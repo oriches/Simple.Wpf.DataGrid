@@ -1,0 +1,102 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:rd="clr-namespace:Simple.Wpf.DataGrid.Resources.ResourceDictionaries"
+                    xmlns:vm="clr-namespace:Simple.Wpf.DataGrid.ViewModels">
+
+    <ResourceDictionary.MergedDictionaries>
+
+        <rd:SharedResourceDictionary Source="../Converters/Converters.xaml" />
+        <rd:SharedResourceDictionary Source="../Styles/ButtonStyles.xaml" />
+
+    </ResourceDictionary.MergedDictionaries>
+
+    <DataTemplate DataType="{x:Type vm:ExceptionViewModel}">
+
+        <Grid Margin="0,5">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="10" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="15" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Column="0"
+                       Grid.Row="0"
+                       TextWrapping="Wrap">
+                <Run>An error has happened, it's been caught and the associated message is displayed below. What do you want to do?</Run>
+                <LineBreak />
+                <LineBreak />
+                <Run>You can</Run>
+                <Run FontWeight="Bold">Exit</Run>
+                <Run>, </Run>
+                <Run FontWeight="Bold">Restart</Run>
+                <Run> or </Run>
+                <Run FontWeight="Bold">Continue</Run>
+                <Run>, if you choose to </Run>
+                <Run FontWeight="Bold">Continue</Run>
+                <Run> the app will be in an unstable state and may not perform as expected.</Run>
+            </TextBlock>
+
+            <TextBox Grid.Column="0"
+                     Grid.Row="2"
+                     IsReadOnly="True"
+                     MinHeight="75"
+                     HorizontalAlignment="Stretch"
+                     Text="{Binding Path=Message, Mode=OneTime}" />
+
+            <Grid Grid.Column="0"
+                  Grid.Row="4">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <WrapPanel Grid.Column="0"
+                           Grid.Row="0"
+                           Orientation="Horizontal"
+                           HorizontalAlignment="Left">
+
+                    <Button Content="Copy Error Details"
+                            Margin="0,0,5,5"
+                            Command="{Binding Path=CopyCommand, Mode=OneWay}"
+                            Style="{StaticResource ExceptionButtonStyle}" />
+
+                    <Button Content="Open Log Folder"
+                            Margin="0,0,0,5"
+                            Command="{Binding Path=OpenLogFolderCommand, Mode=OneWay}"
+                            Style="{StaticResource ExceptionButtonStyle}" />
+
+                </WrapPanel>
+
+                <WrapPanel Grid.Column="1"
+                           Grid.Row="0"
+                           Orientation="Horizontal"
+                           HorizontalAlignment="Right">
+
+                    <Button Content="Continue"
+                            Margin="0,0,5,5"
+                            Command="{Binding Path=ContinueCommand, Mode=OneWay}"
+                            Style="{StaticResource ExceptionButtonStyle}" />
+
+                    <Button Content="Restart"
+                            Margin="0,0,5,5"
+                            Command="{Binding Path=RestartCommand, Mode=OneWay}"
+                            Style="{StaticResource ExceptionButtonStyle}" />
+
+                    <Button Content="Exit"
+                            Margin="0,0,0,5"
+                            Command="{Binding Path=ExitCommand, Mode=OneWay}"
+                            Style="{StaticResource ExceptionButtonStyle}" />
+
+                </WrapPanel>
+
+            </Grid>
+
+        </Grid>
+
+    </DataTemplate>
+
+</ResourceDictionary>

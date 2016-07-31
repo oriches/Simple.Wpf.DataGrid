@@ -1,0 +1,29 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:rd="clr-namespace:Simple.Wpf.DataGrid.Resources.ResourceDictionaries"
+                    xmlns:c="clr-namespace:Simple.Wpf.DataGrid.Resources.Converters">
+
+    <ResourceDictionary.MergedDictionaries>
+        
+        <rd:SharedResourceDictionary Source="../Brushes/Brushes.xaml" />
+        
+    </ResourceDictionary.MergedDictionaries>
+    
+
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+
+    <c:BooleanInvertConverter x:Key="BooleanInvertConverter" />
+
+    <c:FormatDateTimeConverter x:Key="FormatDateTimeConverter" />
+
+    <c:FormatIntegerConverter x:Key="FormatIntegerConverter" />
+
+    <c:FormatDoubleConverter x:Key="FormatDoubleConverter" />
+    
+    <c:IsPositiveNumberConverter x:Key="IsPositiveNumberConverter" />
+
+    <c:NumberToColorConverter x:Key="NumberToColorConverter"
+                              PositiveNumber="{StaticResource PositiveNumberBackgroundBrush}"
+                              NegativeNumber="{StaticResource NegativeNumberBackgroundBrush}" />
+
+</ResourceDictionary>

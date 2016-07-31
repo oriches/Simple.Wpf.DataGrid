@@ -1,0 +1,43 @@
+<Application x:Class="Simple.Wpf.DataGrid.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:resourceDictionaries="clr-namespace:Simple.Wpf.DataGrid.Resources.ResourceDictionaries">
+    <Application.Resources>
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+
+                <resourceDictionaries:SharedResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <resourceDictionaries:SharedResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <resourceDictionaries:SharedResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
+                <resourceDictionaries:SharedResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/steel.xaml" />
+                <resourceDictionaries:SharedResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/baselight.xaml" />
+
+                <resourceDictionaries:SharedResourceDictionary Source="Resources/Colors/Colors.xaml" />
+                
+                <resourceDictionaries:SharedResourceDictionary Source="Resources/Brushes/Brushes.xaml" />
+
+                <resourceDictionaries:SharedResourceDictionary Source="Resources/Converters/Converters.xaml" />
+
+                <resourceDictionaries:SharedResourceDictionary Source="Resources/Styles/ButtonStyles.xaml" />
+
+                <resourceDictionaries:SharedResourceDictionary Source="Resources/Styles/DataGridStyles.xaml" />
+
+                <resourceDictionaries:SharedResourceDictionary Source="Resources/Styles/ListBoxStyles.xaml" />
+
+                <resourceDictionaries:SharedResourceDictionary Source="Resources/Styles/TextBlockStyles.xaml" />
+
+                <resourceDictionaries:SharedResourceDictionary Source="Resources/Icons/Icons.xaml" />
+
+                <resourceDictionaries:SharedResourceDictionary Source="Resources/Templates/DataGridCellTemplates.xaml" />
+                <resourceDictionaries:SharedResourceDictionary Source="Resources/Templates/DiagnosticsViewModelTemplate.xaml" />
+                <resourceDictionaries:SharedResourceDictionary Source="Resources/Templates/ColumnPickerViewModelTemplate.xaml" />
+                <resourceDictionaries:SharedResourceDictionary Source="Resources/Templates/ExceptionViewModelTemplate.xaml" />
+                <resourceDictionaries:SharedResourceDictionary Source="Resources/Templates/MainViewModelTemplate.xaml" />
+
+            </ResourceDictionary.MergedDictionaries>
+            
+        </ResourceDictionary>
+
+    </Application.Resources>
+</Application>
