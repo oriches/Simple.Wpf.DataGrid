@@ -96,6 +96,7 @@
                     <DataGrid Grid.Row="4"
                               Grid.Column="0"
                               Grid.ColumnSpan="2"
+                              CanUserSortColumns="True"
                               ItemsSource="{Binding Data}"
                               CellStyle="{StaticResource DynamicDataGridCellStyle}"
                               RenderOptions.EdgeMode="Aliased">
