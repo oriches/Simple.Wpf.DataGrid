@@ -108,6 +108,7 @@
     <Compile Include="Collections\CustomTypeRangeObservableCollection.cs" />
     <Compile Include="Dtos\Setting.cs" />
     <Compile Include="Extensions\ArrayExtensions.cs" />
+    <Compile Include="Extensions\MenuItemExtensions.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="Extensions\DependencyObjectExtensions.cs" />
     <Compile Include="Extensions\SettingsExtensions.cs" />
