@@ -22,7 +22,7 @@ namespace Simple.Wpf.DataGrid.Resources.Behaviors
                 ColumnName = columnName;
             }
 
-            public string ColumnName { get; }
+            public string ColumnName { get; private set; }
 
             protected override FrameworkElement GenerateElement(DataGridCell cell, object dataItem)
             {
@@ -122,13 +122,20 @@ namespace Simple.Wpf.DataGrid.Resources.Behaviors
                 .SelectMany(x => CultureService.CultureChanged.Skip(1), (x, y) => x)
                 .Subscribe(x => x.Items.Refresh())
                 .DisposeWith(_disposable);
+
+            Observable.Return(AssociatedObject)
+                .SelectMany(x => Observable.FromEventPattern<DataGridSortingEventHandler, DataGridSortingEventArgs>(h => x.Sorting += h,
+                    h => x.Sorting -= h), (x, y) => y)
+                .ActivateGestures()
+                .Subscribe()
+                .DisposeWith(_disposable);
         }
 
         private void HandleGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs args)
         {
             var propertyDescriptor = (PropertyDescriptor) args.PropertyDescriptor;
             var column = new NamedDataGridTemplateColumn(propertyDescriptor.Name);
-
+            
             var displayName = GetPropertyDisplayName(propertyDescriptor);
             if (!string.IsNullOrEmpty(displayName))
             {
@@ -138,10 +145,12 @@ namespace Simple.Wpf.DataGrid.Resources.Behaviors
             if (propertyDescriptor.PropertyType == typeof(string))
             {
                 column.CellTemplate = _stringTemplate;
+                column.SortMemberPath = propertyDescriptor.Name;
             }
             else if (propertyDescriptor.PropertyType == typeof(DateTime))
             {
                 column.CellTemplate = _dateTimeTemplate;
+                column.SortMemberPath = propertyDescriptor.Name;
             }
             else if (propertyDescriptor.PropertyType == typeof(int))
             {
