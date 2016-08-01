@@ -116,7 +116,10 @@
     <Compile Include="Helpers\DateTimeHelper.cs" />
     <Compile Include="Models\ICloneable.cs" />
     <Compile Include="Models\Setting.cs" />
+    <Compile Include="Resources\Behaviors\ApplyColumnSortBehavior.cs" />
+    <Compile Include="Resources\Behaviors\ClearColumnSortBehavior.cs" />
     <Compile Include="Resources\Behaviors\IsGridScrollingBehavior.cs" />
+    <Compile Include="Resources\Behaviors\RegenerateColumnsBehavior.cs" />
     <Compile Include="Resources\Controls\NumberValueControl.cs" />
     <Compile Include="Resources\Controls\DoubleValueControl.xaml.cs">
       <DependentUpon>DoubleValueControl.xaml</DependentUpon>
@@ -142,7 +145,6 @@
     <Compile Include="ViewModels\ColumnPickerViewModel.cs" />
     <Compile Include="ViewModels\DynamicDataViewModel.cs" />
     <Compile Include="ViewModels\DynamicDataViewModelPropertyDescriptor.cs" />
-    <Compile Include="Resources\Behaviors\RegenerateColumnsBehavior.cs" />
     <Compile Include="Resources\Converters\BooleanInvertConverter.cs" />
     <Compile Include="Extensions\CollectionExtensions.cs" />
     <Compile Include="Extensions\CompositeDisposableExtensions.cs" />
