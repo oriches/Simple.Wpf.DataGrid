@@ -1,4 +1,4 @@
-﻿namespace Simple.Wpf.DataGrid.Resources.Controls
+namespace Simple.Wpf.DataGrid.Resources.Controls
 {
     using System;
     using System.Windows;
@@ -22,9 +22,10 @@
             _type = type;
             _isGreaterThanZero = isGreaterThanZero;
 
-            DataContextChanged += HandleDataContextChanged;
             Loaded += HandleLoaded;
             Unloaded += HandleUnloaded;
+
+            DataContextChanged += HandleDataContextChanged;
         }
 
         private void HandleLoaded(object sender, RoutedEventArgs args)
@@ -81,10 +82,6 @@
                 _scrollViewer.PreviewMouseUp -= HandlePreviewMouseUp;
                 _scrollViewer.PreviewMouseWheel -= HandlePreviewMouseWheel;
             }
-
-            DataContextChanged -= HandleDataContextChanged;
-            Loaded -= HandleLoaded;
-            Unloaded -= HandleUnloaded;
         }
         
         private void HandlePreviewMouseUp(object sender, MouseButtonEventArgs args)
@@ -117,7 +114,14 @@
                 return;
             }
             
-            VisualStateManager.GoToState(this, _isGreaterThanZero(args.NewValue) ? Constants.UI.Grids.Transitions.NewPositive : Constants.UI.Grids.Transitions.NewNegative, true);
+            var transitioned = VisualStateManager.GoToState(this,
+                _isGreaterThanZero(args.NewValue) ? Constants.UI.Grids.Transitions.NewPositive : Constants.UI.Grids.Transitions.NewNegative,
+                true);
+
+            if (!transitioned)
+            {
+                throw new Exception("Failed to transition...");
+            }
         }
     }
 }
