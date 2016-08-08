@@ -28,9 +28,6 @@ namespace Simple.Wpf.DataGrid.Services
                     .ToArray();
 
                 x.OnNext(data);
-
-                var updateData = data.Select(y => y.Clone())
-                    .ToArray();
                 
                 return Observable.Interval(TimeSpan.FromMilliseconds(50), scheduler)
                     .Finally(() => x.OnCompleted())
@@ -38,8 +35,11 @@ namespace Simple.Wpf.DataGrid.Services
                     .Synchronize(data)
                     .Subscribe(_ =>
                     {
-                        var updates = TabularDataGenerator.CreateUpdates(updateData);
+                        var localCopy = data.Select(y => y.Clone()).ToArray();
+                        var updates = TabularDataGenerator.CreateUpdates(localCopy);
+
                         x.OnNext(updates);
+                        data = localCopy;
                     });
 
             })
