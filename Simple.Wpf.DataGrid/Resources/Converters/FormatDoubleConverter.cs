@@ -1,9 +1,9 @@
-﻿namespace Simple.Wpf.DataGrid.Resources.Converters
-{
-    using System;
-    using System.Globalization;
-    using System.Windows.Data;
+﻿using System;
+using System.Globalization;
+using System.Windows.Data;
 
+namespace Simple.Wpf.DataGrid.Resources.Converters
+{
     public sealed class FormatDoubleConverter : IValueConverter
     {
         public string DateFormat { get; set; }
@@ -12,10 +12,7 @@
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value == null)
-            {
-                return null;
-            }
+            if (value == null) return null;
 
             try
             {

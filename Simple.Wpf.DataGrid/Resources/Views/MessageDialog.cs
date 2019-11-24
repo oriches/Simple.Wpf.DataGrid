@@ -1,10 +1,10 @@
+using System.Windows.Markup;
+using MahApps.Metro.Controls.Dialogs;
+using Simple.Wpf.DataGrid.Models;
+using Simple.Wpf.DataGrid.ViewModels;
+
 namespace Simple.Wpf.DataGrid.Resources.Views
 {
-    using System.Windows.Markup;
-    using MahApps.Metro.Controls.Dialogs;
-    using Models;
-    using ViewModels;
-
     [ContentProperty("DialogBody")]
     public sealed class MessageDialog : BaseMetroDialog
     {

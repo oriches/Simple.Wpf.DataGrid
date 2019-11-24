@@ -1,8 +1,8 @@
-﻿namespace Simple.Wpf.DataGrid.Services
-{
-    using System;
-    using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
+namespace Simple.Wpf.DataGrid.Services
+{
     public interface IColumnsService : IService
     {
         IObservable<string> Initialised { get; }

@@ -1,13 +1,13 @@
+using System;
+using System.Reactive.Subjects;
+using Moq;
+using NUnit.Framework;
+using Simple.Wpf.DataGrid.Models;
+using Simple.Wpf.DataGrid.Services;
+using Simple.Wpf.DataGrid.ViewModels;
+
 namespace Simple.Wpf.DataGrid.Tests.ViewModels
 {
-    using System;
-    using System.Reactive.Subjects;
-    using DataGrid.Services;
-    using DataGrid.ViewModels;
-    using Models;
-    using Moq;
-    using NUnit.Framework;
-
     [TestFixture]
     public sealed class DiagnosticsViewModelFixtures : BaseViewModelFixtures
     {
@@ -61,8 +61,8 @@ namespace Simple.Wpf.DataGrid.Tests.ViewModels
         public void disposing_unsubscribes_diagnostics_service_stream()
         {
             // ARRANGE
-            const decimal managedMemory = 1024*1000*4;
-            const decimal totalMemory = 1024*1000*42;
+            const decimal managedMemory = 1024 * 1000 * 4;
+            const decimal totalMemory = 1024 * 1000 * 42;
 
             var viewModel = new DiagnosticsViewModel(_diagnosticService.Object, SchedulerService);
 
@@ -97,8 +97,8 @@ namespace Simple.Wpf.DataGrid.Tests.ViewModels
         public void managed_memory_value_is_formatted_when_diagnostics_service_pumps_memory()
         {
             // ARRANGE
-            const decimal managedMemory = 1024*1000*4;
-            const decimal totalMemory = 1024*1000*42;
+            const decimal managedMemory = 1024 * 1000 * 4;
+            const decimal totalMemory = 1024 * 1000 * 42;
 
             var viewModel = new DiagnosticsViewModel(_diagnosticService.Object, SchedulerService);
 
@@ -130,8 +130,8 @@ namespace Simple.Wpf.DataGrid.Tests.ViewModels
         public void total_memory_value_is_formatted_when_diagnostics_service_pumps_memory()
         {
             // ARRANGE
-            const decimal managedMemory = 1024*1000*4;
-            const decimal totalMemory = 1024*1000*42;
+            const decimal managedMemory = 1024 * 1000 * 4;
+            const decimal totalMemory = 1024 * 1000 * 42;
 
             var viewModel = new DiagnosticsViewModel(_diagnosticService.Object, SchedulerService);
 

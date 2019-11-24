@@ -1,9 +1,9 @@
-﻿namespace Simple.Wpf.DataGrid.Tests
-{
-    using System.Reactive.Concurrency;
-    using DataGrid.Services;
-    using Microsoft.Reactive.Testing;
+﻿using System.Reactive.Concurrency;
+using Microsoft.Reactive.Testing;
+using Simple.Wpf.DataGrid.Services;
 
+namespace Simple.Wpf.DataGrid.Tests
+{
     public sealed class MockSchedulerService : ISchedulerService
     {
         private readonly TestScheduler _testScheduler;

@@ -1,7 +1,7 @@
+using System;
+
 namespace Simple.Wpf.DataGrid.Models
 {
-    using System;
-
     public struct Memory : IEquatable<Memory>
     {
         public bool Equals(Memory other)
@@ -19,7 +19,7 @@ namespace Simple.Wpf.DataGrid.Models
         {
             unchecked
             {
-                return (WorkingSetPrivate.GetHashCode()*397) ^ Managed.GetHashCode();
+                return (WorkingSetPrivate.GetHashCode() * 397) ^ Managed.GetHashCode();
             }
         }
 

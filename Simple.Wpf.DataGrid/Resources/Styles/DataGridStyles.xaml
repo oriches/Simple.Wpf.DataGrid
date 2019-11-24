@@ -11,7 +11,8 @@
         <rd:SharedResourceDictionary Source="../Colors/Colors.xaml" />
         <rd:SharedResourceDictionary Source="../Converters/Converters.xaml" />
 
-        <rd:SharedResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/controls.datagrid.xaml" />
+        <rd:SharedResourceDictionary
+            Source="pack://application:,,,/MahApps.Metro;component/Styles/controls.datagrid.xaml" />
 
     </ResourceDictionary.MergedDictionaries>
 

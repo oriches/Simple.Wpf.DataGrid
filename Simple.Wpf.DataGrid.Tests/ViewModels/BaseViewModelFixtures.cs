@@ -1,12 +1,11 @@
+using Microsoft.Reactive.Testing;
+using Moq;
+using NUnit.Framework;
+using Simple.Wpf.DataGrid.Extensions;
+using Simple.Wpf.DataGrid.Services;
+
 namespace Simple.Wpf.DataGrid.Tests.ViewModels
 {
-    using DataGrid.Services;
-    using Microsoft.Reactive.Testing;
-    using Moq;
-    using NUnit.Framework;
-    using ObservableExtensions = Extensions.ObservableExtensions;
-
-
     public abstract class BaseViewModelFixtures
     {
         public MockSchedulerService SchedulerService { get; private set; }
@@ -30,7 +29,7 @@ namespace Simple.Wpf.DataGrid.Tests.ViewModels
         public void BaseSetup()
         {
             TestScheduler = new TestScheduler();
-            
+
             SchedulerService = new MockSchedulerService(TestScheduler);
 
             DateTimeService = new MockDateTimeService(TestScheduler);

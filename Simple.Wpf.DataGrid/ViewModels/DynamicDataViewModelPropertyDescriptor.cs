@@ -1,20 +1,24 @@
+using System;
+using System.ComponentModel;
+
 namespace Simple.Wpf.DataGrid.ViewModels
 {
-    using System;
-    using System.ComponentModel;
-
     public sealed class DynamicDataViewModelPropertyDescriptor : PropertyDescriptor
     {
-        private readonly Type _type;
-
         public DynamicDataViewModelPropertyDescriptor(string columnName, string displayName, Type type)
             : base(columnName, new Attribute[]
             {
-                new DisplayNameAttribute(displayName),
+                new DisplayNameAttribute(displayName)
             })
         {
-            _type = type;
+            PropertyType = type;
         }
+
+        public override Type ComponentType => typeof(DynamicDataViewModel);
+
+        public override bool IsReadOnly => true;
+
+        public override Type PropertyType { get; }
 
         public override bool CanResetValue(object component)
         {
@@ -23,7 +27,7 @@ namespace Simple.Wpf.DataGrid.ViewModels
 
         public override object GetValue(object component)
         {
-            return ((DynamicDataViewModel)component)[Name];
+            return ((DynamicDataViewModel) component)[Name];
         }
 
         public override void ResetValue(object component)
@@ -38,11 +42,5 @@ namespace Simple.Wpf.DataGrid.ViewModels
         {
             return false;
         }
-
-        public override Type ComponentType => typeof(DynamicDataViewModel);
-
-        public override bool IsReadOnly => true;
-
-        public override Type PropertyType => _type;
     }
 }

@@ -1,10 +1,10 @@
-﻿namespace Simple.Wpf.DataGrid.Resources.ResourceDictionaries
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Threading;
-    using System.Windows;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Windows;
 
+namespace Simple.Wpf.DataGrid.Resources.ResourceDictionaries
+{
     // The shared resource dictionary is a specialized resource dictionary
     // that loads it content only once. If a second instance with the same source
     // is created, it only merges the resources from the cache.
@@ -26,15 +26,13 @@
         /// </summary>
         public new Uri Source
         {
-            get { return _sourceUri; }
+            get => _sourceUri;
             set
             {
                 _sourceUri = value;
 
                 if (!SharedDictionaries.IsValueCreated)
-                {
                     SharedDictionaries.Value = new Dictionary<Uri, ResourceDictionary>();
-                }
 
                 if (!SharedDictionaries.Value.ContainsKey(value))
                 {

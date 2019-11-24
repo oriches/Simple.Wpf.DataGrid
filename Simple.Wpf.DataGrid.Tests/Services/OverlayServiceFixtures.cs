@@ -1,12 +1,12 @@
+using System;
+using System.Reactive.Disposables;
+using Moq;
+using NUnit.Framework;
+using Simple.Wpf.DataGrid.Services;
+using Simple.Wpf.DataGrid.ViewModels;
+
 namespace Simple.Wpf.DataGrid.Tests.Services
 {
-    using System;
-    using System.Reactive.Disposables;
-    using DataGrid.Services;
-    using DataGrid.ViewModels;
-    using Moq;
-    using NUnit.Framework;
-
     [TestFixture]
     public sealed class OverlayServiceFixtures
     {

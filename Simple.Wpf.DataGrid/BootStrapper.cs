@@ -1,14 +1,14 @@
+using System;
+using System.Diagnostics;
+using System.Reflection;
+using Autofac;
+using Autofac.Core;
+using Simple.Wpf.DataGrid.Services;
+using Simple.Wpf.DataGrid.Strategies;
+using Simple.Wpf.DataGrid.ViewModels;
+
 namespace Simple.Wpf.DataGrid
 {
-    using System;
-    using System.Diagnostics;
-    using System.Reflection;
-    using Autofac;
-    using Autofac.Core;
-    using Services;
-    using Strategies;
-    using ViewModels;
-
     public static class BootStrapper
     {
         private static ILifetimeScope _rootScope;
@@ -18,10 +18,7 @@ namespace Simple.Wpf.DataGrid
         {
             get
             {
-                if (_rootScope == null)
-                {
-                    Start();
-                }
+                if (_rootScope == null) Start();
 
                 _chromeViewModel = _rootScope.Resolve<IChromeViewModel>();
                 return _chromeViewModel;
@@ -30,13 +27,10 @@ namespace Simple.Wpf.DataGrid
 
         public static void Start()
         {
-            if (_rootScope != null)
-            {
-                return;
-            }
+            if (_rootScope != null) return;
 
             var builder = new ContainerBuilder();
-            var assemblies = new[] { Assembly.GetExecutingAssembly() };
+            var assemblies = new[] {Assembly.GetExecutingAssembly()};
 
             builder.RegisterAssemblyTypes(assemblies)
                 .Where(t => typeof(IService).IsAssignableFrom(t))
@@ -44,8 +38,8 @@ namespace Simple.Wpf.DataGrid
                 .AsImplementedInterfaces();
 
             builder.RegisterAssemblyTypes(assemblies)
-               .Where(t => typeof(IStrategy).IsAssignableFrom(t))
-               .AsImplementedInterfaces();
+                .Where(t => typeof(IStrategy).IsAssignableFrom(t))
+                .AsImplementedInterfaces();
 
             builder.RegisterAssemblyTypes(assemblies)
                 .Where(t => typeof(IViewModel).IsAssignableFrom(t) && !typeof(ITransientViewModel).IsAssignableFrom(t))
@@ -59,10 +53,7 @@ namespace Simple.Wpf.DataGrid
                 .Where(t =>
                 {
                     var isAssignable = typeof(ITransientViewModel).IsAssignableFrom(t);
-                    if (isAssignable)
-                    {
-                        Debug.WriteLine("Transient view model - " + t.Name);
-                    }
+                    if (isAssignable) Debug.WriteLine("Transient view model - " + t.Name);
 
                     return isAssignable;
                 })
@@ -79,20 +70,14 @@ namespace Simple.Wpf.DataGrid
 
         public static T Resolve<T>()
         {
-            if (_rootScope == null)
-            {
-                throw new Exception("Bootstrapper hasn't been started!");
-            }
+            if (_rootScope == null) throw new Exception("Bootstrapper hasn't been started!");
 
             return _rootScope.Resolve<T>(new Parameter[0]);
         }
 
         public static T Resolve<T>(Parameter[] parameters)
         {
-            if (_rootScope == null)
-            {
-                throw new Exception("Bootstrapper hasn't been started!");
-            }
+            if (_rootScope == null) throw new Exception("Bootstrapper hasn't been started!");
 
             return _rootScope.Resolve<T>(parameters);
         }

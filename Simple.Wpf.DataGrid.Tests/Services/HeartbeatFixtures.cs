@@ -1,12 +1,12 @@
-﻿namespace Simple.Wpf.DataGrid.Tests.Services
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Reactive;
-    using DataGrid.Services;
-    using Microsoft.Reactive.Testing;
-    using NUnit.Framework;
+﻿using System;
+using System.Collections.Generic;
+using System.Reactive;
+using Microsoft.Reactive.Testing;
+using NUnit.Framework;
+using Simple.Wpf.DataGrid.Services;
 
+namespace Simple.Wpf.DataGrid.Tests.Services
+{
     [TestFixture]
     public class HeartbeatFixtures
     {

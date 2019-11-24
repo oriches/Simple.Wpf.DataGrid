@@ -1,15 +1,15 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reactive.Disposables;
+using System.Reactive.Linq;
+using System.Reactive.Subjects;
+using Simple.Wpf.DataGrid.Extensions;
+using Simple.Wpf.DataGrid.Models;
+using Simple.Wpf.DataGrid.ViewModels;
+
 namespace Simple.Wpf.DataGrid.Services
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Reactive.Disposables;
-    using System.Reactive.Linq;
-    using System.Reactive.Subjects;
-    using Extensions;
-    using Models;
-    using ViewModels;
-
     public sealed class MessageService : DisposableObject, IMessageService
     {
         private readonly Subject<Message> _show;
@@ -33,25 +33,19 @@ namespace Simple.Wpf.DataGrid.Services
             newMessage.ViewModel.Closed
                 .Take(1)
                 .Subscribe(x =>
-                           {
-                               Message nextMessage = null;
-                               lock (_sync)
-                               {
-                                   _waitingMessages.Dequeue();
+                {
+                    Message nextMessage = null;
+                    lock (_sync)
+                    {
+                        _waitingMessages.Dequeue();
 
-                                   if (_waitingMessages.Any())
-                                   {
-                                       nextMessage = _waitingMessages.Peek();
-                                   }
-                               }
+                        if (_waitingMessages.Any()) nextMessage = _waitingMessages.Peek();
+                    }
 
-                               if (nextMessage != null)
-                               {
-                                   _show.OnNext(nextMessage);
-                               }
+                    if (nextMessage != null) _show.OnNext(nextMessage);
 
-                               viewModel.Dispose();
-                           });
+                    viewModel.Dispose();
+                });
 
             bool show;
             lock (_sync)
@@ -60,10 +54,7 @@ namespace Simple.Wpf.DataGrid.Services
                 show = _waitingMessages.Count == 1;
             }
 
-            if (show)
-            {
-                _show.OnNext(newMessage);
-            }
+            if (show) _show.OnNext(newMessage);
         }
 
         public IObservable<Message> Show => _show;

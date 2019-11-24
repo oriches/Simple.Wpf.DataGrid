@@ -1,27 +1,18 @@
+using System;
+using System.Collections.Generic;
+using System.Reactive.Concurrency;
+using System.Reactive.Subjects;
+using Moq;
+using NUnit.Framework;
+using Simple.Wpf.DataGrid.Models;
+using Simple.Wpf.DataGrid.Services;
+using Simple.Wpf.DataGrid.ViewModels;
+
 namespace Simple.Wpf.DataGrid.Tests.ViewModels
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Reactive.Concurrency;
-    using System.Reactive.Subjects;
-    using DataGrid.Services;
-    using DataGrid.ViewModels;
-    using Models;
-    using Moq;
-    using NUnit.Framework;
-
     [TestFixture]
     public sealed class MainViewModelFixtures : BaseViewModelFixtures
     {
-        private Mock<IDiagnosticsViewModel> _diagnosticsViewModel;
-        private Mock<ITabularDataService> _tabularDataService;
-        private Mock<IColumnsService> _columnsService;
-        private Mock<IOverlayService> _overlayService;
-        private MockDateTimeService _dateTimeService;
-        private Subject<string> _columnsChanged;
-        private Subject<string> _columnsInitialised;
-        private Subject<IEnumerable<DynamicData>> _data;
-
         [SetUp]
         public void SetUp()
         {
@@ -49,6 +40,25 @@ namespace Simple.Wpf.DataGrid.Tests.ViewModels
             TestScheduler.AdvanceTo(DateTime.Now.Ticks);
         }
 
+        private Mock<IDiagnosticsViewModel> _diagnosticsViewModel;
+        private Mock<ITabularDataService> _tabularDataService;
+        private Mock<IColumnsService> _columnsService;
+        private Mock<IOverlayService> _overlayService;
+        private MockDateTimeService _dateTimeService;
+        private Subject<string> _columnsChanged;
+        private Subject<string> _columnsInitialised;
+        private Subject<IEnumerable<DynamicData>> _data;
+
+        private MainViewModel CreateViewModel()
+        {
+            return new MainViewModel(_diagnosticsViewModel.Object,
+                _tabularDataService.Object,
+                _columnsService.Object,
+                _overlayService.Object,
+                _dateTimeService,
+                SchedulerService);
+        }
+
         [Test]
         public void created_with_no_data()
         {
@@ -74,17 +84,19 @@ namespace Simple.Wpf.DataGrid.Tests.ViewModels
             // ARRANGE
             var data = new[]
             {
-                new DynamicData {
-                    { "id", 1 },
-                    { "col1", 1 },
-                    { "col2", 2 },
-                    { "col3", 3 },
+                new DynamicData
+                {
+                    {"id", 1},
+                    {"col1", 1},
+                    {"col2", 2},
+                    {"col3", 3}
                 },
-                 new DynamicData {
-                    { "id", 2 },
-                    { "col1", 1 },
-                    { "col2", 2 },
-                    { "col3", 3 },
+                new DynamicData
+                {
+                    {"id", 2},
+                    {"col1", 1},
+                    {"col2", 2},
+                    {"col3", 3}
                 }
             };
 
@@ -105,16 +117,6 @@ namespace Simple.Wpf.DataGrid.Tests.ViewModels
             Assert.That(viewModel.TotalNumberOfColumns, Is.EqualTo(6));
             Assert.That(viewModel.TotalNumberOfValues, Is.EqualTo(12));
             Assert.That(viewModel.UpdatesPerSecond, Is.EqualTo(0));
-        }
-        
-        private MainViewModel CreateViewModel()
-        {
-            return new MainViewModel(_diagnosticsViewModel.Object,
-                _tabularDataService.Object,
-                _columnsService.Object,
-                _overlayService.Object,
-                _dateTimeService,
-                SchedulerService);
         }
     }
 }

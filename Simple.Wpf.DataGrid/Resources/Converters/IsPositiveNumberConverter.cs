@@ -1,9 +1,9 @@
-﻿namespace Simple.Wpf.DataGrid.Resources.Converters
-{
-    using System;
-    using System.Globalization;
-    using System.Windows.Data;
+﻿using System;
+using System.Globalization;
+using System.Windows.Data;
 
+namespace Simple.Wpf.DataGrid.Resources.Converters
+{
     public sealed class IsPositiveNumberConverter : IValueConverter
     {
         private static readonly object False = false;
@@ -13,15 +13,9 @@
         {
             try
             {
-                if (value is int)
-                {
-                    return (int)value > 0 ? True : False;
-                }
+                if (value is int) return (int) value > 0 ? True : False;
 
-                if (value is double)
-                {
-                    return (double)value > 0 ? True : False;
-                }
+                if (value is double) return (double) value > 0 ? True : False;
 
                 return False;
             }

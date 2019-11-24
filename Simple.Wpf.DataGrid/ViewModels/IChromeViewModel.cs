@@ -1,7 +1,7 @@
+using Simple.Wpf.DataGrid.Commands;
+
 namespace Simple.Wpf.DataGrid.ViewModels
 {
-    using Commands;
-
     public interface IChromeViewModel : IViewModel
     {
         IMainViewModel Main { get; }

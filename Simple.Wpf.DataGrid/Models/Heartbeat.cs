@@ -1,7 +1,7 @@
+using System;
+
 namespace Simple.Wpf.DataGrid.Models
 {
-    using System;
-
     public sealed class Heartbeat : IEquatable<Heartbeat>
     {
         public Heartbeat(string timestamp)

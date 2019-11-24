@@ -1,32 +1,34 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Linq;
+using System.Reactive.Linq;
+using Simple.Wpf.DataGrid.Extensions;
+using Simple.Wpf.DataGrid.Helpers;
+using Simple.Wpf.DataGrid.Models;
+using Simple.Wpf.DataGrid.Services;
+
 namespace Simple.Wpf.DataGrid.ViewModels
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Diagnostics;
-    using System.Linq;
-    using System.Reactive.Linq;
-    using Extensions;
-    using Helpers;
-    using Models;
-    using Services;
-
     [DebuggerDisplay("Id = {Id}, CreatedOn = {CreatedOn}, ModifiedOn = {ModifiedOn}")]
     public sealed class DynamicDataViewModel : BaseViewModel, ICustomTypeDescriptor, ITransientViewModel
     {
         public static PropertyDescriptorCollection PropertyDescriptors;
 
-        private static readonly string[] AuditProperties = { Constants.UI.Grids.PredefinedColumns.CreatedOn, Constants.UI.Grids.PredefinedColumns.ModifiedOn };
+        private static readonly string[] AuditProperties =
+            {Constants.UI.Grids.PredefinedColumns.CreatedOn, Constants.UI.Grids.PredefinedColumns.ModifiedOn};
 
-        private readonly IDictionary<string, string> _valuesAsStrings;
+        private readonly object _createdOn;
         private readonly DynamicData _data;
 
         private readonly IDateTimeService _dateTimeService;
-        private readonly object _createdOn;
+
+        private readonly IDictionary<string, string> _valuesAsStrings;
 
         private object _modifiedOn;
-        
-        public DynamicDataViewModel(DynamicData data, IDateTimeService dateTimeService) 
+
+        public DynamicDataViewModel(DynamicData data, IDateTimeService dateTimeService)
         {
             _data = data;
             _dateTimeService = dateTimeService;
@@ -36,7 +38,7 @@ namespace Simple.Wpf.DataGrid.ViewModels
             var auditDate = _dateTimeService.Now
                 .DateTime
                 .Truncate(TimeSpan.TicksPerSecond);
-            
+
             _createdOn = auditDate;
 
             _modifiedOn = auditDate;
@@ -45,81 +47,14 @@ namespace Simple.Wpf.DataGrid.ViewModels
             SuppressDebugWriteline = true;
 #endif
         }
-        
+
         public object this[string name] => GetValue(name);
 
         public string Id => _data.Id;
 
-        public DateTime CreatedOn => (DateTime)_createdOn;
+        public DateTime CreatedOn => (DateTime) _createdOn;
 
-        public DateTime ModifiedOn => (DateTime)_modifiedOn;
-
-        public static void Reset()
-        {
-            PropertyDescriptors = null;
-        }
-
-        public object GetValue(string name)
-        {
-            if (name == Constants.UI.Grids.PredefinedColumns.Id)
-            {
-                return Id;
-            }
-
-            if (name == Constants.UI.Grids.PredefinedColumns.CreatedOn)
-            {
-                return _createdOn;
-            }
-
-            if (name == Constants.UI.Grids.PredefinedColumns.ModifiedOn)
-            {
-                return _modifiedOn;
-            }
-
-            return _data[name];
-        }
-
-        public string GetValueAsString(string name)
-        {
-            string value;
-            if (!_valuesAsStrings.TryGetValue(name, out value))
-            {
-                value = GetValue(name).ToString().ToLower();
-                _valuesAsStrings.Add(name, value);
-            }
-
-            return value;
-        }
-
-        public void Update(string name, object value)
-        {
-            if (_data.Update(name, value))
-            {
-                _valuesAsStrings.Remove(name);
-
-                _modifiedOn = _dateTimeService.Now
-                    .DateTime
-                    .Truncate(TimeSpan.TicksPerSecond);
-                
-                OnPropertyChanged(name);
-                OnPropertyChanged(Constants.UI.Grids.PredefinedColumns.ModifiedOn);
-            }
-        }
-        
-        public void ProcessUpdate(DynamicData data)
-        {
-            var properties = data.Properties.ToArray();
-
-            using (SuspendNotifications())
-            {
-                // ReSharper disable once ForCanBeConvertedToForeach
-                for (var i = 0; i < properties.Length; i++)
-                {
-                    var property = properties[i];
-                    Update(property, data[property]);
-                }
-            }
-        }
+        public DateTime ModifiedOn => (DateTime) _modifiedOn;
 
         public AttributeCollection GetAttributes()
         {
@@ -165,13 +100,10 @@ namespace Simple.Wpf.DataGrid.ViewModels
         {
             throw new NotImplementedException();
         }
-        
+
         public PropertyDescriptorCollection GetProperties()
         {
-            if (PropertyDescriptors != null)
-            {
-                return PropertyDescriptors;
-            }
+            if (PropertyDescriptors != null) return PropertyDescriptors;
 
             var descriptors = Observable.Return(this)
                 .Select(x => x.BuildDescriptors(x._data.Properties.Concat(AuditProperties).ToArray()))
@@ -181,7 +113,7 @@ namespace Simple.Wpf.DataGrid.ViewModels
             PropertyDescriptors = new PropertyDescriptorCollection(descriptors);
             return PropertyDescriptors;
         }
-        
+
         public PropertyDescriptorCollection GetProperties(Attribute[] attributes)
         {
             return GetProperties();
@@ -190,6 +122,64 @@ namespace Simple.Wpf.DataGrid.ViewModels
         public object GetPropertyOwner(PropertyDescriptor pd)
         {
             throw new NotImplementedException();
+        }
+
+        public static void Reset()
+        {
+            PropertyDescriptors = null;
+        }
+
+        public object GetValue(string name)
+        {
+            if (name == Constants.UI.Grids.PredefinedColumns.Id) return Id;
+
+            if (name == Constants.UI.Grids.PredefinedColumns.CreatedOn) return _createdOn;
+
+            if (name == Constants.UI.Grids.PredefinedColumns.ModifiedOn) return _modifiedOn;
+
+            return _data[name];
+        }
+
+        public string GetValueAsString(string name)
+        {
+            string value;
+            if (!_valuesAsStrings.TryGetValue(name, out value))
+            {
+                value = GetValue(name).ToString().ToLower();
+                _valuesAsStrings.Add(name, value);
+            }
+
+            return value;
+        }
+
+        public void Update(string name, object value)
+        {
+            if (_data.Update(name, value))
+            {
+                _valuesAsStrings.Remove(name);
+
+                _modifiedOn = _dateTimeService.Now
+                    .DateTime
+                    .Truncate(TimeSpan.TicksPerSecond);
+
+                OnPropertyChanged(name);
+                OnPropertyChanged(Constants.UI.Grids.PredefinedColumns.ModifiedOn);
+            }
+        }
+
+        public void ProcessUpdate(DynamicData data)
+        {
+            var properties = data.Properties.ToArray();
+
+            using (SuspendNotifications())
+            {
+                // ReSharper disable once ForCanBeConvertedToForeach
+                for (var i = 0; i < properties.Length; i++)
+                {
+                    var property = properties[i];
+                    Update(property, data[property]);
+                }
+            }
         }
 
         // ReSharper disable once SuggestBaseTypeForParameter

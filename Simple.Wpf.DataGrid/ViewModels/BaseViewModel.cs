@@ -1,23 +1,23 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq.Expressions;
+using System.Reactive.Linq;
+using Simple.Wpf.DataGrid.Extensions;
+using Simple.Wpf.DataGrid.Helpers;
+using Simple.Wpf.DataGrid.Models;
+using Simple.Wpf.DataGrid.Services;
+
 namespace Simple.Wpf.DataGrid.ViewModels
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Linq.Expressions;
-    using System.Reactive.Linq;
-    using Extensions;
-    using Helpers;
-    using Models;
-    using Services;
-
     public abstract class BaseViewModel : DisposableObject, IViewModel
     {
         private static readonly PropertyChangedEventArgs EmptyChangeArgs = new PropertyChangedEventArgs(string.Empty);
-        private static readonly IDictionary<string, PropertyChangedEventArgs> ChangedProperties = new Dictionary<string, PropertyChangedEventArgs>();
+
+        private static readonly IDictionary<string, PropertyChangedEventArgs> ChangedProperties =
+            new Dictionary<string, PropertyChangedEventArgs>();
 
         private SuspendedNotifications _suspendedNotifications;
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         protected BaseViewModel()
         {
@@ -28,12 +28,11 @@ namespace Simple.Wpf.DataGrid.ViewModels
                 .DisposeWith(this);
         }
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public IDisposable SuspendNotifications()
         {
-            if (_suspendedNotifications == null)
-            {
-                _suspendedNotifications = new SuspendedNotifications(this);
-            }
+            if (_suspendedNotifications == null) _suspendedNotifications = new SuspendedNotifications(this);
 
             return _suspendedNotifications.AddRef();
         }
@@ -80,10 +79,7 @@ namespace Simple.Wpf.DataGrid.ViewModels
 
         protected virtual bool SetPropertyAndNotify<T>(ref T existingValue, T newValue, Expression<Func<T>> expression)
         {
-            if (EqualityComparer<T>.Default.Equals(existingValue, newValue))
-            {
-                return false;
-            }
+            if (EqualityComparer<T>.Default.Equals(existingValue, newValue)) return false;
 
             existingValue = newValue;
             OnPropertyChanged(expression);
@@ -93,10 +89,7 @@ namespace Simple.Wpf.DataGrid.ViewModels
 
         protected virtual bool SetPropertyAndNotify<T>(ref T existingValue, T newValue, string propertyName)
         {
-            if (EqualityComparer<T>.Default.Equals(existingValue, newValue))
-            {
-                return false;
-            }
+            if (EqualityComparer<T>.Default.Equals(existingValue, newValue)) return false;
 
             existingValue = newValue;
             OnPropertyChanged(propertyName);
@@ -106,6 +99,36 @@ namespace Simple.Wpf.DataGrid.ViewModels
 
         private sealed class SuspendedNotifications : IDisposable
         {
+            private readonly Counter _counter;
+
+            private readonly HashSet<string> _properties = new HashSet<string>();
+            private readonly BaseViewModel _target;
+
+            public SuspendedNotifications(BaseViewModel target)
+            {
+                _target = target;
+
+                _counter = new Counter(Dispose);
+            }
+
+            public void Dispose()
+            {
+                _target._suspendedNotifications = null;
+
+                foreach (var property in _properties) _target.OnPropertyChanged(property);
+            }
+
+            public void Add(string propertyName)
+            {
+                _properties.Add(propertyName);
+            }
+
+            public IDisposable AddRef()
+            {
+                _counter.Increment();
+
+                return _counter;
+            }
             // Using an internal class to avoid using closure which would cases the creation of a class
             // under the covers at runtime - gives better performance for this base class...
 
@@ -119,51 +142,15 @@ namespace Simple.Wpf.DataGrid.ViewModels
                     _dispose = dispose;
                 }
 
+                public void Dispose()
+                {
+                    if (--_refCount == 0) _dispose();
+                }
+
                 public void Increment()
                 {
                     ++_refCount;
                 }
-                
-                public void Dispose()
-                {
-                    if (--_refCount == 0)
-                    {
-                        _dispose();
-                    }
-                }
-            }
-
-            private readonly HashSet<string> _properties = new HashSet<string>();
-            private readonly BaseViewModel _target;
-            private readonly Counter _counter;
-
-            public SuspendedNotifications(BaseViewModel target)
-            {
-                _target = target;
-
-                _counter = new Counter(Dispose);
-            }
-
-            public void Dispose()
-            {
-                _target._suspendedNotifications = null;
-
-                foreach (var property in _properties)
-                {
-                    _target.OnPropertyChanged(property);
-                }
-            }
-
-            public void Add(string propertyName)
-            {
-                _properties.Add(propertyName);
-            }
-
-            public IDisposable AddRef()
-            {
-                _counter.Increment();
-
-                return _counter;
             }
         }
     }

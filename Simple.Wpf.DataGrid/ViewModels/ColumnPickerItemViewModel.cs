@@ -1,7 +1,7 @@
+using System.Diagnostics;
+
 namespace Simple.Wpf.DataGrid.ViewModels
 {
-    using System.Diagnostics;
-
     [DebuggerDisplay("Name = {Name}, IsSelected = {IsSelected}")]
     public sealed class ColumnPickerItemViewModel : BaseViewModel, ITransientViewModel
     {
@@ -15,11 +15,11 @@ namespace Simple.Wpf.DataGrid.ViewModels
 
         public string Name { get; }
 
-        public string DisplayName { get; private set; }
+        public string DisplayName { get; }
 
         public bool IsSelected
         {
-            get { return _isSelected; }
+            get => _isSelected;
             set { SetPropertyAndNotify(ref _isSelected, value, () => IsSelected); }
         }
     }

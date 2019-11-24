@@ -1,14 +1,10 @@
+using System.Diagnostics;
+
 namespace Simple.Wpf.DataGrid.Models
 {
-    using System.Diagnostics;
-
     [DebuggerDisplay("Name = {Name}, Value = {Value}")]
     public sealed class Setting
     {
-        public string Name { get; }
-
-        public object Value { get; }
-
         public Setting()
         {
         }
@@ -18,5 +14,9 @@ namespace Simple.Wpf.DataGrid.Models
             Name = name;
             Value = value;
         }
+
+        public string Name { get; }
+
+        public object Value { get; }
     }
 }

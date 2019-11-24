@@ -1,9 +1,9 @@
-﻿namespace Simple.Wpf.DataGrid.Resources.Converters
-{
-    using System;
-    using System.Globalization;
-    using System.Windows.Data;
+﻿using System;
+using System.Globalization;
+using System.Windows.Data;
 
+namespace Simple.Wpf.DataGrid.Resources.Converters
+{
     public sealed class BooleanInvertConverter : IValueConverter
     {
         private static readonly object False = false;
@@ -13,10 +13,7 @@
         {
             try
             {
-                if (value == null)
-                {
-                    return False;
-                }
+                if (value == null) return False;
 
                 var boolValue = (bool) value;
                 return boolValue ? False : True;

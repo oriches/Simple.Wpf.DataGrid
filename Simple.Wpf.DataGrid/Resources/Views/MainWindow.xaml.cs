@@ -1,14 +1,15 @@
 // ReSharper disable ConvertClosureToMethodGroup
+
+using System;
+using System.Reactive;
+using System.Reactive.Linq;
+using System.Reactive.Threading.Tasks;
+using MahApps.Metro.Controls.Dialogs;
+using Simple.Wpf.DataGrid.Extensions;
+using Simple.Wpf.DataGrid.Services;
+
 namespace Simple.Wpf.DataGrid.Resources.Views
 {
-    using System;
-    using System.Reactive;
-    using System.Reactive.Linq;
-    using System.Reactive.Threading.Tasks;
-    using Extensions;
-    using MahApps.Metro.Controls.Dialogs;
-    using Services;
-
     public partial class MainWindow
     {
         private readonly IDisposable _disposable;
@@ -36,11 +37,11 @@ namespace Simple.Wpf.DataGrid.Resources.Views
         private IObservable<Unit> ShowDialogAsync(MessageDialog dialog)
         {
             var settings = new MetroDialogSettings
-                           {
-                               AnimateShow = true,
-                               AnimateHide = true,
-                               ColorScheme = MetroDialogColorScheme.Accented
-                           };
+            {
+                AnimateShow = true,
+                AnimateHide = true,
+                ColorScheme = MetroDialogColorScheme.Accented
+            };
 
             return this.ShowMetroDialogAsync(dialog, settings)
                 .ToObservable()

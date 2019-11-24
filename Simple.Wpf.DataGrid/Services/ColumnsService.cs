@@ -1,17 +1,17 @@
-﻿namespace Simple.Wpf.DataGrid.Services
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Reactive.Subjects;
-    using Extensions;
-    using Models;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reactive.Subjects;
+using Simple.Wpf.DataGrid.Extensions;
+using Simple.Wpf.DataGrid.Models;
 
+namespace Simple.Wpf.DataGrid.Services
+{
     public sealed class ColumnsService : DisposableObject, IColumnsService
     {
-        private readonly ISettingsService _settingsService;
-        private readonly Subject<string> _initialised;
         private readonly Subject<string> _changed;
+        private readonly Subject<string> _initialised;
+        private readonly ISettingsService _settingsService;
 
         public ColumnsService(ISettingsService settingsService)
         {
@@ -23,7 +23,7 @@
                     .DisposeWith(this);
 
                 _changed = new Subject<string>()
-                   .DisposeWith(this);
+                    .DisposeWith(this);
             }
         }
 

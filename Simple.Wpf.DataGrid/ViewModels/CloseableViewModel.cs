@@ -1,12 +1,12 @@
+using System;
+using System.Reactive;
+using System.Reactive.Linq;
+using System.Reactive.Subjects;
+using Simple.Wpf.DataGrid.Commands;
+using Simple.Wpf.DataGrid.Extensions;
+
 namespace Simple.Wpf.DataGrid.ViewModels
 {
-    using System;
-    using System.Reactive;
-    using System.Reactive.Linq;
-    using System.Reactive.Subjects;
-    using Commands;
-    using Extensions;
-
     public abstract class CloseableViewModel : BaseViewModel, ICloseableViewModel
     {
         private readonly Subject<Unit> _closed;

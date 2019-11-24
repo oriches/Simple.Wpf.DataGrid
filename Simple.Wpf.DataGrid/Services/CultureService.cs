@@ -1,17 +1,17 @@
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Reactive.Linq;
+using System.Reactive.Subjects;
+using System.Threading;
+using NLog;
+
 namespace Simple.Wpf.DataGrid.Services
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Globalization;
-    using System.Linq;
-    using System.Reactive.Linq;
-    using System.Reactive.Subjects;
-    using System.Threading;
-    using NLog;
-
     public static class CultureService
     {
-        private static readonly IDictionary<string, CultureInfo> Cultures = new Dictionary<string, CultureInfo>()
+        private static readonly IDictionary<string, CultureInfo> Cultures = new Dictionary<string, CultureInfo>
         {
             {"English (UK)", new CultureInfo("en-GB")},
             {"English (USA)", new CultureInfo("en-US")},

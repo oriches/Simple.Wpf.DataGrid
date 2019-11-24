@@ -1,28 +1,29 @@
+using System;
+using System.Diagnostics;
+using System.Globalization;
+using System.Linq;
+using System.Reactive;
+using System.Reactive.Disposables;
+using System.Reactive.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Media;
+using System.Windows.Threading;
+using Autofac;
+using Autofac.Core;
+using NLog;
+using Simple.Wpf.DataGrid.Extensions;
+using Simple.Wpf.DataGrid.Helpers;
+using Simple.Wpf.DataGrid.Models;
+using Simple.Wpf.DataGrid.Resources.Views;
+using Simple.Wpf.DataGrid.Services;
+using Simple.Wpf.DataGrid.ViewModels;
+using Duration = Simple.Wpf.DataGrid.Services.Duration;
+using ObservableExtensions = Simple.Wpf.DataGrid.Extensions.ObservableExtensions;
+
 namespace Simple.Wpf.DataGrid
 {
-    using System;
-    using System.Diagnostics;
-    using System.Globalization;
-    using System.Linq;
-    using System.Reactive;
-    using System.Reactive.Disposables;
-    using System.Reactive.Linq;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using System.Windows;
-    using System.Windows.Media;
-    using System.Windows.Threading;
-    using Autofac;
-    using Autofac.Core;
-    using Extensions;
-    using Models;
-    using NLog;
-    using Resources.Views;
-    using Services;
-    using ViewModels;
-    using Duration = Services.Duration;
-    using ObservableExtensions = Extensions.ObservableExtensions;
-
     public partial class App
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
@@ -32,7 +33,7 @@ namespace Simple.Wpf.DataGrid
         public App()
         {
 #if DEBUG
-            Helpers.LogHelper.ReconfigureLoggerToLevel(LogLevel.Debug);
+            LogHelper.ReconfigureLoggerToLevel(LogLevel.Debug);
 #endif
             AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
             Current.DispatcherUnhandledException += DispatcherOnUnhandledException;
@@ -54,9 +55,9 @@ namespace Simple.Wpf.DataGrid
                 Logger.Info(dispatcherMessage);
                 Debug.WriteLine(dispatcherMessage);
 
-                Logger.Info($"WPF rendering capability (tier) = {(RenderCapability.Tier/0x10000).ToString()}");
+                Logger.Info($"WPF rendering capability (tier) = {(RenderCapability.Tier / 0x10000).ToString()}");
                 RenderCapability.TierChanged += (s, a) =>
-                    Logger.Info($"WPF rendering capability (tier) = {(RenderCapability.Tier/0x10000).ToString()}");
+                    Logger.Info($"WPF rendering capability (tier) = {(RenderCapability.Tier / 0x10000).ToString()}");
 
                 base.OnStartup(args);
 
@@ -79,17 +80,15 @@ namespace Simple.Wpf.DataGrid
 
                 window.Closed += HandleClosed;
                 Current.Exit += HandleExit;
-                
+
                 // Let's go...
                 window.Show();
 
 
                 if (Logger.IsInfoEnabled)
-                {
                     // Monitoring heartbeat only when info level is enabled...
                     ObserveHeartbeat(schedulerService)
                         .DisposeWith(_disposable);
-                }
 
 #if DEBUG
                 ObserveUiFreeze()
@@ -113,7 +112,7 @@ namespace Simple.Wpf.DataGrid
             Logger.Info("Bye Bye!");
             LogManager.Flush();
         }
-        
+
         private static IDisposable ObserveCultureChanges()
         {
             return CultureService.CultureChanged
@@ -139,45 +138,45 @@ namespace Simple.Wpf.DataGrid
                 {
                     Debug.WriteLine(x);
                     Logger.Info(x);
-                }, schedulerService.Dispatcher); 
+                }, schedulerService.Dispatcher);
         }
 
 
         private static IObservable<Unit> LoadSettingsAsync(ISchedulerService schedulerService)
         {
             return Observable.Create<Unit>(x =>
-            {
-                BootStrapper.Resolve<ISettingsService>();
+                {
+                    BootStrapper.Resolve<ISettingsService>();
 
-                x.OnNext(Unit.Default);
-                x.OnCompleted();
+                    x.OnNext(Unit.Default);
+                    x.OnCompleted();
 
-                return Disposable.Empty;
-            })
-            .SubscribeOn(schedulerService.TaskPool);
+                    return Disposable.Empty;
+                })
+                .SubscribeOn(schedulerService.TaskPool);
         }
 
         private static IDisposable ObserveUiFreeze()
         {
             var timer = new DispatcherTimer(DispatcherPriority.Normal)
-                        {
-                            Interval = Constants.UI.Diagnostics.UiFreezeTimer
-                        };
+            {
+                Interval = Constants.UI.Diagnostics.UiFreezeTimer
+            };
 
             var previous = DateTime.Now;
             timer.Tick += (sender, args) =>
-                          {
-                              var current = DateTime.Now;
-                              var delta = current - previous;
-                              previous = current;
+            {
+                var current = DateTime.Now;
+                var delta = current - previous;
+                previous = current;
 
-                              if (delta > Constants.UI.Diagnostics.UiFreeze)
-                              {
-                                  var message =
-                                      $"UI Freeze = {delta.TotalMilliseconds.ToString(CultureInfo.InvariantCulture)} ms";
-                                  Debug.WriteLine(message);
-                              }
-                          };
+                if (delta > Constants.UI.Diagnostics.UiFreeze)
+                {
+                    var message =
+                        $"UI Freeze = {delta.TotalMilliseconds.ToString(CultureInfo.InvariantCulture)} ms";
+                    Debug.WriteLine(message);
+                }
+            };
 
             timer.Start();
             return Disposable.Create(() => timer.Stop());

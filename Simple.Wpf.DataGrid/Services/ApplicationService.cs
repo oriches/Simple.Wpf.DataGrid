@@ -1,13 +1,13 @@
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Windows;
+using NLog;
+using NLog.Layouts;
+using NLog.Targets;
+
 namespace Simple.Wpf.DataGrid.Services
 {
-    using System.Diagnostics;
-    using System.IO;
-    using System.Linq;
-    using System.Windows;
-    using NLog;
-    using NLog.Layouts;
-    using NLog.Targets;
-
     public sealed class ApplicationService : IApplicationService
     {
         private string _logFolder;
@@ -16,10 +16,7 @@ namespace Simple.Wpf.DataGrid.Services
         {
             get
             {
-                if (!string.IsNullOrEmpty(_logFolder))
-                {
-                    return _logFolder;
-                }
+                if (!string.IsNullOrEmpty(_logFolder)) return _logFolder;
 
                 _logFolder = GetLogFolder();
                 return _logFolder;

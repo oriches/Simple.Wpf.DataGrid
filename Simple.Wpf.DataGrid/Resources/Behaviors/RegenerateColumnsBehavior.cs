@@ -1,42 +1,20 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Reactive.Disposables;
+using System.Reactive.Linq;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Interactivity;
+using Simple.Wpf.DataGrid.Extensions;
+using Simple.Wpf.DataGrid.Services;
+
 namespace Simple.Wpf.DataGrid.Resources.Behaviors
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Linq;
-    using System.Reactive.Disposables;
-    using System.Reactive.Linq;
-    using System.Windows;
-    using System.Windows.Controls;
-    using System.Windows.Data;
-    using System.Windows.Interactivity;
-    using Extensions;
-    using Services;
-
-    public sealed class RegenerateColumnsBehavior : Behavior<DataGrid>
+    public sealed class RegenerateColumnsBehavior : Behavior<System.Windows.Controls.DataGrid>
     {
-        internal sealed class NamedDataGridTemplateColumn : DataGridTemplateColumn
-        {
-            public NamedDataGridTemplateColumn(string columnName)
-            {
-                ColumnName = columnName;
-            }
-
-            public string ColumnName { get; private set; }
-
-            protected override FrameworkElement GenerateElement(DataGridCell cell, object dataItem)
-            {
-                // The DataGridTemplateColumn uses ContentPresenter with your DataTemplate.
-                var contentPresenter = (ContentPresenter)base.GenerateElement(cell, dataItem);
-
-                // Reset the Binding to the specific column. The default binding is to the DataRowView.
-                var binding = new Binding(ColumnName);
-                
-                BindingOperations.SetBinding(contentPresenter, ContentPresenter.ContentProperty, binding);
-                return contentPresenter;
-            }
-        }
-
         public static readonly DependencyProperty VisibleColumnsProperty = DependencyProperty.Register("VisibleColumns",
             typeof(IEnumerable<string>),
             typeof(RegenerateColumnsBehavior),
@@ -49,44 +27,40 @@ namespace Simple.Wpf.DataGrid.Resources.Behaviors
 
         private Dictionary<string, NamedDataGridTemplateColumn> _columns;
         private List<string> _columnsName;
+        private DataTemplate _dateTimeTemplate;
 
         private CompositeDisposable _disposable;
-        private DataTemplate _stringTemplate;
-        private DataTemplate _dateTimeTemplate;
-        private DataTemplate _integerTemplate;
         private DataTemplate _doubleTemplate;
+        private DataTemplate _integerTemplate;
+        private DataTemplate _stringTemplate;
 
         public IEnumerable<string> VisibleColumns
         {
-            get { return (IEnumerable<string>) GetValue(VisibleColumnsProperty); }
-            set { SetValue(VisibleColumnsProperty, value); }
+            get => (IEnumerable<string>) GetValue(VisibleColumnsProperty);
+            set => SetValue(VisibleColumnsProperty, value);
         }
 
         public bool IsEnabled
         {
-            get { return (bool) GetValue(IsEnabledProperty); }
-            set { SetValue(IsEnabledProperty, value); }
+            get => (bool) GetValue(IsEnabledProperty);
+            set => SetValue(IsEnabledProperty, value);
         }
 
-        private static void HandleVisibleColumnsChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+        private static void HandleVisibleColumnsChanged(DependencyObject dependencyObject,
+            DependencyPropertyChangedEventArgs args)
         {
-            if (args.OldValue == args.NewValue)
-            {
-                return;
-            }
+            if (args.OldValue == args.NewValue) return;
 
             var behavior = (RegenerateColumnsBehavior) dependencyObject;
             behavior.HandleVisibleColumnsChanged();
         }
 
-        private static void HandleIsEnabledChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+        private static void HandleIsEnabledChanged(DependencyObject dependencyObject,
+            DependencyPropertyChangedEventArgs args)
         {
-            if (args.OldValue == args.NewValue)
-            {
-                return;
-            }
+            if (args.OldValue == args.NewValue) return;
 
-            var behavior = (RegenerateColumnsBehavior)dependencyObject;
+            var behavior = (RegenerateColumnsBehavior) dependencyObject;
             behavior.HandleIsEnabledChanged();
         }
 
@@ -124,7 +98,8 @@ namespace Simple.Wpf.DataGrid.Resources.Behaviors
                 .DisposeWith(_disposable);
 
             Observable.Return(AssociatedObject)
-                .SelectMany(x => Observable.FromEventPattern<DataGridSortingEventHandler, DataGridSortingEventArgs>(h => x.Sorting += h,
+                .SelectMany(x => Observable.FromEventPattern<DataGridSortingEventHandler, DataGridSortingEventArgs>(
+                    h => x.Sorting += h,
                     h => x.Sorting -= h), (x, y) => y)
                 .ActivateGestures()
                 .Subscribe()
@@ -135,12 +110,9 @@ namespace Simple.Wpf.DataGrid.Resources.Behaviors
         {
             var propertyDescriptor = (PropertyDescriptor) args.PropertyDescriptor;
             var column = new NamedDataGridTemplateColumn(propertyDescriptor.Name);
-            
+
             var displayName = GetPropertyDisplayName(propertyDescriptor);
-            if (!string.IsNullOrEmpty(displayName))
-            {
-                column.Header = displayName;
-            }
+            if (!string.IsNullOrEmpty(displayName)) column.Header = displayName;
 
             if (propertyDescriptor.PropertyType == typeof(string))
             {
@@ -166,13 +138,13 @@ namespace Simple.Wpf.DataGrid.Resources.Behaviors
 
         public static string GetPropertyDisplayName(PropertyDescriptor descriptor)
         {
-           // Check for DisplayName attribute and set the column header accordingly
-            var displayName = (DisplayNameAttribute)descriptor.Attributes[typeof(DisplayNameAttribute)];
+            // Check for DisplayName attribute and set the column header accordingly
+            var displayName = (DisplayNameAttribute) descriptor.Attributes[typeof(DisplayNameAttribute)];
             return !Equals(displayName, DisplayNameAttribute.Default) ? displayName.DisplayName : null;
         }
-        
+
         private void HandleCoumnsGenerated(object sender, EventArgs args)
-        { 
+        {
             _columns.Clear();
             _columnsName.Clear();
 
@@ -185,10 +157,7 @@ namespace Simple.Wpf.DataGrid.Resources.Behaviors
 
         private void HandleVisibleColumnsChanged()
         {
-            if (AssociatedObject == null)
-            {
-                return;
-            }
+            if (AssociatedObject == null) return;
 
             // Not using LINQ to improve UI responsiveness...
 
@@ -215,12 +184,31 @@ namespace Simple.Wpf.DataGrid.Resources.Behaviors
 
         private void HandleIsEnabledChanged()
         {
-            if (AssociatedObject == null)
-            {
-                return;
-            }
+            if (AssociatedObject == null) return;
 
             AssociatedObject.AutoGenerateColumns = IsEnabled;
+        }
+
+        internal sealed class NamedDataGridTemplateColumn : DataGridTemplateColumn
+        {
+            public NamedDataGridTemplateColumn(string columnName)
+            {
+                ColumnName = columnName;
+            }
+
+            public string ColumnName { get; }
+
+            protected override FrameworkElement GenerateElement(DataGridCell cell, object dataItem)
+            {
+                // The DataGridTemplateColumn uses ContentPresenter with your DataTemplate.
+                var contentPresenter = (ContentPresenter) base.GenerateElement(cell, dataItem);
+
+                // Reset the Binding to the specific column. The default binding is to the DataRowView.
+                var binding = new Binding(ColumnName);
+
+                BindingOperations.SetBinding(contentPresenter, ContentPresenter.ContentProperty, binding);
+                return contentPresenter;
+            }
         }
     }
 }

@@ -1,11 +1,11 @@
+using System;
+using System.Reactive.Subjects;
+using Simple.Wpf.DataGrid.Extensions;
+using Simple.Wpf.DataGrid.Models;
+using Simple.Wpf.DataGrid.ViewModels;
+
 namespace Simple.Wpf.DataGrid.Services
 {
-    using System;
-    using System.Reactive.Subjects;
-    using Extensions;
-    using Models;
-    using ViewModels;
-
     public sealed class OverlayService : DisposableObject, IOverlayService
     {
         private readonly Subject<OverlayViewModel> _show;

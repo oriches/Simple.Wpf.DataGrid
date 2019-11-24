@@ -1,13 +1,13 @@
 ﻿<c:NumberValueControl x:Class="Simple.Wpf.DataGrid.Resources.Controls.IntegerValueControl"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:rd="clr-namespace:Simple.Wpf.DataGrid.Resources.ResourceDictionaries"
-             xmlns:s="clr-namespace:Simple.Wpf.DataGrid"
-             xmlns:po="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
-             xmlns:c="clr-namespace:Simple.Wpf.DataGrid.Resources.Controls"
-             mc:Ignorable="d">
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:rd="clr-namespace:Simple.Wpf.DataGrid.Resources.ResourceDictionaries"
+                      xmlns:s="clr-namespace:Simple.Wpf.DataGrid"
+                      xmlns:po="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
+                      xmlns:c="clr-namespace:Simple.Wpf.DataGrid.Resources.Controls"
+                      mc:Ignorable="d">
 
     <UserControl.Resources>
 
@@ -28,7 +28,7 @@
 
     <Grid x:Name="IntegerGrid"
           Background="{StaticResource DefaultNumberBackgroundBrush}">
-        
+
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="MyStates">
                 <VisualStateGroup.Transitions>
@@ -75,66 +75,3 @@
 
     </Grid>
 </c:NumberValueControl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

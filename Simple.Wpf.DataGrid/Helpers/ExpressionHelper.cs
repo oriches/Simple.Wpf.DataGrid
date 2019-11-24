@@ -1,8 +1,8 @@
+using System;
+using System.Linq.Expressions;
+
 namespace Simple.Wpf.DataGrid.Helpers
 {
-    using System;
-    using System.Linq.Expressions;
-
     public static class ExpressionHelper
     {
         public static string Name<T>(Expression<Func<T>> expression)

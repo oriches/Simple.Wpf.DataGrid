@@ -1,14 +1,14 @@
+using System.Reflection;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+
 namespace Simple.Wpf.DataGrid.Extensions
 {
-    using System.Reflection;
-    using System.Windows.Controls;
-    using System.Windows.Controls.Primitives;
-
     public static class MenuItemExtensions
     {
         public static DataGridColumnHeader GetHeader(this MenuItem menuItem)
         {
-            return ((ContextMenu)menuItem.Parent)
+            return ((ContextMenu) menuItem.Parent)
                 .PlacementTarget
                 .FindAncestor<DataGridColumnHeader>();
         }
@@ -19,11 +19,11 @@ namespace Simple.Wpf.DataGrid.Extensions
                 .Column;
         }
 
-        public static DataGrid GetDataGrid(this MenuItem menuItem)
+        public static System.Windows.Controls.DataGrid GetDataGrid(this MenuItem menuItem)
         {
             var column = menuItem.GetColumn();
 
-            return (DataGrid)column.GetType()
+            return (System.Windows.Controls.DataGrid) column.GetType()
                 .GetProperty("DataGridOwner", BindingFlags.Instance | BindingFlags.NonPublic)
                 .GetValue(column, null);
         }

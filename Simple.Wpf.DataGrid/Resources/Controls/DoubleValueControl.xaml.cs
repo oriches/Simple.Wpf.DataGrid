@@ -2,7 +2,7 @@
 {
     public partial class DoubleValueControl : NumberValueControl
     {
-        public DoubleValueControl() : base(typeof(double), x => (double)x > 0)
+        public DoubleValueControl() : base(typeof(double), x => (double) x > 0)
         {
             InitializeComponent();
         }

@@ -1,13 +1,13 @@
+using System;
+using System.Linq;
+using System.Threading;
+using NLog;
+using NUnit.Framework;
+using Simple.Wpf.DataGrid.Helpers;
+using Simple.Wpf.DataGrid.Services;
+
 namespace Simple.Wpf.DataGrid.Tests.ViewModels
 {
-    using System;
-    using System.Linq;
-    using System.Threading;
-    using DataGrid.Services;
-    using Helpers;
-    using NLog;
-    using NUnit.Framework;
-
     [TestFixture]
     public class DurationFixtures
     {

@@ -1,30 +1,30 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
 namespace Simple.Wpf.DataGrid
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-
     public static class Constants
     {
         public static class StartsWith
         {
             public static class Unit
             {
-                public static IEnumerable<System.Reactive.Unit> Default = new[] { System.Reactive.Unit.Default }
+                public static IEnumerable<System.Reactive.Unit> Default = new[] {System.Reactive.Unit.Default}
                     .ToArray();
 
-                public static IEnumerable<object> DefaultBoxed = new[] { System.Reactive.Unit.Default }
+                public static IEnumerable<object> DefaultBoxed = new[] {System.Reactive.Unit.Default}
                     .Cast<object>()
                     .ToArray();
             }
 
             public static class Boolean
             {
-                public static IEnumerable<bool> False = new[] { false }
+                public static IEnumerable<bool> False = new[] {false}
                     .ToArray();
 
-                public static IEnumerable<bool> True = new[] { true }
-                   .ToArray();
+                public static IEnumerable<bool> True = new[] {true}
+                    .ToArray();
             }
         }
 
@@ -32,6 +32,8 @@ namespace Simple.Wpf.DataGrid
         public static class UI
         {
             public const string ExceptionTitle = "whoops - something's gone wrong!";
+
+            public static readonly TimeSpan MessageDelay = TimeSpan.FromMilliseconds(250);
 
             public static class Diagnostics
             {
@@ -49,10 +51,18 @@ namespace Simple.Wpf.DataGrid
                 public static readonly TimeSpan DiagnosticsSubscriptionDelay = TimeSpan.FromMilliseconds(1000);
             }
 
-            public static readonly TimeSpan MessageDelay = TimeSpan.FromMilliseconds(250);
-
             public static class Grids
             {
+                public const string DateFormat = "{0:d}";
+                public const string DateTimeFormat = "{0:G}";
+
+                public static readonly TimeSpan FilterThrottle = TimeSpan.FromMilliseconds(333);
+                public static readonly TimeSpan ScrollingThrottle = TimeSpan.FromMilliseconds(250);
+                public static readonly TimeSpan UpdatesInfoThrottle = TimeSpan.FromMilliseconds(500);
+
+                public static readonly string ColumnNameSeperator = "_";
+                public static readonly string ColumnNameDisplaySeperator = " ";
+
                 public class SeperatorsFormat
                 {
                     public bool? Seperators { get; set; }
@@ -62,22 +72,12 @@ namespace Simple.Wpf.DataGrid
                     public string Format { get; set; }
                 }
 
-                public static readonly TimeSpan FilterThrottle = TimeSpan.FromMilliseconds(333);
-                public static readonly TimeSpan ScrollingThrottle = TimeSpan.FromMilliseconds(250);
-                public static readonly TimeSpan UpdatesInfoThrottle = TimeSpan.FromMilliseconds(500);
-                
-                public const string DateFormat = "{0:d}";
-                public const string DateTimeFormat = "{0:G}";
-
                 public static class PredefinedColumns
                 {
                     public static readonly string Id = "id";
                     public static readonly string CreatedOn = "created_on";
                     public static readonly string ModifiedOn = "modified_on";
                 }
-
-                public static readonly string ColumnNameSeperator = "_";
-                public static readonly string ColumnNameDisplaySeperator = " ";
 
                 public static class Transitions
                 {

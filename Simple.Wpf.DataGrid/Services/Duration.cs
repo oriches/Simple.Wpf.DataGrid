@@ -1,12 +1,12 @@
+using System;
+using System.Diagnostics;
+using System.Globalization;
+using System.Reactive.Disposables;
+using System.Threading;
+using NLog;
+
 namespace Simple.Wpf.DataGrid.Services
 {
-    using System;
-    using System.Diagnostics;
-    using System.Globalization;
-    using System.Reactive.Disposables;
-    using System.Threading;
-    using NLog;
-
     public sealed class Duration : IDisposable
     {
         private readonly string _context;
@@ -42,25 +42,16 @@ namespace Simple.Wpf.DataGrid.Services
 
         public static IDisposable Measure(Logger logger, string context)
         {
-            if (!logger.IsDebugEnabled)
-            {
-                return Disposable.Empty;
-            }
-            
+            if (!logger.IsDebugEnabled) return Disposable.Empty;
+
             return new Duration(logger, context);
         }
 
         public static IDisposable Measure(Logger logger, string context, object[] args)
         {
-            if (!logger.IsDebugEnabled)
-            {
-                return Disposable.Empty;
-            }
+            if (!logger.IsDebugEnabled) return Disposable.Empty;
 
-            if (args != null)
-            {
-                context = string.Format(CultureInfo.InvariantCulture, context, args);
-            }
+            if (args != null) context = string.Format(CultureInfo.InvariantCulture, context, args);
 
             return new Duration(logger, context);
         }

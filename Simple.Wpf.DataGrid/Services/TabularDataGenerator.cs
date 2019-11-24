@@ -1,12 +1,12 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
+using Simple.Wpf.DataGrid.Models;
+
 namespace Simple.Wpf.DataGrid.Services
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Text.RegularExpressions;
-    using Models;
-
     public static class TabularDataGenerator
     {
         private static readonly Random HowManyColumnsRandom;
@@ -33,12 +33,16 @@ namespace Simple.Wpf.DataGrid.Services
 
             Types = new Dictionary<Type, Func<object>>
             {
-                {typeof(string), GenerateString },
-                {typeof(double), GenerateDouble },
-                {typeof(int), GenerateInteger },
-                {typeof(DateTime), GenerateDateTime }
+                {typeof(string), GenerateString},
+                {typeof(double), GenerateDouble},
+                {typeof(int), GenerateInteger},
+                {typeof(DateTime), GenerateDateTime}
             };
         }
+
+        private static int HowManyColumns => HowManyColumnsRandom.Next(1, 30);
+
+        private static int HowManyRows => HowManyRowsRandom.Next(1, 20000);
 
         public static IEnumerable<DynamicData> CreateInitialSnapshot()
         {
@@ -59,7 +63,6 @@ namespace Simple.Wpf.DataGrid.Services
                 var type = GenerateType();
 
                 for (var j = 0; j < rowCount; j++)
-                {
                     if (i == 0)
                     {
                         var row = new DynamicData(columnCount);
@@ -72,15 +75,10 @@ namespace Simple.Wpf.DataGrid.Services
                     {
                         rows[j].Update(name, Types[type]());
                     }
-                }
             }
 
             return rows;
         }
-
-        private static int HowManyColumns => HowManyColumnsRandom.Next(1, 30);
-
-        private static int HowManyRows => HowManyRowsRandom.Next(1, 20000);
 
         private static Type GenerateType()
         {
@@ -109,10 +107,7 @@ namespace Simple.Wpf.DataGrid.Services
             var length = StringLengthRandom.Next(4, 20);
             var sb = new StringBuilder(length);
 
-            for (var i = 0; i < length; i++)
-            {
-                sb.Append((char)StringCharRandom.Next(65, 91));
-            }
+            for (var i = 0; i < length; i++) sb.Append((char) StringCharRandom.Next(65, 91));
 
             return sb.ToString();
         }
@@ -122,7 +117,7 @@ namespace Simple.Wpf.DataGrid.Services
             var dataArray = data.ToArray();
 
             var numberOfUpdates = UpdatesRandom.Next(0, Convert.ToInt32(dataArray.Length * 0.1));
-            
+
             var updatesHash = new HashSet<string>();
 
             var updates = new List<DynamicData>(numberOfUpdates);
@@ -147,20 +142,21 @@ namespace Simple.Wpf.DataGrid.Services
 
                 if (propertyType == typeof(int))
                 {
-                    var tenPercent = Convert.ToInt32((int)property * UpdatesRandom.NextDouble());
+                    var tenPercent = Convert.ToInt32((int) property * UpdatesRandom.NextDouble());
                     var delta = UpdatesRandom.Next(0, 100000) < 60000 ? -1 * tenPercent : tenPercent;
 
-                    x.Update(propertyName, (int)property + delta);
-
+                    x.Update(propertyName, (int) property + delta);
                 }
                 else if (propertyType == typeof(double))
                 {
-                    var delta = UpdatesRandom.Next(0, 1000) < 500 ? -1 * UpdatesRandom.NextDouble() : 1 * UpdatesRandom.NextDouble();
+                    var delta = UpdatesRandom.Next(0, 1000) < 500
+                        ? -1 * UpdatesRandom.NextDouble()
+                        : 1 * UpdatesRandom.NextDouble();
 
-                    x.Update(propertyName, (double)property + delta);
+                    x.Update(propertyName, (double) property + delta);
                 }
             });
-            
+
             return updates;
         }
     }

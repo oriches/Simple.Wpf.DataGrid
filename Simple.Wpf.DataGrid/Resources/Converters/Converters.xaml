@@ -4,11 +4,11 @@
                     xmlns:c="clr-namespace:Simple.Wpf.DataGrid.Resources.Converters">
 
     <ResourceDictionary.MergedDictionaries>
-        
+
         <rd:SharedResourceDictionary Source="../Brushes/Brushes.xaml" />
-        
+
     </ResourceDictionary.MergedDictionaries>
-    
+
 
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
@@ -19,7 +19,7 @@
     <c:FormatIntegerConverter x:Key="FormatIntegerConverter" />
 
     <c:FormatDoubleConverter x:Key="FormatDoubleConverter" />
-    
+
     <c:IsPositiveNumberConverter x:Key="IsPositiveNumberConverter" />
 
     <c:NumberToColorConverter x:Key="NumberToColorConverter"

@@ -1,14 +1,15 @@
 // ReSharper disable ConvertClosureToMethodGroup
+
+using System;
+using System.Collections.Generic;
+using System.Reactive.Linq;
+using System.Reactive.Subjects;
+using System.Windows.Input;
+using NLog;
+using Simple.Wpf.DataGrid.Services;
+
 namespace Simple.Wpf.DataGrid.Commands
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Reactive.Linq;
-    using System.Reactive.Subjects;
-    using System.Windows.Input;
-    using NLog;
-    using Services;
-
     public sealed class ReactiveCommand : ReactiveCommand<object>
     {
         private ReactiveCommand(IObservable<bool> canExecute)
@@ -36,7 +37,7 @@ namespace Simple.Wpf.DataGrid.Commands
         private readonly Subject<T> _execute;
 
         private bool _currentCanExecute;
-        
+
         protected ReactiveCommand(IObservable<bool> canExecute)
         {
             _eventHandlers = new List<EventHandler>(8);
@@ -52,19 +53,16 @@ namespace Simple.Wpf.DataGrid.Commands
 
         public virtual void Execute(object parameter)
         {
-            var typedParameter = parameter is T ? (T) parameter : default(T);
+            var typedParameter = parameter is T ? (T) parameter : default;
 
-            if (CanExecute(typedParameter))
-            {
-                _execute.OnNext(typedParameter);
-            }
+            if (CanExecute(typedParameter)) _execute.OnNext(typedParameter);
         }
 
         public virtual bool CanExecute(object parameter)
         {
             return _currentCanExecute;
         }
-        
+
         public event EventHandler CanExecuteChanged
         {
             add

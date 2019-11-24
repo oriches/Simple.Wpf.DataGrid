@@ -1,9 +1,9 @@
+using Moq;
+using Simple.Wpf.DataGrid.Extensions;
+using Simple.Wpf.DataGrid.Services;
+
 namespace Simple.Wpf.DataGrid.Tests.Services
 {
-    using DataGrid.Services;
-    using Moq;
-    using ObservableExtensions = Extensions.ObservableExtensions;
-
     public abstract class BaseServiceFixtures
     {
         protected BaseServiceFixtures()

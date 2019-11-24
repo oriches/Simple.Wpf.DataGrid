@@ -1,23 +1,23 @@
+using System;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Threading;
+using Simple.Wpf.DataGrid.Extensions;
+
 namespace Simple.Wpf.DataGrid.Resources.Controls
 {
-    using System;
-    using System.Windows;
-    using System.Windows.Controls;
-    using System.Windows.Input;
-    using System.Windows.Threading;
-    using Extensions;
-
     public abstract class NumberValueControl : UserControl
     {
-        private readonly Type _type;
         private readonly Func<object, bool> _isGreaterThanZero;
+        private readonly Type _type;
 
         private bool _mouseDown;
-        private DispatcherTimer _scrollWheelTimer;
-        private bool _scrollWheel;
         private ScrollViewer _scrollViewer;
+        private bool _scrollWheel;
+        private DispatcherTimer _scrollWheelTimer;
 
-        protected NumberValueControl(Type type,  Func<object, bool> isGreaterThanZero)
+        protected NumberValueControl(Type type, Func<object, bool> isGreaterThanZero)
         {
             _type = type;
             _isGreaterThanZero = isGreaterThanZero;
@@ -36,7 +36,7 @@ namespace Simple.Wpf.DataGrid.Resources.Controls
                 _scrollViewer.PreviewMouseDown += HandlePreviewMouseDown;
                 _scrollViewer.PreviewMouseUp += HandlePreviewMouseUp;
 
-                _scrollWheelTimer = new DispatcherTimer { Interval = Constants.UI.Grids.ScrollingThrottle };
+                _scrollWheelTimer = new DispatcherTimer {Interval = Constants.UI.Grids.ScrollingThrottle};
                 _scrollWheelTimer.Tick += HandleScrollWheelTimerTick;
 
                 _scrollViewer.PreviewMouseWheel += HandlePreviewMouseWheel;
@@ -46,13 +46,9 @@ namespace Simple.Wpf.DataGrid.Resources.Controls
         private void HandlePreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
             if (_scrollWheelTimer.IsEnabled)
-            {
                 _scrollWheelTimer.Stop();
-            }
             else
-            {
                 _scrollWheel = true;
-            }
 
             _scrollWheelTimer.Start();
         }
@@ -83,7 +79,7 @@ namespace Simple.Wpf.DataGrid.Resources.Controls
                 _scrollViewer.PreviewMouseWheel -= HandlePreviewMouseWheel;
             }
         }
-        
+
         private void HandlePreviewMouseUp(object sender, MouseButtonEventArgs args)
         {
             _mouseDown = false;
@@ -106,22 +102,19 @@ namespace Simple.Wpf.DataGrid.Resources.Controls
             // new value type is wrong...
 
             if (!IsVisible ||
-                args.OldValue == null || 
+                args.OldValue == null ||
                 _mouseDown ||
                 _scrollWheel ||
                 !(args.NewValue.GetType() == _type))
-            {
                 return;
-            }
-            
+
             var transitioned = VisualStateManager.GoToState(this,
-                _isGreaterThanZero(args.NewValue) ? Constants.UI.Grids.Transitions.NewPositive : Constants.UI.Grids.Transitions.NewNegative,
+                _isGreaterThanZero(args.NewValue)
+                    ? Constants.UI.Grids.Transitions.NewPositive
+                    : Constants.UI.Grids.Transitions.NewNegative,
                 true);
 
-            if (!transitioned)
-            {
-                throw new Exception("Failed to transition...");
-            }
+            if (!transitioned) throw new Exception("Failed to transition...");
         }
     }
 }

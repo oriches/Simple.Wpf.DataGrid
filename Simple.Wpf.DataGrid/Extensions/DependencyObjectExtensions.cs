@@ -1,8 +1,8 @@
+using System.Windows;
+using System.Windows.Media;
+
 namespace Simple.Wpf.DataGrid.Extensions
 {
-    using System.Windows;
-    using System.Windows.Media;
-
     public static class DependencyObjectExtensions
     {
         public static T FindAncestor<T>(this DependencyObject current) where T : DependencyObject
@@ -12,12 +12,11 @@ namespace Simple.Wpf.DataGrid.Extensions
             while (current != null)
             {
                 var ancestor = current as T;
-                if (ancestor != null)
-                {
-                    return ancestor;
-                }
+                if (ancestor != null) return ancestor;
                 current = VisualTreeHelper.GetParent(current);
-            };
+            }
+
+            ;
 
             return null;
         }
@@ -27,12 +26,11 @@ namespace Simple.Wpf.DataGrid.Extensions
             while (current != null)
             {
                 var ancestor = current as T;
-                if (ancestor != null && Equals(ancestor, lookupItem))
-                {
-                    return ancestor;
-                }
+                if (ancestor != null && Equals(ancestor, lookupItem)) return ancestor;
                 current = VisualTreeHelper.GetParent(current);
-            };
+            }
+
+            ;
 
             return null;
         }
@@ -45,27 +43,24 @@ namespace Simple.Wpf.DataGrid.Extensions
                 {
                     var frameworkElement = current as FrameworkElement;
                     if (current is T && frameworkElement != null && frameworkElement.Name == parentName)
-                    {
-                        return (T)current;
-                    }
+                        return (T) current;
                 }
                 else if (current is T)
                 {
-                    return (T)current;
+                    return (T) current;
                 }
+
                 current = VisualTreeHelper.GetParent(current);
-            };
+            }
+
+            ;
 
             return null;
-
         }
 
         public static T FindDescendant<T>(DependencyObject parent, string childName) where T : DependencyObject
         {
-            if (parent == null)
-            {
-                return null;
-            }
+            if (parent == null) return null;
 
             T foundChild = null;
 
@@ -78,30 +73,24 @@ namespace Simple.Wpf.DataGrid.Extensions
                 {
                     foundChild = FindDescendant<T>(child, childName);
 
-                    if (foundChild != null)
-                    {
-                        break;
-                    }
+                    if (foundChild != null) break;
                 }
                 else if (!string.IsNullOrEmpty(childName))
                 {
                     var frameworkElement = child as FrameworkElement;
                     if (frameworkElement != null && frameworkElement.Name == childName)
                     {
-                        foundChild = (T)child;
+                        foundChild = (T) child;
                         break;
                     }
 
                     foundChild = FindDescendant<T>(child, childName);
 
-                    if (foundChild != null)
-                    {
-                        break;
-                    }
+                    if (foundChild != null) break;
                 }
                 else
                 {
-                    foundChild = (T)child;
+                    foundChild = (T) child;
                     break;
                 }
             }
@@ -111,10 +100,7 @@ namespace Simple.Wpf.DataGrid.Extensions
 
         public static T FindDescendant<T>(this DependencyObject parent) where T : DependencyObject
         {
-            if (parent == null)
-            {
-                return null;
-            }
+            if (parent == null) return null;
 
             T foundChild = null;
 
@@ -126,17 +112,15 @@ namespace Simple.Wpf.DataGrid.Extensions
                 if (childType == null)
                 {
                     foundChild = FindDescendant<T>(child);
-                    if (foundChild != null)
-                    {
-                        break;
-                    }
+                    if (foundChild != null) break;
                 }
                 else
                 {
-                    foundChild = (T)child;
+                    foundChild = (T) child;
                     break;
                 }
             }
+
             return foundChild;
         }
     }

@@ -2,10 +2,6 @@
 {
     public sealed class Setting
     {
-        public string Name { get; set; }
-
-        public object Value { get; set; }
-
         public Setting()
         {
         }
@@ -15,5 +11,9 @@
             Name = name;
             Value = value;
         }
+
+        public string Name { get; set; }
+
+        public object Value { get; set; }
     }
 }

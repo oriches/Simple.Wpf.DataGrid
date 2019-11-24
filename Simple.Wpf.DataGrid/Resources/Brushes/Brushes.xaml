@@ -8,7 +8,7 @@
         <rd:SharedResourceDictionary Source="../Colors/Colors.xaml" />
 
     </ResourceDictionary.MergedDictionaries>
-    
+
     <SolidColorBrush x:Key="NumberBrush"
                      Color="Black"
                      po:Freeze="True" />
@@ -16,7 +16,7 @@
     <SolidColorBrush x:Key="DefaultNumberBackgroundBrush"
                      Color="{StaticResource DefaultBackgroundColor}"
                      po:Freeze="True" />
-    
+
     <SolidColorBrush x:Key="TextBrush"
                      Color="Black"
                      po:Freeze="True" />
@@ -24,7 +24,7 @@
     <SolidColorBrush x:Key="DateBrush"
                      Color="DarkBlue"
                      po:Freeze="True" />
-   
+
     <SolidColorBrush x:Key="DefaultBackgroundBrush"
                      Color="{StaticResource DefaultBackgroundColor}"
                      po:Freeze="True" />

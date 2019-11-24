@@ -7,7 +7,7 @@
         <rd:SharedResourceDictionary Source="../Colors/Colors.xaml" />
 
     </ResourceDictionary.MergedDictionaries>
-    
+
     <Style x:Key="RowTextBlockStyle"
            TargetType="TextBlock">
         <Setter Property="VerticalAlignment"

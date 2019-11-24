@@ -1,24 +1,24 @@
+using System;
+using System.Collections.Generic;
+using Microsoft.Reactive.Testing;
+using NUnit.Framework;
+using Simple.Wpf.DataGrid.Models;
+using Simple.Wpf.DataGrid.Services;
+
 namespace Simple.Wpf.DataGrid.Tests.Services
 {
-    using System;
-    using System.Collections.Generic;
-    using DataGrid.Services;
-    using Microsoft.Reactive.Testing;
-    using Models;
-    using NUnit.Framework;
-
     [TestFixture]
     public sealed class TabularDataServiceFixtures
     {
-        private TestScheduler _testScheduler;
-        private MockSchedulerService _schedulerService;
-
         [SetUp]
         public void SetUp()
         {
             _testScheduler = new TestScheduler();
             _schedulerService = new MockSchedulerService(_testScheduler);
         }
+
+        private TestScheduler _testScheduler;
+        private MockSchedulerService _schedulerService;
 
         [Test]
         public void generates_data()
@@ -30,10 +30,7 @@ namespace Simple.Wpf.DataGrid.Tests.Services
 
             // ACT
             service.GetAsync(_schedulerService.TaskPool)
-                .Subscribe(x =>
-                {
-                    data = x;
-                });
+                .Subscribe(x => { data = x; });
 
             _testScheduler.AdvanceBy(TimeSpan.FromSeconds(1));
 

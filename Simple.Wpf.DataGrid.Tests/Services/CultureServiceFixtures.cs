@@ -1,13 +1,13 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using NUnit.Framework;
+using Simple.Wpf.DataGrid.Extensions;
+using Simple.Wpf.DataGrid.Services;
+using Simple.Wpf.DataGrid.Tests.ViewModels;
+
 namespace Simple.Wpf.DataGrid.Tests.Services
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using DataGrid.Services;
-    using Extensions;
-    using NUnit.Framework;
-    using ViewModels;
-
     [TestFixture]
     public sealed class CultureServiceFixtures : BaseServiceFixtures
     {
@@ -15,7 +15,7 @@ namespace Simple.Wpf.DataGrid.Tests.Services
         public void SetUp()
         {
         }
-        
+
         [Test]
         public void culture_changes()
         {
@@ -46,7 +46,7 @@ namespace Simple.Wpf.DataGrid.Tests.Services
 
             // ACT
             CultureService.SetCulture(CultureService.AvailableCultures.Skip(1).First());
-            
+
             // ASSERT
             Assert.That(propertyNames.Count, Is.EqualTo(1));
             Assert.That(propertyNames.Contains(""), Is.True);

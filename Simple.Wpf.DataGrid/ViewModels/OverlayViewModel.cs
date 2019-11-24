@@ -1,7 +1,7 @@
+using System;
+
 namespace Simple.Wpf.DataGrid.ViewModels
 {
-    using System;
-
     public abstract class OverlayViewModel<T>
     {
         protected OverlayViewModel(string header, T viewModel, IDisposable lifetime)
@@ -11,9 +11,9 @@ namespace Simple.Wpf.DataGrid.ViewModels
             Lifetime = lifetime;
         }
 
-        public string Header { get; private set; }
+        public string Header { get; }
 
-        public T ViewModel { get; private set; }
+        public T ViewModel { get; }
 
         public IDisposable Lifetime { get; }
 

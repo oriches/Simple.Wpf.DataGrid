@@ -1,11 +1,11 @@
+using System;
+using System.Reactive.Linq;
+using Simple.Wpf.DataGrid.Commands;
+using Simple.Wpf.DataGrid.Extensions;
+using Simple.Wpf.DataGrid.Services;
+
 namespace Simple.Wpf.DataGrid.ViewModels
 {
-    using System;
-    using System.Reactive.Linq;
-    using Commands;
-    using Extensions;
-    using Services;
-
     public sealed class ExceptionViewModel : CloseableViewModel, IExceptionViewModel
     {
         private readonly IApplicationService _applicationService;

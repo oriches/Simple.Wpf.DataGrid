@@ -1,13 +1,13 @@
+using System;
+using System.Reactive.Disposables;
+using System.Windows;
+using System.Windows.Input;
+using System.Windows.Threading;
+using Simple.Wpf.DataGrid.Extensions;
+using Simple.Wpf.DataGrid.Models;
+
 namespace Simple.Wpf.DataGrid.Services
 {
-    using System;
-    using System.Reactive.Disposables;
-    using System.Windows;
-    using System.Windows.Input;
-    using System.Windows.Threading;
-    using Extensions;
-    using Models;
-
     public sealed class GesturesService : DisposableObject, IGestureService
     {
         private readonly DispatcherTimer _timer;
@@ -39,10 +39,7 @@ namespace Simple.Wpf.DataGrid.Services
                 _isBusy = busy;
                 Mouse.OverrideCursor = busy ? Cursors.Wait : null;
 
-                if (_isBusy)
-                {
-                    _timer.Start();
-                }
+                if (_isBusy) _timer.Start();
             }
         }
 

@@ -1,9 +1,9 @@
+using System;
+using System.Reactive.Concurrency;
+using System.Threading;
+
 namespace Simple.Wpf.DataGrid.Services
 {
-    using System;
-    using System.Reactive.Concurrency;
-    using System.Threading;
-
     public sealed class SchedulerService : ISchedulerService
     {
         private readonly DispatcherScheduler _dispatcherScheduler;
@@ -28,12 +28,12 @@ namespace Simple.Wpf.DataGrid.Services
             get
             {
                 Func<ThreadStart, Thread> func = x =>
-                                                 {
-                                                     var thread = new Thread(x) {IsBackground = true};
-                                                     thread.SetApartmentState(ApartmentState.STA);
+                {
+                    var thread = new Thread(x) {IsBackground = true};
+                    thread.SetApartmentState(ApartmentState.STA);
 
-                                                     return thread;
-                                                 };
+                    return thread;
+                };
 
                 return new EventLoopScheduler(func);
             }

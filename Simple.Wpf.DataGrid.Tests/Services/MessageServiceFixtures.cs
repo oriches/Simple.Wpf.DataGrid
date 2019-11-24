@@ -1,17 +1,16 @@
+using System;
+using NUnit.Framework;
+using Simple.Wpf.DataGrid.Models;
+using Simple.Wpf.DataGrid.Services;
+using Simple.Wpf.DataGrid.ViewModels;
+
 namespace Simple.Wpf.DataGrid.Tests.Services
 {
-    using System;
-    using DataGrid.Services;
-    using DataGrid.ViewModels;
-    using Models;
-    using NUnit.Framework;
-
     [TestFixture]
     public sealed class MessageServiceFixtures : BaseServiceFixtures
     {
         private sealed class TestClosableViewModel : CloseableViewModel
         {
-
         }
 
         [Test]

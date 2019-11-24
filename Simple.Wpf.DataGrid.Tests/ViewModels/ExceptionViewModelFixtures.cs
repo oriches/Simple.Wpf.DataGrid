@@ -1,14 +1,14 @@
+using System;
+using Moq;
+using NUnit.Framework;
+using Simple.Wpf.DataGrid.Services;
+using Simple.Wpf.DataGrid.Tests.Services;
+using Simple.Wpf.DataGrid.ViewModels;
+
 namespace Simple.Wpf.DataGrid.Tests.ViewModels
 {
-    using System;
-    using DataGrid.Services;
-    using DataGrid.ViewModels;
-    using Moq;
-    using NUnit.Framework;
-    using Services;
-
     [TestFixture]
-    public sealed class ExceptionViewModelFixtures: BaseServiceFixtures
+    public sealed class ExceptionViewModelFixtures : BaseServiceFixtures
     {
         [SetUp]
         public void Setup()
@@ -17,7 +17,7 @@ namespace Simple.Wpf.DataGrid.Tests.ViewModels
         }
 
         private Mock<IApplicationService> _applicationService;
-        
+
         [Test]
         public void can_copy_exception_to_clipboard_when_exception_is_null()
         {

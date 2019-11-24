@@ -1,40 +1,42 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Globalization;
+using Simple.Wpf.DataGrid.Models;
+
 namespace Simple.Wpf.DataGrid.Extensions
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Globalization;
-    using Models;
-
     public static class MemoryExtensions
     {
         private static readonly IDictionary<MemoryUnits, string> UnitsAsString = new Dictionary<MemoryUnits, string>();
-        private static readonly IDictionary<MemoryUnits, decimal> UnitsMulitpler = new Dictionary<MemoryUnits, decimal>();
-        private static readonly Type MemoryUnitsType = typeof (MemoryUnits);
+
+        private static readonly IDictionary<MemoryUnits, decimal> UnitsMulitpler =
+            new Dictionary<MemoryUnits, decimal>();
+
+        private static readonly Type MemoryUnitsType = typeof(MemoryUnits);
 
         public static string WorkingSetPrivateAsString(this Memory memory)
         {
-            var valueAsString = decimal.Round(memory.WorkingSetPrivate * GetMultipler(MemoryUnits.Mega), 2).ToString(CultureInfo.InvariantCulture);
+            var valueAsString = decimal.Round(memory.WorkingSetPrivate * GetMultipler(MemoryUnits.Mega), 2)
+                .ToString(CultureInfo.InvariantCulture);
 
             return valueAsString + " " + GetUnitString(MemoryUnits.Mega);
         }
 
         public static string ManagedAsString(this Memory memory)
         {
-            var valueAsString = decimal.Round(memory.Managed * GetMultipler(MemoryUnits.Mega), 2).ToString(CultureInfo.InvariantCulture);
+            var valueAsString = decimal.Round(memory.Managed * GetMultipler(MemoryUnits.Mega), 2)
+                .ToString(CultureInfo.InvariantCulture);
 
             return valueAsString + " " + GetUnitString(MemoryUnits.Mega);
         }
-        
+
         private static decimal GetMultipler(MemoryUnits units)
         {
             decimal unitsMulitpler;
-            if (UnitsMulitpler.TryGetValue(units, out unitsMulitpler))
-            {
-                return unitsMulitpler;
-            }
+            if (UnitsMulitpler.TryGetValue(units, out unitsMulitpler)) return unitsMulitpler;
 
-            unitsMulitpler = 1 / Convert.ToDecimal((int)units);
+            unitsMulitpler = 1 / Convert.ToDecimal((int) units);
 
             UnitsMulitpler.Add(units, unitsMulitpler);
             return unitsMulitpler;
@@ -43,10 +45,7 @@ namespace Simple.Wpf.DataGrid.Extensions
         private static string GetUnitString(MemoryUnits units)
         {
             string unitsString;
-            if (UnitsAsString.TryGetValue(units, out unitsString))
-            {
-                return unitsString;
-            }
+            if (UnitsAsString.TryGetValue(units, out unitsString)) return unitsString;
 
             string unitAsString;
             switch (units)

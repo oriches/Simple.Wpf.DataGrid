@@ -1,16 +1,17 @@
 // ReSharper disable ConvertClosureToMethodGroup
+
+using System;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Linq;
+using System.Reactive.Disposables;
+using System.Reactive.Linq;
+using System.Reactive.Subjects;
+using Simple.Wpf.DataGrid.Extensions;
+using Simple.Wpf.DataGrid.Models;
+
 namespace Simple.Wpf.DataGrid.Services
 {
-    using System;
-    using System.ComponentModel;
-    using System.Diagnostics;
-    using System.Linq;
-    using System.Reactive.Disposables;
-    using System.Reactive.Linq;
-    using System.Reactive.Subjects;
-    using Extensions;
-    using Models;
-
     public sealed class DiagnosticsService : DisposableObject, IDiagnosticsService
     {
         private readonly IConnectableObservable<Counters> _countersObservable;
@@ -170,16 +171,12 @@ namespace Simple.Wpf.DataGrid.Services
             var currentProcess = Process.GetCurrentProcess();
             foreach (var instance in new PerformanceCounterCategory("Process").GetInstanceNames()
                 .Where(x => x.StartsWith(currentProcess.ProcessName, StringComparison.InvariantCulture)))
-            {
                 try
                 {
                     using (var counter = new PerformanceCounter("Process", "ID Process", instance, true))
                     {
-                        var val = (int)counter.RawValue;
-                        if (val == currentProcess.Id)
-                        {
-                            return instance;
-                        }
+                        var val = (int) counter.RawValue;
+                        if (val == currentProcess.Id) return instance;
                     }
                 }
                 catch (ArgumentException)
@@ -197,7 +194,6 @@ namespace Simple.Wpf.DataGrid.Services
                 catch (UnauthorizedAccessException)
                 {
                 }
-            }
 
             throw new ArgumentException(
                 $@"Could not find performance counter instance name for current process, name '{"ARG0"}'",
@@ -206,17 +202,11 @@ namespace Simple.Wpf.DataGrid.Services
 
         private void ConnectCountersObservable()
         {
-            if (_countersConnected)
-            {
-                return;
-            }
+            if (_countersConnected) return;
 
             lock (_sync)
             {
-                if (_countersConnected)
-                {
-                    return;
-                }
+                if (_countersConnected) return;
 
                 var disposable = _countersObservable.Connect();
                 _disposable.Add(disposable);
@@ -224,7 +214,7 @@ namespace Simple.Wpf.DataGrid.Services
                 _countersConnected = true;
             }
         }
-        
+
         private static IObservable<Counters> CreatePerformanceCountersAsync()
         {
             return Observable.Create<Counters>(x =>
@@ -254,7 +244,7 @@ namespace Simple.Wpf.DataGrid.Services
                     using (
                         Duration.Measure(Logger,
                             "Initialising performance counters (after creation)")
-                        )
+                    )
                     {
                         workingSetCounter.NextValue();
                         cpuCounter.NextValue();

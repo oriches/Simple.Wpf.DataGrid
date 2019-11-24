@@ -1,10 +1,10 @@
-﻿namespace Simple.Wpf.DataGrid.Resources.Converters
-{
-    using System;
-    using System.Globalization;
-    using System.Windows.Data;
-    using System.Windows.Media;
+﻿using System;
+using System.Globalization;
+using System.Windows.Data;
+using System.Windows.Media;
 
+namespace Simple.Wpf.DataGrid.Resources.Converters
+{
     public sealed class NumberToColorConverter : IValueConverter
     {
         public Brush PositiveNumber { get; set; }
@@ -13,22 +13,13 @@
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value == null)
-            {
-                return Brushes.Transparent;
-            }
+            if (value == null) return Brushes.Transparent;
 
             try
             {
-                if (value is int)
-                {
-                    return (int)value < 0 ? NegativeNumber : PositiveNumber;
-                }
+                if (value is int) return (int) value < 0 ? NegativeNumber : PositiveNumber;
 
-                if (value is double)
-                {
-                    return (double)value < 0 ? NegativeNumber : PositiveNumber;
-                }
+                if (value is double) return (double) value < 0 ? NegativeNumber : PositiveNumber;
 
                 return Brushes.Transparent;
             }

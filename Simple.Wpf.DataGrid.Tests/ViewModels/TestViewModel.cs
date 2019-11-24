@@ -1,21 +1,21 @@
-﻿namespace Simple.Wpf.DataGrid.Tests.ViewModels
-{
-    using DataGrid.ViewModels;
+﻿using Simple.Wpf.DataGrid.ViewModels;
 
+namespace Simple.Wpf.DataGrid.Tests.ViewModels
+{
     public sealed class TestViewModel : BaseViewModel
     {
-        private string _stringProperty;
         private int _integerProperty;
+        private string _stringProperty;
 
         public string StringProperty
         {
-            get { return _stringProperty; }
+            get => _stringProperty;
             set { SetPropertyAndNotify(ref _stringProperty, value, () => StringProperty); }
         }
 
         public int IntegerProperty
         {
-            get { return _integerProperty; }
+            get => _integerProperty;
             set { SetPropertyAndNotify(ref _integerProperty, value, () => IntegerProperty); }
         }
     }

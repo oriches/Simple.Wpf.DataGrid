@@ -1,39 +1,29 @@
 // ReSharper disable ConvertClosureToMethodGroup
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reactive;
+using System.Reactive.Linq;
+using Simple.Wpf.DataGrid.Collections;
+using Simple.Wpf.DataGrid.Commands;
+using Simple.Wpf.DataGrid.Extensions;
+using Simple.Wpf.DataGrid.Helpers;
+using Simple.Wpf.DataGrid.Services;
+
 namespace Simple.Wpf.DataGrid.ViewModels
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Reactive;
-    using System.Reactive.Linq;
-    using Collections;
-    using Commands;
-    using Extensions;
-    using Helpers;
-    using Services;
-
     public sealed class ColumnPickerViewModel : BaseViewModel, IColumnPickerViewModel
     {
-        private sealed class VisibleColumns
-        {
-            public IEnumerable<ColumnPickerItemViewModel> Visible { get; }
-
-            public IEnumerable<ColumnPickerItemViewModel> Hidden { get; }
-
-            public VisibleColumns(IEnumerable<ColumnPickerItemViewModel> visible, IEnumerable<ColumnPickerItemViewModel> hidden)
-            {
-                Visible = visible;
-                Hidden = hidden;
-            }
-        }
+        private readonly IColumnsService _columnsService;
 
         private readonly string _identifier;
-        private readonly IColumnsService _columnsService;
-        private readonly ISchedulerService _schedulerService;
         private readonly RangeObservableCollection<ColumnPickerItemViewModel> _left;
         private readonly RangeObservableCollection<ColumnPickerItemViewModel> _right;
-        
-        public ColumnPickerViewModel(string identifier, IColumnsService columnsService, ISchedulerService schedulerService)
+        private readonly ISchedulerService _schedulerService;
+
+        public ColumnPickerViewModel(string identifier, IColumnsService columnsService,
+            ISchedulerService schedulerService)
         {
             _identifier = identifier;
             _columnsService = columnsService;
@@ -41,10 +31,10 @@ namespace Simple.Wpf.DataGrid.ViewModels
 
             _left = new RangeObservableCollection<ColumnPickerItemViewModel>();
             _right = new RangeObservableCollection<ColumnPickerItemViewModel>();
-            
+
             _columnsService.Initialised
                 .ObserveOn(schedulerService.TaskPool)
-                .StartWith(new [] { identifier })
+                .StartWith(identifier)
                 .Where(x => x == identifier)
                 .Select(x =>
                 {
@@ -68,7 +58,7 @@ namespace Simple.Wpf.DataGrid.ViewModels
                     _right.AddRange(x.Visible);
                 })
                 .DisposeWith(this);
-            
+
             AddCommand = ReactiveCommand.Create(CanAddObservable())
                 .DisposeWith(this);
 
@@ -90,8 +80,8 @@ namespace Simple.Wpf.DataGrid.ViewModels
                 .DisposeWith(this);
 
             MoveupCommand.ActivateGestures()
-              .Subscribe(x => Moveup())
-              .DisposeWith(this);
+                .Subscribe(x => Moveup())
+                .DisposeWith(this);
 
             MovedownCommand.ActivateGestures()
                 .Subscribe(x => Movedown())
@@ -109,14 +99,14 @@ namespace Simple.Wpf.DataGrid.ViewModels
         public ReactiveCommand<object> MoveupCommand { get; }
 
         public ReactiveCommand<object> MovedownCommand { get; }
-        
+
         private IObservable<bool> CanAddObservable()
         {
             return _left.ObserveCollectionChanged()
                 .SelectMany(x => ObserveColumnProperties(_left))
                 .Select(x => _left.Any(y => y.IsSelected));
         }
-        
+
         private IObservable<bool> CanRemoveObservable()
         {
             return _right.ObserveCollectionChanged()
@@ -142,7 +132,7 @@ namespace Simple.Wpf.DataGrid.ViewModels
                     return false;
                 });
         }
-        
+
         private IObservable<bool> CanMovedownObservable()
         {
             return _right.ObserveCollectionChanged()
@@ -194,7 +184,7 @@ namespace Simple.Wpf.DataGrid.ViewModels
         private void Remove()
         {
             var selectedRight = _right.Where(x => x.IsSelected)
-               .ToArray();
+                .ToArray();
 
             var hiddenColumns = _columnsService.HiddenColumns(_identifier)
                 .Concat(selectedRight.Select(x => x.Name))
@@ -226,11 +216,25 @@ namespace Simple.Wpf.DataGrid.ViewModels
         {
             var selectedItem = _right.First(x => x.IsSelected);
             var selectedIndex = _right.IndexOf(selectedItem);
-            
+
             _right.Remove(selectedItem);
             _right.Insert(++selectedIndex, selectedItem);
 
             _columnsService.ShowColumns(_identifier, _right.Select(x => x.Name));
+        }
+
+        private sealed class VisibleColumns
+        {
+            public VisibleColumns(IEnumerable<ColumnPickerItemViewModel> visible,
+                IEnumerable<ColumnPickerItemViewModel> hidden)
+            {
+                Visible = visible;
+                Hidden = hidden;
+            }
+
+            public IEnumerable<ColumnPickerItemViewModel> Visible { get; }
+
+            public IEnumerable<ColumnPickerItemViewModel> Hidden { get; }
         }
     }
 }

@@ -1,12 +1,12 @@
+using System;
+using System.Reactive;
+using System.Reactive.Linq;
+using System.Reactive.Subjects;
+using Simple.Wpf.DataGrid.Extensions;
+using Simple.Wpf.DataGrid.Models;
+
 namespace Simple.Wpf.DataGrid.Services
 {
-    using System;
-    using System.Reactive;
-    using System.Reactive.Linq;
-    using System.Reactive.Subjects;
-    using Extensions;
-    using Models;
-
     public sealed class HeartbeatService : DisposableObject, IHeartbeatService
     {
         private readonly IConnectableObservable<Unit> _listen;
