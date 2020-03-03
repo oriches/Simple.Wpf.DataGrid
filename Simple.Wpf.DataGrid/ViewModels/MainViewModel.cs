@@ -33,7 +33,6 @@ namespace Simple.Wpf.DataGrid.ViewModels
         private readonly ISchedulerService _schedulerService;
         private readonly SerialDisposable _suspendNotifications;
 
-        private readonly ITabularDataService _tabularDataService;
         private readonly Subject<int> _updates;
         private readonly Dictionary<long, int> _updateStats;
 
@@ -48,7 +47,6 @@ namespace Simple.Wpf.DataGrid.ViewModels
             IDateTimeService dateTimeService,
             ISchedulerService schedulerService)
         {
-            _tabularDataService = tabularDataService;
             _schedulerService = schedulerService;
             _columnsService = columnsService;
             _dateTimeService = dateTimeService;
@@ -88,7 +86,7 @@ namespace Simple.Wpf.DataGrid.ViewModels
                     refreshEnabled.OnNext(false);
                     DisposeOfData();
 
-                    _dataDisposable.Disposable = _tabularDataService.GetAsync(schedulerService.TaskPool)
+                    _dataDisposable.Disposable = tabularDataService.GetAsync(schedulerService.TaskPool)
                         .Select(x => ConvertToDataSet(x))
                         .ObserveOn(schedulerService.Dispatcher)
                         .ResilentSubscribe(x =>
@@ -317,8 +315,7 @@ namespace Simple.Wpf.DataGrid.ViewModels
         {
             if (string.IsNullOrEmpty(_filter)) return true;
 
-            var data = obj as DynamicDataViewModel;
-            if (data != null)
+            if (obj is DynamicDataViewModel data)
             {
                 var propertyDescriptors = data.GetProperties()
                     .OfType<PropertyDescriptor>()

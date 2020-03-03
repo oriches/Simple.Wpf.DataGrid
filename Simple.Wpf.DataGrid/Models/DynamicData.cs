@@ -42,10 +42,7 @@ namespace Simple.Wpf.DataGrid.Models
             {
                 if (name == Constants.UI.Grids.PredefinedColumns.Id) return Id;
 
-                object value;
-                if (_dictionary.TryGetValue(name, out value)) return value;
-
-                return null;
+                return _dictionary.TryGetValue(name, out var value) ? value : null;
             }
             private set => _dictionary[string.Intern(name)] = value;
         }
