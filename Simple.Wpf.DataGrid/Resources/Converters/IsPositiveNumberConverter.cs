@@ -6,6 +6,8 @@ namespace Simple.Wpf.DataGrid.Resources.Converters
 {
     public sealed class IsPositiveNumberConverter : IValueConverter
     {
+        public static readonly IValueConverter Instance = new IsPositiveNumberConverter();
+
         private static readonly object False = false;
         private static readonly object True = true;
 
@@ -13,11 +15,15 @@ namespace Simple.Wpf.DataGrid.Resources.Converters
         {
             try
             {
-                if (value is int) return (int) value > 0 ? True : False;
-
-                if (value is double) return (double) value > 0 ? True : False;
-
-                return False;
+                switch (value)
+                {
+                    case int i:
+                        return i > 0 ? True : False;
+                    case double d:
+                        return d > 0 ? True : False;
+                    default:
+                        return False;
+                }
             }
             catch (Exception)
             {

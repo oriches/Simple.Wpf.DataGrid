@@ -7,9 +7,7 @@ namespace Simple.Wpf.DataGrid.Resources.Converters
 {
     public sealed class FormatDateTimeConverter : IValueConverter
     {
-        public string DateFormat { get; set; }
-
-        public string DateTimeFormat { get; set; }
+        public static readonly IValueConverter Instance = new FormatDateTimeConverter();
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

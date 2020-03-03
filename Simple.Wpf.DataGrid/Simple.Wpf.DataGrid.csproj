@@ -147,8 +147,6 @@
       <DependentUpon>IntegerValueControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Resources\Converters\FormatDateTimeConverter.cs" />
-    <Compile Include="Resources\Converters\FormatDoubleConverter.cs" />
-    <Compile Include="Resources\Converters\FormatIntegerConverter.cs" />
     <Compile Include="Resources\Converters\IsPositiveNumberConverter.cs" />
     <Compile Include="Resources\Converters\NumberToColorConverter.cs" />
     <Compile Include="Services\ColumnsService.cs" />

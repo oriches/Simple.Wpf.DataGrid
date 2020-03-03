@@ -1,12 +1,10 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:rd="clr-namespace:Simple.Wpf.DataGrid.Resources.ResourceDictionaries">
+﻿<rd:SharedResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                             xmlns:rd="clr-namespace:Simple.Wpf.DataGrid.Resources.ResourceDictionaries">
 
-    <ResourceDictionary.MergedDictionaries>
-
+    <rd:SharedResourceDictionary.MergedDictionaries>
         <rd:SharedResourceDictionary Source="../Colors/Colors.xaml" />
-
-    </ResourceDictionary.MergedDictionaries>
+    </rd:SharedResourceDictionary.MergedDictionaries>
 
     <Style x:Key="RowTextBlockStyle"
            TargetType="TextBlock">
@@ -70,4 +68,4 @@
                 Value="Center" />
     </Style>
 
-</ResourceDictionary>
+</rd:SharedResourceDictionary>

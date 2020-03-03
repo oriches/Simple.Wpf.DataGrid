@@ -1,20 +1,16 @@
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:rd="clr-namespace:Simple.Wpf.DataGrid.Resources.ResourceDictionaries"
-                    xmlns:c="http://metro.mahapps.com/winfx/xaml/controls"
-                    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-                    xmlns:b="clr-namespace:Simple.Wpf.DataGrid.Resources.Behaviors">
+<rd:SharedResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                             xmlns:c="http://metro.mahapps.com/winfx/xaml/controls"
+                             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+                             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                             xmlns:b="clr-namespace:Simple.Wpf.DataGrid.Resources.Behaviors"
+                             xmlns:rd="clr-namespace:Simple.Wpf.DataGrid.Resources.ResourceDictionaries">
 
-    <ResourceDictionary.MergedDictionaries>
-
+    <rd:SharedResourceDictionary.MergedDictionaries>
         <rd:SharedResourceDictionary Source="../Brushes/Brushes.xaml" />
         <rd:SharedResourceDictionary Source="../Colors/Colors.xaml" />
         <rd:SharedResourceDictionary Source="../Converters/Converters.xaml" />
-
-        <rd:SharedResourceDictionary
-            Source="pack://application:,,,/MahApps.Metro;component/Styles/controls.datagrid.xaml" />
-
-    </ResourceDictionary.MergedDictionaries>
+        <rd:SharedResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/controls.datagrid.xaml" />
+    </rd:SharedResourceDictionary.MergedDictionaries>
 
     <Style TargetType="{x:Type DataGridColumnHeader}"
            BasedOn="{StaticResource MetroDataGridColumnHeader}">
@@ -213,4 +209,4 @@
         </Style.Triggers>
     </Style>
 
-</ResourceDictionary>
+</rd:SharedResourceDictionary>

@@ -64,8 +64,7 @@ namespace Simple.Wpf.DataGrid.ViewModels
                     }
                     else
                     {
-                        PropertyChangedEventArgs args;
-                        if (!ChangedProperties.TryGetValue(propertyName, out args))
+                        if (!ChangedProperties.TryGetValue(propertyName, out var args))
                         {
                             args = new PropertyChangedEventArgs(propertyName);
                             ChangedProperties.Add(propertyName, args);

@@ -1,19 +1,17 @@
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-                    xmlns:c="http://metro.mahapps.com/winfx/xaml/controls"
-                    xmlns:rd="clr-namespace:Simple.Wpf.DataGrid.Resources.ResourceDictionaries"
-                    xmlns:vm="clr-namespace:Simple.Wpf.DataGrid.ViewModels"
-                    xmlns:b="clr-namespace:Simple.Wpf.DataGrid.Resources.Behaviors">
+<rd:SharedResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                          xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+                          xmlns:c="http://metro.mahapps.com/winfx/xaml/controls"
+                          xmlns:rd="clr-namespace:Simple.Wpf.DataGrid.Resources.ResourceDictionaries"
+                          xmlns:vm="clr-namespace:Simple.Wpf.DataGrid.ViewModels"
+                          xmlns:b="clr-namespace:Simple.Wpf.DataGrid.Resources.Behaviors">
 
-    <ResourceDictionary.MergedDictionaries>
-
+    <rd:SharedResourceDictionary.MergedDictionaries>
         <rd:SharedResourceDictionary Source="../Converters/Converters.xaml" />
         <rd:SharedResourceDictionary Source="../Styles/ButtonStyles.xaml" />
         <rd:SharedResourceDictionary Source="../Styles/DataGridStyles.xaml" />
         <rd:SharedResourceDictionary Source="../Styles/TextBlockStyles.xaml" />
-
-    </ResourceDictionary.MergedDictionaries>
+    </rd:SharedResourceDictionary.MergedDictionaries>
 
     <DataTemplate DataType="{x:Type vm:MainViewModel}">
 
@@ -126,4 +124,4 @@
 
     </DataTemplate>
 
-</ResourceDictionary>
+</rd:SharedResourceDictionary>

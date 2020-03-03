@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
-using System.Reactive.Linq;
 using Simple.Wpf.DataGrid.Extensions;
 using Simple.Wpf.DataGrid.Helpers;
 using Simple.Wpf.DataGrid.Models;
@@ -105,11 +104,7 @@ namespace Simple.Wpf.DataGrid.ViewModels
         {
             if (PropertyDescriptors != null) return PropertyDescriptors;
 
-            var descriptors = Observable.Return(this)
-                .Select(x => x.BuildDescriptors(x._data.Properties.Concat(AuditProperties).ToArray()))
-                .Wait()
-                .ToArray();
-
+            var descriptors = BuildDescriptors(_data.Properties.Concat(AuditProperties).ToArray()).ToArray();
             PropertyDescriptors = new PropertyDescriptorCollection(descriptors);
             return PropertyDescriptors;
         }
@@ -142,8 +137,7 @@ namespace Simple.Wpf.DataGrid.ViewModels
 
         public string GetValueAsString(string name)
         {
-            string value;
-            if (!_valuesAsStrings.TryGetValue(name, out value))
+            if (!_valuesAsStrings.TryGetValue(name, out var value))
             {
                 value = GetValue(name).ToString().ToLower();
                 _valuesAsStrings.Add(name, value);

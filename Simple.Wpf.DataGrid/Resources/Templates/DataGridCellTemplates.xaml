@@ -1,14 +1,13 @@
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:rd="clr-namespace:Simple.Wpf.DataGrid.Resources.ResourceDictionaries"
-                    xmlns:c="clr-namespace:Simple.Wpf.DataGrid.Resources.Controls">
+<rd:SharedResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                             xmlns:c="clr-namespace:Simple.Wpf.DataGrid.Resources.Controls"
+                             xmlns:c2="clr-namespace:Simple.Wpf.DataGrid.Resources.Converters"
+                             xmlns:rd="clr-namespace:Simple.Wpf.DataGrid.Resources.ResourceDictionaries">
 
-    <ResourceDictionary.MergedDictionaries>
-
+    <rd:SharedResourceDictionary.MergedDictionaries>
         <rd:SharedResourceDictionary Source="../Converters/Converters.xaml" />
         <rd:SharedResourceDictionary Source="../Styles/TextBlockStyles.xaml" />
-
-    </ResourceDictionary.MergedDictionaries>
+    </rd:SharedResourceDictionary.MergedDictionaries>
 
     <DataTemplate x:Key="DataGridStringCellTemplate">
 
@@ -19,7 +18,7 @@
 
     <DataTemplate x:Key="DataGridDateTimeCellTemplate">
 
-        <TextBlock Text="{Binding Converter={StaticResource FormatDateTimeConverter}}"
+        <TextBlock Text="{Binding Converter={x:Static c2:FormatDateTimeConverter.Instance}}"
                    Style="{StaticResource DataGridDateTimeTextBlockStyle}" />
 
     </DataTemplate>
@@ -36,4 +35,4 @@
 
     </DataTemplate>
 
-</ResourceDictionary>
+</rd:SharedResourceDictionary>

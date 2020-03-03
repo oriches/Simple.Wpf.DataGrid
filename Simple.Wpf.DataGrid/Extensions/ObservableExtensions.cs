@@ -24,7 +24,7 @@ namespace Simple.Wpf.DataGrid.Extensions
 
         public static IObservable<T> ActivateGestures<T>(this IObservable<T> observable)
         {
-            if (GestureService == null) throw new Exception("GestureService has not been initialised");
+            if (GestureService == null) throw new Exception($"GestureService has not been initialised");
 
             return observable.Do(x => GestureService.SetBusy());
         }
@@ -74,7 +74,7 @@ namespace Simple.Wpf.DataGrid.Extensions
             }
             catch (Exception exn)
             {
-                scheduler.Schedule(exn, (s1, s2) => { throw s2; });
+                scheduler.Schedule(exn, (s1, s2) => throw s2);
             }
         }
     }

@@ -1,5 +1,6 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+﻿<rd:SharedResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                          xmlns:rd="clr-namespace:Simple.Wpf.DataGrid.Resources.ResourceDictionaries">
 
     <Color A="255"
            R="255"
@@ -19,4 +20,4 @@
            B="0"
            x:Key="PositiveNumberBackgroundColor" />
 
-</ResourceDictionary>
+</rd:SharedResourceDictionary>

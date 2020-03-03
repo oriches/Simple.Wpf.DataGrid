@@ -1,14 +1,12 @@
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:rd="clr-namespace:Simple.Wpf.DataGrid.Resources.ResourceDictionaries"
-                    xmlns:vm="clr-namespace:Simple.Wpf.DataGrid.ViewModels">
+<rd:SharedResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                             xmlns:rd="clr-namespace:Simple.Wpf.DataGrid.Resources.ResourceDictionaries"
+                             xmlns:vm="clr-namespace:Simple.Wpf.DataGrid.ViewModels">
 
-    <ResourceDictionary.MergedDictionaries>
-
+    <rd:SharedResourceDictionary.MergedDictionaries>
         <rd:SharedResourceDictionary Source="../Converters/Converters.xaml" />
         <rd:SharedResourceDictionary Source="../Styles/ButtonStyles.xaml" />
-
-    </ResourceDictionary.MergedDictionaries>
+    </rd:SharedResourceDictionary.MergedDictionaries>
 
     <DataTemplate DataType="{x:Type vm:ExceptionViewModel}">
 
@@ -99,4 +97,4 @@
 
     </DataTemplate>
 
-</ResourceDictionary>
+</rd:SharedResourceDictionary>

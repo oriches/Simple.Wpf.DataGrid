@@ -1,17 +1,15 @@
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:rd="clr-namespace:Simple.Wpf.DataGrid.Resources.ResourceDictionaries"
-                    xmlns:vm="clr-namespace:Simple.Wpf.DataGrid.ViewModels">
+<rd:SharedResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                             xmlns:rd="clr-namespace:Simple.Wpf.DataGrid.Resources.ResourceDictionaries"
+                             xmlns:vm="clr-namespace:Simple.Wpf.DataGrid.ViewModels">
 
-    <ResourceDictionary.MergedDictionaries>
-
+    <rd:SharedResourceDictionary.MergedDictionaries>
         <rd:SharedResourceDictionary Source="../Converters/Converters.xaml" />
         <rd:SharedResourceDictionary Source="../Styles/ButtonStyles.xaml" />
         <rd:SharedResourceDictionary Source="../Styles/DataGridStyles.xaml" />
         <rd:SharedResourceDictionary Source="../Styles/ListBoxStyles.xaml" />
         <rd:SharedResourceDictionary Source="../Styles/TextBlockStyles.xaml" />
-
-    </ResourceDictionary.MergedDictionaries>
+    </rd:SharedResourceDictionary.MergedDictionaries>
 
     <DataTemplate DataType="{x:Type vm:ColumnPickerViewModel}">
 
@@ -64,4 +62,4 @@
 
     </DataTemplate>
 
-</ResourceDictionary>
+</rd:SharedResourceDictionary>

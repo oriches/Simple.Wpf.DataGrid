@@ -7,21 +7,30 @@ namespace Simple.Wpf.DataGrid.Resources.Converters
 {
     public sealed class NumberToColorConverter : IValueConverter
     {
-        public Brush PositiveNumber { get; set; }
+        public static readonly IValueConverter Instance = new NumberToColorConverter();
 
-        public Brush NegativeNumber { get; set; }
+        private readonly SolidColorBrush _positiveNumber;
+        private readonly SolidColorBrush _negativeNumber;
+
+        private  NumberToColorConverter()
+        {
+            _positiveNumber = GetBrush("PositiveNumberBackgroundBrush");
+            _negativeNumber = GetBrush("NegativeNumberBackgroundBrush");
+        }
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value == null) return Brushes.Transparent;
-
             try
             {
-                if (value is int) return (int) value < 0 ? NegativeNumber : PositiveNumber;
-
-                if (value is double) return (double) value < 0 ? NegativeNumber : PositiveNumber;
-
-                return Brushes.Transparent;
+                switch (value)
+                {
+                    case int i:
+                        return i < 0 ? _negativeNumber : _positiveNumber;
+                    case double d:
+                        return d < 0 ? _negativeNumber : _positiveNumber;
+                    default:
+                        return Brushes.Transparent;
+                }
             }
             catch (Exception)
             {
@@ -32,6 +41,11 @@ namespace Simple.Wpf.DataGrid.Resources.Converters
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return Binding.DoNothing;
+        }
+
+        private static SolidColorBrush GetBrush(string resource)
+        {
+            return (SolidColorBrush) System.Windows.Application.Current.Resources[resource];
         }
     }
 }
