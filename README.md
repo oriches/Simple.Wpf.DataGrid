@@ -1,5 +1,4 @@
 # Simple.Wpf.DataGrid
-=====================
 
 [![Build status](https://ci.appveyor.com/api/projects/status/2gustf15hmt9tw09/branch/master?svg=true)](https://ci.appveyor.com/project/oriches/simple-wpf-datagrid)
 
@@ -13,4 +12,4 @@ The UI's built using MVVM as the MVC architecture and being 'pure' about the sep
 
 Happy coding...
 
-![alt text](https://t27ana.dm2302.livefilestore.com/y3pUv_tziI6aIFjQ555q1Yuqek03rcq9aZGaKAkyKQzb2QBCp2q75cWXjJj83aIfEiCAFygm7F6vpZTSeAn1O1SKXF4EUcYfrS-34270HawBp0Kc2TqPBTmONiqaFPpaAKQZZjgRQ7lIthQCeceKOWGoQ_JibjGXPYRvO6-LEjIce0/Simple.Wpf.DataGrid.png?psid=1 "Example screenshot")
+![Image description](screenshot.png)
