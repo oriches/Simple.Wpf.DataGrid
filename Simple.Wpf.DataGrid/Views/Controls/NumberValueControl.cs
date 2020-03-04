@@ -5,7 +5,7 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using Simple.Wpf.DataGrid.Extensions;
 
-namespace Simple.Wpf.DataGrid.Resources.Controls
+namespace Simple.Wpf.DataGrid.Views.Controls
 {
     public abstract class NumberValueControl : UserControl
     {

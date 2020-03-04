@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Windows;
 
-namespace Simple.Wpf.DataGrid.Resources.ResourceDictionaries
+namespace Simple.Wpf.DataGrid.Views.ResourceDictionaries
 {
     // The shared resource dictionary is a specialized resource dictionary
     // that loads it content only once. If a second instance with the same source

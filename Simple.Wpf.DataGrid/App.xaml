@@ -1,7 +1,7 @@
 <Application x:Class="Simple.Wpf.DataGrid.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:rd="clr-namespace:Simple.Wpf.DataGrid.Resources.ResourceDictionaries">
+             xmlns:rd="clr-namespace:Simple.Wpf.DataGrid.Views.ResourceDictionaries">
     <Application.Resources>
 
         <rd:SharedResourceDictionary>
@@ -13,7 +13,6 @@
                 <rd:SharedResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/baselight.xaml" />
                 <rd:SharedResourceDictionary Source="Views/Colors/Colors.xaml" />
                 <rd:SharedResourceDictionary Source="Views/Brushes/Brushes.xaml" />
-                <rd:SharedResourceDictionary Source="Views/Converters/Converters.xaml" />
                 <rd:SharedResourceDictionary Source="Views/Styles/ButtonStyles.xaml" />
                 <rd:SharedResourceDictionary Source="Views/Styles/DataGridStyles.xaml" />
                 <rd:SharedResourceDictionary Source="Views/Styles/ListBoxStyles.xaml" />

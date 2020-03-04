@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Globalization;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
 
-namespace Simple.Wpf.DataGrid.Resources.Converters
+namespace Simple.Wpf.DataGrid.Views.Converters
 {
     public sealed class NumberToColorConverter : IValueConverter
     {
         public static readonly IValueConverter Instance = new NumberToColorConverter();
 
-        private readonly SolidColorBrush _positiveNumber;
         private readonly SolidColorBrush _negativeNumber;
+        private readonly SolidColorBrush _positiveNumber;
 
-        private  NumberToColorConverter()
+        private NumberToColorConverter()
         {
             _positiveNumber = GetBrush("PositiveNumberBackgroundBrush");
             _negativeNumber = GetBrush("NegativeNumberBackgroundBrush");
@@ -45,7 +46,7 @@ namespace Simple.Wpf.DataGrid.Resources.Converters
 
         private static SolidColorBrush GetBrush(string resource)
         {
-            return (SolidColorBrush) System.Windows.Application.Current.Resources[resource];
+            return (SolidColorBrush) Application.Current.Resources[resource];
         }
     }
 }

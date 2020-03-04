@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Windows.Data;
 
-namespace Simple.Wpf.DataGrid.Resources.Converters
+namespace Simple.Wpf.DataGrid.Views.Converters
 {
     public sealed class IsPositiveNumberConverter : IValueConverter
     {

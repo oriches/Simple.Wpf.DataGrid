@@ -2,13 +2,12 @@
                              xmlns:c="http://metro.mahapps.com/winfx/xaml/controls"
                              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
                              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                             xmlns:b="clr-namespace:Simple.Wpf.DataGrid.Resources.Behaviors"
-                             xmlns:rd="clr-namespace:Simple.Wpf.DataGrid.Resources.ResourceDictionaries">
+                             xmlns:rd="clr-namespace:Simple.Wpf.DataGrid.Views.ResourceDictionaries"
+                             xmlns:b="clr-namespace:Simple.Wpf.DataGrid.Views.Behaviors">
 
     <rd:SharedResourceDictionary.MergedDictionaries>
         <rd:SharedResourceDictionary Source="../Brushes/Brushes.xaml" />
         <rd:SharedResourceDictionary Source="../Colors/Colors.xaml" />
-        <rd:SharedResourceDictionary Source="../Converters/Converters.xaml" />
         <rd:SharedResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/controls.datagrid.xaml" />
     </rd:SharedResourceDictionary.MergedDictionaries>
 

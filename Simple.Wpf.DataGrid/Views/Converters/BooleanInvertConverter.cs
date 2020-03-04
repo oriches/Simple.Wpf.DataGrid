@@ -2,12 +2,14 @@
 using System.Globalization;
 using System.Windows.Data;
 
-namespace Simple.Wpf.DataGrid.Resources.Converters
+namespace Simple.Wpf.DataGrid.Views.Converters
 {
     public sealed class BooleanInvertConverter : IValueConverter
     {
         private static readonly object False = false;
         private static readonly object True = true;
+
+        public static readonly IValueConverter Instance = new BooleanInvertConverter();
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

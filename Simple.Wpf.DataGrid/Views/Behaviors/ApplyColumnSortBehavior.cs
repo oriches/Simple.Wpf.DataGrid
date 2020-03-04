@@ -8,7 +8,7 @@ using System.Windows.Data;
 using System.Windows.Interactivity;
 using Simple.Wpf.DataGrid.Extensions;
 
-namespace Simple.Wpf.DataGrid.Resources.Behaviors
+namespace Simple.Wpf.DataGrid.Views.Behaviors
 {
     public sealed class ApplyColumnSortBehavior : Behavior<MenuItem>
     {

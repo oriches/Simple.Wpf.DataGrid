@@ -1,6 +1,6 @@
 ﻿<rd:SharedResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                             xmlns:rd="clr-namespace:Simple.Wpf.DataGrid.Resources.ResourceDictionaries">
+                             xmlns:rd="clr-namespace:Simple.Wpf.DataGrid.Views.ResourceDictionaries">
 
     <rd:SharedResourceDictionary.MergedDictionaries>
         <rd:SharedResourceDictionary Source="../Colors/Colors.xaml" />

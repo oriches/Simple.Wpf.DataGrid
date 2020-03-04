@@ -5,7 +5,7 @@ using System.Windows.Interactivity;
 using System.Windows.Threading;
 using Simple.Wpf.DataGrid.Extensions;
 
-namespace Simple.Wpf.DataGrid.Resources.Behaviors
+namespace Simple.Wpf.DataGrid.Views.Behaviors
 {
     public sealed class IsGridScrollingBehavior : Behavior<System.Windows.Controls.DataGrid>
     {

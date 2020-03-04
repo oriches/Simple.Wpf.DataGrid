@@ -11,7 +11,7 @@ using System.Windows.Interactivity;
 using Simple.Wpf.DataGrid.Extensions;
 using Simple.Wpf.DataGrid.Services;
 
-namespace Simple.Wpf.DataGrid.Resources.Behaviors
+namespace Simple.Wpf.DataGrid.Views.Behaviors
 {
     public sealed class RegenerateColumnsBehavior : Behavior<System.Windows.Controls.DataGrid>
     {

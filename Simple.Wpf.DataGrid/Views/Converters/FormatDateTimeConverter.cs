@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows.Data;
 using Simple.Wpf.DataGrid.Helpers;
 
-namespace Simple.Wpf.DataGrid.Resources.Converters
+namespace Simple.Wpf.DataGrid.Views.Converters
 {
     public sealed class FormatDateTimeConverter : IValueConverter
     {

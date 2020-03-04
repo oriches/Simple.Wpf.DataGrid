@@ -5,10 +5,9 @@ using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
 using MahApps.Metro.Controls.Dialogs;
-using Simple.Wpf.DataGrid.Extensions;
 using Simple.Wpf.DataGrid.Services;
 
-namespace Simple.Wpf.DataGrid.Resources.Views
+namespace Simple.Wpf.DataGrid.Views.Views
 {
     public partial class MainWindow
     {

@@ -1,4 +1,4 @@
-﻿namespace Simple.Wpf.DataGrid.Resources.Controls
+﻿namespace Simple.Wpf.DataGrid.Views.Controls
 {
     public partial class DoubleValueControl : NumberValueControl
     {

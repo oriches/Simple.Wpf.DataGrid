@@ -3,7 +3,7 @@ using MahApps.Metro.Controls.Dialogs;
 using Simple.Wpf.DataGrid.Models;
 using Simple.Wpf.DataGrid.ViewModels;
 
-namespace Simple.Wpf.DataGrid.Resources.Views
+namespace Simple.Wpf.DataGrid.Views.Views
 {
     [ContentProperty("DialogBody")]
     public sealed class MessageDialog : BaseMetroDialog

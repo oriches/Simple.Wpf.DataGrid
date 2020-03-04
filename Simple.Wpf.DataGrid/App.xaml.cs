@@ -16,9 +16,9 @@ using NLog;
 using Simple.Wpf.DataGrid.Extensions;
 using Simple.Wpf.DataGrid.Helpers;
 using Simple.Wpf.DataGrid.Models;
-using Simple.Wpf.DataGrid.Resources.Views;
 using Simple.Wpf.DataGrid.Services;
 using Simple.Wpf.DataGrid.ViewModels;
+using Simple.Wpf.DataGrid.Views.Views;
 using Duration = Simple.Wpf.DataGrid.Services.Duration;
 using ObservableExtensions = Simple.Wpf.DataGrid.Extensions.ObservableExtensions;
 
