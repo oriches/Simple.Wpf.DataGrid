@@ -4,8 +4,8 @@ namespace Simple.Wpf.DataGrid.Helpers
     {
         public static string DisplayName(string columnName)
         {
-            return columnName.Replace(Constants.UI.Grids.ColumnNameSeperator,
-                Constants.UI.Grids.ColumnNameDisplaySeperator);
+            return columnName.Replace(Constants.UI.Grids.ColumnNameSeparator,
+                Constants.UI.Grids.ColumnNameDisplaySeparator);
         }
     }
 }

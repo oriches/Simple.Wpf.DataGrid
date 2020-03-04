@@ -292,6 +292,7 @@ namespace Simple.Wpf.DataGrid.ViewModels
 
             var propertyDescriptors = data.GetProperties()
                 .OfType<PropertyDescriptor>()
+                .Where(x => x.PropertyType == typeof(string))
                 .ToArray();
 
             // ReSharper disable once ForCanBeConvertedToForeach
@@ -299,8 +300,11 @@ namespace Simple.Wpf.DataGrid.ViewModels
             for (var i = 0; i < propertyDescriptors.Length; i++)
             {
                 var propertyDescriptor = propertyDescriptors[i];
+                
                 var valueAsString = data.GetValueAsString(propertyDescriptor.Name);
-                return valueAsString.IndexOf(_filter, StringComparison.InvariantCultureIgnoreCase) != -1;
+                var result = valueAsString.IndexOf(_filter, StringComparison.InvariantCultureIgnoreCase) != -1;
+                if (result)
+                    return true;
             }
 
             return false;

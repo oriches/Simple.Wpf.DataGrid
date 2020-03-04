@@ -94,7 +94,10 @@
                               Grid.Column="0"
                               Grid.ColumnSpan="2"
                               CanUserSortColumns="True"
-                              ItemsSource="{Binding Data}"
+                              ItemsSource="{Binding Data, IsAsync=True}"
+                              ScrollViewer.CanContentScroll="True"
+                              EnableColumnVirtualization="True"
+                              EnableRowVirtualization="True"
                               CellStyle="{StaticResource DynamicDataGridCellStyle}"
                               RenderOptions.EdgeMode="Aliased">
                         <i:Interaction.Behaviors>

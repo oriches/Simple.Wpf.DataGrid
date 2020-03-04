@@ -60,12 +60,12 @@ namespace Simple.Wpf.DataGrid
                 public static readonly TimeSpan ScrollingThrottle = TimeSpan.FromMilliseconds(250);
                 public static readonly TimeSpan UpdatesInfoThrottle = TimeSpan.FromMilliseconds(500);
 
-                public static readonly string ColumnNameSeperator = "_";
-                public static readonly string ColumnNameDisplaySeperator = " ";
+                public static readonly string ColumnNameSeparator = "_";
+                public static readonly string ColumnNameDisplaySeparator = " ";
 
-                public class SeperatorsFormat
+                public class SeparatorsFormat
                 {
-                    public bool? Seperators { get; set; }
+                    public bool? Separators { get; set; }
 
                     public int? Rounding { get; set; }
 
