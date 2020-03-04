@@ -128,20 +128,20 @@
     <Compile Include="Helpers\DateTimeHelper.cs" />
     <Compile Include="Models\ICloneable.cs" />
     <Compile Include="Models\Setting.cs" />
-    <Compile Include="Resources\Behaviors\ApplyColumnSortBehavior.cs" />
-    <Compile Include="Resources\Behaviors\ClearColumnSortBehavior.cs" />
-    <Compile Include="Resources\Behaviors\IsGridScrollingBehavior.cs" />
-    <Compile Include="Resources\Behaviors\RegenerateColumnsBehavior.cs" />
-    <Compile Include="Resources\Controls\NumberValueControl.cs" />
-    <Compile Include="Resources\Controls\DoubleValueControl.xaml.cs">
+    <Compile Include="Views\Behaviors\ApplyColumnSortBehavior.cs" />
+    <Compile Include="Views\Behaviors\ClearColumnSortBehavior.cs" />
+    <Compile Include="Views\Behaviors\IsGridScrollingBehavior.cs" />
+    <Compile Include="Views\Behaviors\RegenerateColumnsBehavior.cs" />
+    <Compile Include="Views\Controls\NumberValueControl.cs" />
+    <Compile Include="Views\Controls\DoubleValueControl.xaml.cs">
       <DependentUpon>DoubleValueControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Resources\Controls\IntegerValueControl.xaml.cs">
+    <Compile Include="Views\Controls\IntegerValueControl.xaml.cs">
       <DependentUpon>IntegerValueControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Resources\Converters\FormatDateTimeConverter.cs" />
-    <Compile Include="Resources\Converters\IsPositiveNumberConverter.cs" />
-    <Compile Include="Resources\Converters\NumberToColorConverter.cs" />
+    <Compile Include="Views\Converters\FormatDateTimeConverter.cs" />
+    <Compile Include="Views\Converters\IsPositiveNumberConverter.cs" />
+    <Compile Include="Views\Converters\NumberToColorConverter.cs" />
     <Compile Include="Services\ColumnsService.cs" />
     <Compile Include="Services\CultureService.cs" />
     <Compile Include="Services\IColumnsService.cs" />
@@ -155,7 +155,7 @@
     <Compile Include="ViewModels\ColumnPickerViewModel.cs" />
     <Compile Include="ViewModels\DynamicDataViewModel.cs" />
     <Compile Include="ViewModels\DynamicDataViewModelPropertyDescriptor.cs" />
-    <Compile Include="Resources\Converters\BooleanInvertConverter.cs" />
+    <Compile Include="Views\Converters\BooleanInvertConverter.cs" />
     <Compile Include="Extensions\CollectionExtensions.cs" />
     <Compile Include="Extensions\CompositeDisposableExtensions.cs" />
     <Compile Include="Extensions\MemoryExtensions.cs" />
@@ -168,7 +168,7 @@
     <Compile Include="Models\DisposableObject.cs" />
     <Compile Include="Models\Heartbeat.cs" />
     <Compile Include="Models\Message.cs" />
-    <Compile Include="Resources\ResourceDictionaries\SharedResourceDictionary.cs" />
+    <Compile Include="Views\ResourceDictionaries\SharedResourceDictionary.cs" />
     <Compile Include="Services\ApplicationService.cs" />
     <Compile Include="Services\DateTimeService.cs" />
     <Compile Include="Models\DynamicData.cs" />
@@ -212,81 +212,81 @@
     <Compile Include="ViewModels\MessageViewModel.cs" />
     <Compile Include="ViewModels\OverlayViewModel.cs" />
     <Compile Include="ViewModels\ChromeViewModel.cs" />
-    <Compile Include="Resources\Views\MessageDialog.cs" />
+    <Compile Include="Views\Views\MessageDialog.cs" />
     <Page Include="Properties\DesignTimeResources.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <ContainsDesignTimeResources>true</ContainsDesignTimeResources>
     </Page>
-    <Page Include="Resources\Brushes\Brushes.xaml">
+    <Page Include="Views\Brushes\Brushes.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\Colors\Colors.xaml">
+    <Page Include="Views\Colors\Colors.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\Controls\DoubleValueControl.xaml">
+    <Page Include="Views\Controls\DoubleValueControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Resources\Controls\IntegerValueControl.xaml">
+    <Page Include="Views\Controls\IntegerValueControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Resources\Icons.xaml">
+    <Page Include="Views\Icons.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\IconsNonShared.xaml">
+    <Page Include="Views\IconsNonShared.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\Icons\Icons.xaml">
+    <Page Include="Views\Icons\Icons.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\Converters\Converters.xaml">
+    <Page Include="Views\Converters\Converters.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Resources\Styles\ListBoxStyles.xaml">
+    <Page Include="Views\Styles\ListBoxStyles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\Styles\ButtonStyles.xaml">
+    <Page Include="Views\Styles\ButtonStyles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\Styles\DataGridStyles.xaml">
+    <Page Include="Views\Styles\DataGridStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Resources\Styles\TextBlockStyles.xaml">
+    <Page Include="Views\Styles\TextBlockStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Resources\Templates\DataGridCellTemplates.xaml">
+    <Page Include="Views\Templates\DataGridCellTemplates.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\Templates\ColumnPickerViewModelTemplate.xaml">
+    <Page Include="Views\Templates\ColumnPickerViewModelTemplate.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\Templates\MainViewModelTemplate.xaml">
+    <Page Include="Views\Templates\MainViewModelTemplate.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\Templates\ExceptionViewModelTemplate.xaml">
+    <Page Include="Views\Templates\ExceptionViewModelTemplate.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\Templates\DiagnosticsViewModelTemplate.xaml">
+    <Page Include="Views\Templates\DiagnosticsViewModelTemplate.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\Views\MainWindow.xaml">
+    <Page Include="Views\Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -298,7 +298,7 @@
     <Compile Include="BootStrapper.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="Helpers\ExpressionHelper.cs" />
-    <Compile Include="Resources\Views\MainWindow.xaml.cs">
+    <Compile Include="Views\Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
@@ -317,10 +317,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Resource Include="Resources\Entypo-license.txt" />
-    <Resource Include="Resources\Entypo.ttf" />
-    <Resource Include="Resources\WindowsIcons-license.txt" />
-    <Resource Include="Resources\Icons\WindowsIcons-license.txt" />
+    <Resource Include="Views\Entypo-license.txt" />
+    <Resource Include="Views\Entypo.ttf" />
+    <Resource Include="Views\WindowsIcons-license.txt" />
+    <Resource Include="Views\Icons\WindowsIcons-license.txt" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -340,7 +340,7 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Resources\AttachedProperties\" />
+    <Folder Include="Views\AttachedProperties\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
