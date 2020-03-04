@@ -57,14 +57,17 @@
                                 Command="{Binding ClearCommand}"
                                 Style="{StaticResource ResourceButtonStyle}" />
 
-                        <TextBlock Text="{Binding TotalNumberOfRows, StringFormat=Total Rows Count: {0:N0}}"
+                        <TextBlock Text="{Binding TotalNumberOfRows, IsAsync=True, StringFormat=Total Rows Count: {0:N0}}"
                                    Style="{StaticResource RowTextBlockStyle}" />
 
-                        <TextBlock Text="{Binding TotalNumberOfValues, StringFormat=Total Value Count: {0:N0}}"
+                        <TextBlock Text="{Binding TotalNumberOfValues, IsAsync=True, StringFormat=Total Value Count: {0:N0}}"
                                    Style="{StaticResource RowTextBlockStyle}" />
 
-                        <TextBlock Text="{Binding UpdatesPerSecond, StringFormat=Updates per Second: {0:N0}}"
-                                   Style="{StaticResource RowTextBlockStyle}" />
+                        <TextBlock Style="{StaticResource RowTextBlockStyle}"
+                                   Text="Updates per Second: " />
+
+                        <TextBlock Style="{StaticResource RowTextBlockStyle}"
+                                   Text="{Binding UpdatesPerSecond, IsAsync=True, StringFormat={}{0:N0}}" />
 
                     </StackPanel>
 
@@ -94,6 +97,10 @@
                               Grid.Column="0"
                               Grid.ColumnSpan="2"
                               CanUserSortColumns="True"
+                              AllowDrop="False"
+                              CanUserAddRows="False"
+                              CanUserDeleteRows="False"
+                              IsReadOnly="True"
                               ItemsSource="{Binding Data, IsAsync=True}"
                               ScrollViewer.CanContentScroll="True"
                               EnableColumnVirtualization="True"

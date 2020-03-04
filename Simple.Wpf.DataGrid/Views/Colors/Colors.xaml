@@ -2,7 +2,7 @@
                              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                              xmlns:rd="clr-namespace:Simple.Wpf.DataGrid.Views.ResourceDictionaries">
 
-    <Color A="255"
+    <Color A="0"
            R="255"
            G="255"
            B="255"
