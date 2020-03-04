@@ -20,7 +20,7 @@ namespace Simple.Wpf.DataGrid.Tests.ViewModels
 
             _data = new Subject<IEnumerable<DynamicData>>();
             _tabularDataService = new Mock<ITabularDataService>();
-            _tabularDataService.Setup(x => x.GetAsync(It.IsAny<IScheduler>())).Returns(_data);
+            _tabularDataService.Setup(x => x.GetAsync()).Returns(_data);
 
             _columnsChanged = new Subject<string>();
             _columnsInitialised = new Subject<string>();

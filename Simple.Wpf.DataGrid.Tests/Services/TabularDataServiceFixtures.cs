@@ -24,12 +24,12 @@ namespace Simple.Wpf.DataGrid.Tests.Services
         public void generates_data()
         {
             // ARRANGE
-            var service = new TabularDataService();
+            var service = new TabularDataService(_schedulerService);
 
             IEnumerable<DynamicData> data = null;
 
             // ACT
-            service.GetAsync(_schedulerService.TaskPool)
+            service.GetAsync()
                 .Subscribe(x => { data = x; });
 
             _testScheduler.AdvanceBy(TimeSpan.FromSeconds(1));

@@ -22,6 +22,11 @@ namespace Simple.Wpf.DataGrid.Extensions
                     (x, y) => y);
         }
 
+        public static IObservable<PropertyChangedEventArgs> ObservePropertyChanged(this INotifyPropertyChanged source, string propertyName)
+        {
+            return ObservePropertyChanged(source).Where(x => x.PropertyName == propertyName);
+        }
+
         public static IObservable<PropertyChangedEventArgs> ObservePropertyChanged(this INotifyPropertyChanged source)
         {
             return Observable.Return(source)

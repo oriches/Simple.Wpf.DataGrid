@@ -126,19 +126,19 @@ namespace Simple.Wpf.DataGrid
 
         private static IDisposable ObserveHeartbeat(ISchedulerService schedulerService)
         {
-            var dianosticsService = BootStrapper.Resolve<IDiagnosticsService>();
+            var diagnosticsService = BootStrapper.Resolve<IDiagnosticsService>();
 
             return BootStrapper.Resolve<IHeartbeatService>()
                 .Listen
-                .SelectMany(x => dianosticsService.Memory.Take(1), (x, y) => y)
-                .SelectMany(x => dianosticsService.Cpu.Take(1), (x, y) => new Tuple<Memory, int>(x, y))
+                .SelectMany(x => diagnosticsService.Memory.Take(1), (x, y) => y)
+                .SelectMany(x => diagnosticsService.Cpu.Take(1), (x, y) => new Tuple<Memory, int>(x, y))
                 .Select(x => $"Heartbeat (Memory={x.Item1.WorkingSetPrivateAsString()}, CPU={x.Item2.ToString()}%)")
                 .ObserveOn(schedulerService.Dispatcher)
-                .ResilentSubscribe(x =>
+                .Subscribe(x =>
                 {
                     Debug.WriteLine(x);
                     Logger.Info(x);
-                }, schedulerService.Dispatcher);
+                });
         }
 
 

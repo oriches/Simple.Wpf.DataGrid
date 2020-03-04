@@ -20,7 +20,7 @@ namespace Simple.Wpf.DataGrid.ViewModels
         public bool IsSelected
         {
             get => _isSelected;
-            set { SetPropertyAndNotify(ref _isSelected, value, () => IsSelected); }
+            set => SetProperty(ref _isSelected, value);
         }
     }
 }

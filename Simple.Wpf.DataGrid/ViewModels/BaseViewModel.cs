@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq.Expressions;
 using System.Reactive.Linq;
+using System.Runtime.CompilerServices;
 using Simple.Wpf.DataGrid.Extensions;
-using Simple.Wpf.DataGrid.Helpers;
 using Simple.Wpf.DataGrid.Models;
 using Simple.Wpf.DataGrid.Services;
 
@@ -35,11 +34,6 @@ namespace Simple.Wpf.DataGrid.ViewModels
             if (_suspendedNotifications == null) _suspendedNotifications = new SuspendedNotifications(this);
 
             return _suspendedNotifications.AddRef();
-        }
-
-        protected virtual void OnPropertyChanged<T>(Expression<Func<T>> expression)
-        {
-            OnPropertyChanged(ExpressionHelper.Name(expression));
         }
 
         protected virtual void OnPropertyChanged()
@@ -76,17 +70,8 @@ namespace Simple.Wpf.DataGrid.ViewModels
             }
         }
 
-        protected virtual bool SetPropertyAndNotify<T>(ref T existingValue, T newValue, Expression<Func<T>> expression)
-        {
-            if (EqualityComparer<T>.Default.Equals(existingValue, newValue)) return false;
-
-            existingValue = newValue;
-            OnPropertyChanged(expression);
-
-            return true;
-        }
-
-        protected virtual bool SetPropertyAndNotify<T>(ref T existingValue, T newValue, string propertyName)
+        protected virtual bool SetProperty<T>(ref T existingValue, T newValue,
+            [CallerMemberName] string propertyName = null)
         {
             if (EqualityComparer<T>.Default.Equals(existingValue, newValue)) return false;
 

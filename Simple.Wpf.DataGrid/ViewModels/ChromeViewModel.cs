@@ -62,9 +62,9 @@ namespace Simple.Wpf.DataGrid.ViewModels
         {
             _overlay = overlay;
 
-            OnPropertyChanged(() => HasOverlay);
-            OnPropertyChanged(() => Overlay);
-            OnPropertyChanged(() => OverlayHeader);
+            OnPropertyChanged(nameof(HasOverlay));
+            OnPropertyChanged(nameof(Overlay));
+            OnPropertyChanged(nameof(OverlayHeader));
         }
     }
 }

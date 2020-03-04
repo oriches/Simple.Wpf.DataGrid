@@ -6,6 +6,7 @@ using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Windows.Input;
 using NLog;
+using Simple.Wpf.DataGrid.Extensions;
 using Simple.Wpf.DataGrid.Services;
 
 namespace Simple.Wpf.DataGrid.Commands
@@ -53,7 +54,7 @@ namespace Simple.Wpf.DataGrid.Commands
 
         public virtual void Execute(object parameter)
         {
-            var typedParameter = parameter is T ? (T) parameter : default;
+            var typedParameter = parameter is T o ? o : default;
 
             if (CanExecute(typedParameter)) _execute.OnNext(typedParameter);
         }
@@ -93,7 +94,7 @@ namespace Simple.Wpf.DataGrid.Commands
 
         public IDisposable Subscribe(IObserver<T> observer)
         {
-            return _execute.Subscribe(x => observer.OnNext(x),
+            return _execute.ActivateGestures().Subscribe(x => observer.OnNext(x),
                 e => observer.OnError(e),
                 () => observer.OnCompleted());
         }

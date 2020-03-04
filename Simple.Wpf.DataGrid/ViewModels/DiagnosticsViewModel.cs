@@ -54,19 +54,19 @@ namespace Simple.Wpf.DataGrid.ViewModels
         public string Cpu
         {
             get => _cpu;
-            set { SetPropertyAndNotify(ref _cpu, value, () => Cpu); }
+            set => SetProperty(ref _cpu, value);
         }
 
         public string ManagedMemory
         {
             get => _managedMemory;
-            set { SetPropertyAndNotify(ref _managedMemory, value, () => ManagedMemory); }
+            set => SetProperty(ref _managedMemory, value);
         }
 
         public string TotalMemory
         {
             get => _totalMemory;
-            set { SetPropertyAndNotify(ref _totalMemory, value, () => TotalMemory); }
+            set => SetProperty(ref _totalMemory, value);
         }
 
         private static string FormatCpu(int cpu)

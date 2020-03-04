@@ -24,7 +24,7 @@ namespace Simple.Wpf.DataGrid.Resources.Views
                 .ObserveOn(schedulerService.Dispatcher)
                 .Select(x => new MessageDialog(x))
                 .SelectMany(x => ShowDialogAsync(x), (x, y) => x)
-                .ResilentSubscribe(schedulerService.Dispatcher);
+                .Subscribe();
 
             Closed += HandleClosed;
         }

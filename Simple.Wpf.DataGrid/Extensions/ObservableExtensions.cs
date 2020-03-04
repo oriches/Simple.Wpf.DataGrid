@@ -28,54 +28,5 @@ namespace Simple.Wpf.DataGrid.Extensions
 
             return observable.Do(x => GestureService.SetBusy());
         }
-
-        public static IDisposable ResilentSubscribe<T>(this IObservable<T> observable, Action<T> onNext,
-            Action<Exception> onError, IScheduler scheduler)
-        {
-            return observable.Subscribe(x => OnNextInvoke(onNext, x, scheduler), onError);
-        }
-
-        public static IDisposable ResilentSubscribe<T>(this IObservable<T> observable, IScheduler scheduler)
-        {
-            return observable.Subscribe(x => OnNextInvoke(y => { }, x, scheduler));
-        }
-
-        public static IDisposable ResilentSubscribe<T>(this IObservable<T> observable, Action<T> onNext,
-            Action onCompleted,
-            IScheduler scheduler)
-        {
-            return observable.Subscribe(x => OnNextInvoke(onNext, x, scheduler), onCompleted);
-        }
-
-        public static IDisposable ResilentSubscribe<T>(this IObservable<T> observable, Action<T> onNext,
-            IScheduler scheduler)
-        {
-            return observable.Subscribe(x => OnNextInvoke(onNext, x, scheduler));
-        }
-
-        public static void ResilentSubscribe<T>(this IObservable<T> observable, Action<T> onNext, Action onCompleted,
-            CancellationToken token, IScheduler scheduler)
-        {
-            observable.Subscribe(x => OnNextInvoke(onNext, x, scheduler), onCompleted, token);
-        }
-
-        public static void ResilentSubscribe<T>(this IObservable<T> observable, Action<T> onNext,
-            Action<Exception> onError,
-            Action onCompleted, CancellationToken token, IScheduler scheduler)
-        {
-            observable.Subscribe(x => OnNextInvoke(onNext, x, scheduler), onError, onCompleted, token);
-        }
-
-        private static void OnNextInvoke<T>(Action<T> onNext, T instance, IScheduler scheduler)
-        {
-            try
-            {
-                onNext(instance);
-            }
-            catch (Exception exn)
-            {
-                scheduler.Schedule(exn, (s1, s2) => throw s2);
-            }
-        }
     }
 }

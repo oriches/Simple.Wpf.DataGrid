@@ -11,7 +11,8 @@ using Simple.Wpf.DataGrid.Services;
 namespace Simple.Wpf.DataGrid.ViewModels
 {
     [DebuggerDisplay("Id = {Id}, CreatedOn = {CreatedOn}, ModifiedOn = {ModifiedOn}")]
-    public sealed class DynamicDataViewModel : BaseViewModel, ICustomTypeDescriptor, ITransientViewModel
+    public sealed class DynamicDataViewModel : BaseViewModel, ICustomTypeDescriptor, ITransientViewModel,
+        IComparable<DynamicDataViewModel>, IComparable
     {
         public static PropertyDescriptorCollection PropertyDescriptors;
 
@@ -54,6 +55,16 @@ namespace Simple.Wpf.DataGrid.ViewModels
         public DateTime CreatedOn => (DateTime) _createdOn;
 
         public DateTime ModifiedOn => (DateTime) _modifiedOn;
+
+        public int CompareTo(object obj)
+        {
+            return CompareTo((DynamicDataViewModel) obj);
+        }
+
+        public int CompareTo(DynamicDataViewModel other)
+        {
+            return string.Compare(Id, other.Id, StringComparison.Ordinal);
+        }
 
         public AttributeCollection GetAttributes()
         {
@@ -161,7 +172,7 @@ namespace Simple.Wpf.DataGrid.ViewModels
             }
         }
 
-        public void ProcessUpdate(DynamicData data)
+        public void Update(DynamicData data)
         {
             var properties = data.Properties.ToArray();
 

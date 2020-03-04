@@ -159,6 +159,8 @@ namespace Simple.Wpf.DataGrid.Resources.Behaviors
         {
             if (AssociatedObject == null) return;
 
+            if (_columns.Count == 0) return;
+
             // Not using LINQ to improve UI responsiveness...
 
             // ReSharper disable once ForCanBeConvertedToForeach

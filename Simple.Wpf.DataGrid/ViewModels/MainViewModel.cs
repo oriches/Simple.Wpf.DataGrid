@@ -9,7 +9,6 @@ using System.Linq;
 using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
-using System.Reactive.Subjects;
 using System.Windows.Data;
 using Simple.Wpf.DataGrid.Collections;
 using Simple.Wpf.DataGrid.Commands;
@@ -25,19 +24,17 @@ namespace Simple.Wpf.DataGrid.ViewModels
         private readonly ListCollectionView _collectionView;
         private readonly IColumnsService _columnsService;
         private readonly CustomTypeRangeObservableCollection<DynamicDataViewModel> _data;
-        private readonly SerialDisposable _dataDisposable;
         private readonly Dictionary<object, DynamicDataViewModel> _dataIds;
-        private readonly object _dataSync = new object();
         private readonly IDateTimeService _dateTimeService;
-        private readonly Subject<Unit> _filterRefresh;
+        private readonly IOverlayService _overlayService;
         private readonly ISchedulerService _schedulerService;
         private readonly SerialDisposable _suspendNotifications;
+        private readonly ITabularDataService _tabularDataService;
 
-        private readonly Subject<int> _updates;
         private readonly Dictionary<long, int> _updateStats;
+        private IDisposable _dataStream;
 
         private string _filter;
-        private string _filterLowercase;
         private int _updatesPerSecond;
 
         public MainViewModel(IDiagnosticsViewModel diagnosticsViewModel,
@@ -47,8 +44,10 @@ namespace Simple.Wpf.DataGrid.ViewModels
             IDateTimeService dateTimeService,
             ISchedulerService schedulerService)
         {
+            _tabularDataService = tabularDataService;
             _schedulerService = schedulerService;
             _columnsService = columnsService;
+            _overlayService = overlayService;
             _dateTimeService = dateTimeService;
             Diagnostics = diagnosticsViewModel;
 
@@ -58,86 +57,38 @@ namespace Simple.Wpf.DataGrid.ViewModels
 
             _updateStats = new Dictionary<long, int>();
 
-            _updates = new Subject<int>()
+            RefreshCommand = ReactiveCommand.Create()
                 .DisposeWith(this);
 
-            var refreshEnabled = new BehaviorSubject<bool>(true)
+            ClearCommand = ReactiveCommand.Create()
                 .DisposeWith(this);
 
-            _filterRefresh = new Subject<Unit>()
+            ColumnPickerCommand = ReactiveCommand.Create(HasDataChanged)
                 .DisposeWith(this);
 
-            _dataDisposable = new SerialDisposable()
+            _dataStream = InitialiseAndProcessDataAsync()
                 .DisposeWith(this);
 
-            RefreshCommand = ReactiveCommand.Create(refreshEnabled.DistinctUntilChanged())
+            RefreshCommand.Subscribe(x => Refresh())
                 .DisposeWith(this);
 
-            ClearCommand = ReactiveCommand.Create(refreshEnabled.DistinctUntilChanged())
+            ClearCommand.Subscribe(x => Clear())
                 .DisposeWith(this);
 
-            ColumnPickerCommand = ReactiveCommand.Create(_data.ObserveCollectionChanged().Select(x => _data.Any()))
-                .DisposeWith(this);
-
-            RefreshCommand.ActivateGestures()
-                .StartWith(Constants.StartsWith.Unit.DefaultBoxed)
-                .ResilentSubscribe(_ =>
-                {
-                    refreshEnabled.OnNext(false);
-                    DisposeOfData();
-
-                    _dataDisposable.Disposable = tabularDataService.GetAsync(schedulerService.TaskPool)
-                        .Select(x => ConvertToDataSet(x))
-                        .ObserveOn(schedulerService.Dispatcher)
-                        .ResilentSubscribe(x =>
-                        {
-                            ProcessDataSet(x);
-                            refreshEnabled.OnNext(true);
-                        }, schedulerService.Dispatcher);
-                }, schedulerService.Dispatcher)
-                .DisposeWith(this);
-
-            ClearCommand.ActivateGestures()
-                .ResilentSubscribe(x => DisposeOfData(), schedulerService.Dispatcher)
-                .DisposeWith(this);
-
-            ColumnPickerCommand.ActivateGestures()
-                .ResilentSubscribe(x =>
-                {
-                    var viewModel = new ColumnPickerViewModel(GridName, _columnsService, schedulerService);
-                    overlayService.Post("Column Picker", viewModel, viewModel);
-                }, schedulerService.Dispatcher)
-                .DisposeWith(this);
-
-            Disposable.Create(() => DisposeOfData())
+            ColumnPickerCommand.Subscribe(x => ShowColumnPicker())
                 .DisposeWith(this);
 
             _suspendNotifications = new SerialDisposable()
                 .DisposeWith(this);
 
-            _filterRefresh.Throttle(Constants.UI.Grids.FilterThrottle, schedulerService.TaskPool)
-                .ObserveOn(schedulerService.Dispatcher)
-                .ActivateGestures()
-                .Subscribe(x =>
-                {
-                    using (Duration.Measure(Logger, "Refresh"))
-                    {
-                        _collectionView.Refresh();
-                    }
-                })
+            FilterChanged.Subscribe(x => _collectionView.Refresh())
                 .DisposeWith(this);
 
-            columnsService.Changed
-                .Where(x => x == GridName)
-                .ObserveOn(schedulerService.Dispatcher)
-                .ResilentSubscribe(x => OnPropertyChanged(() => VisibleColumns), schedulerService.Dispatcher)
+            ColumnsChanged.ObserveOn(schedulerService.Dispatcher)
+                .Subscribe(x => OnPropertyChanged(nameof(VisibleColumns)))
                 .DisposeWith(this);
 
-            _updates.Buffer(Constants.UI.Grids.UpdatesInfoThrottle, schedulerService.TaskPool)
-                .Where(x => x.Any())
-                .Select(x => x.Last())
-                .ObserveOn(schedulerService.Dispatcher)
-                .Subscribe(x => UpdatesPerSecond = x)
+            Disposable.Create(() => Clear())
                 .DisposeWith(this);
         }
 
@@ -162,7 +113,7 @@ namespace Simple.Wpf.DataGrid.ViewModels
         public int UpdatesPerSecond
         {
             get => _updatesPerSecond;
-            private set { SetPropertyAndNotify(ref _updatesPerSecond, value, () => UpdatesPerSecond); }
+            private set => SetProperty(ref _updatesPerSecond, value);
         }
 
         public IEnumerable<string> AvailableCultures => CultureService.AvailableCultures;
@@ -191,13 +142,8 @@ namespace Simple.Wpf.DataGrid.ViewModels
                 if (_suspendNotifications.Disposable == null && !value) return;
 
                 Debug.WriteLine(value ? "Updates: Suspended" : "Updates: Resumed");
-                IEnumerable<IDisposable> suspendedNotifications;
 
-                lock (_dataSync)
-                {
-                    suspendedNotifications = _data.Select(x => x.SuspendNotifications());
-                }
-
+                var suspendedNotifications = _data.Select(x => x.SuspendNotifications());
                 _suspendNotifications.Disposable = value ? new CompositeDisposable(suspendedNotifications) : null;
             }
         }
@@ -205,32 +151,62 @@ namespace Simple.Wpf.DataGrid.ViewModels
         public string Filter
         {
             get => _filter;
-            set
-            {
-                if (SetPropertyAndNotify(ref _filter, value, "Filter"))
-                {
-                    _filterLowercase = _filter.ToLower();
-                    _filterRefresh.OnNext(Unit.Default);
-                }
-            }
+            set => SetProperty(ref _filter, value);
         }
+
+        private IObservable<string> FilterChanged =>
+            this.ObservePropertyChanged(nameof(Filter)).Select(x => Filter)
+                .DistinctUntilChanged()
+                .Select(x => x?.ToLower())
+                .Throttle(Constants.UI.Grids.FilterThrottle, _schedulerService.Dispatcher)
+                .ActivateGestures();
+
+        private IObservable<Unit> ColumnsChanged =>
+            _columnsService.Changed.Where(x => x == GridName).AsUnit();
+
+        private IObservable<bool> HasDataChanged =>
+            _data.ObserveCollectionChanged().Select(x => _data.Any());
 
         public IDiagnosticsViewModel Diagnostics { get; }
 
-        private void DisposeOfData()
+        private IObservable<DataSet> InitialiseDataAsync()
         {
-            _dataDisposable.Disposable = Disposable.Empty;
+            return _tabularDataService.GetAsync()
+                .Select(x => Convert(x))
+                .Catch<DataSet, Exception>(e =>
+                {
+                    Logger.Error(e, "Failed to get any data!");
+                    return InitialiseDataAsync();
+                });
+        }
 
-            DynamicDataViewModel[] data;
-            lock (_dataSync)
-            {
-                data = _data.ToArray();
+        private IDisposable InitialiseAndProcessDataAsync()
+        {
+            return InitialiseDataAsync()
+                .Publish()
+                .RefCount()
+                .ObserveOn(_schedulerService.Dispatcher)
+                .Subscribe(x => UpdatesPerSecond = Process(x));
+        }
 
-                _dataIds.Clear();
-                _data.Clear();
+        private void Refresh()
+        {
+            Clear();
 
-                _updateStats.Clear();
-            }
+            _dataStream = InitialiseAndProcessDataAsync()
+                .DisposeWith(this);
+        }
+
+        private void Clear()
+        {
+            _dataStream.Dispose();
+
+            var data = _data.ToArray();
+
+            _dataIds.Clear();
+            _data.Clear();
+
+            _updateStats.Clear();
 
             // perf hack...
             DynamicDataViewModel.Reset();
@@ -239,14 +215,14 @@ namespace Simple.Wpf.DataGrid.ViewModels
 
             DisposeOfAsync(data, _schedulerService.TaskPool);
 
-            OnPropertyChanged("HasData");
-            OnPropertyChanged("VisibleColumns");
-            OnPropertyChanged("TotalNumberOfRows");
-            OnPropertyChanged("TotalNumberOfValues");
-            OnPropertyChanged("UpdatesPerSecond");
+            OnPropertyChanged(nameof(HasData));
+            OnPropertyChanged(nameof(VisibleColumns));
+            OnPropertyChanged(nameof(TotalNumberOfRows));
+            OnPropertyChanged(nameof(TotalNumberOfValues));
+            OnPropertyChanged(nameof(UpdatesPerSecond));
         }
 
-        private DataSet ConvertToDataSet(IEnumerable<DynamicData> data)
+        private DataSet Convert(IEnumerable<DynamicData> data)
         {
             var array = data.ToArray();
 
@@ -265,22 +241,19 @@ namespace Simple.Wpf.DataGrid.ViewModels
             return new DataSet(@new.ToArray(), updates.ToArray());
         }
 
-        private void ProcessDataSet(DataSet data)
+        private int Process(DataSet data)
         {
             if (data.New.Length != 0)
-                using (Duration.Measure(Logger, "ProcessDataSet - New"))
+                using (Duration.Measure(Logger, "Process - New"))
                 {
-                    lock (_dataSync)
-                    {
-                        _dataIds.AddRange(data.NewAsKeyValuePairs);
-                        _data.AddRange(data.New);
-                    }
+                    data.New.ForEach(x => { _dataIds[x.Id] = x; });
+                    _data.AddRange(data.New);
 
                     _columnsService.InitialiseColumns(GridName, data.ColumnNames);
 
-                    OnPropertyChanged("HasData");
-                    OnPropertyChanged("TotalNumberOfRows");
-                    OnPropertyChanged("TotalNumberOfValues");
+                    OnPropertyChanged(nameof(HasData));
+                    OnPropertyChanged(nameof(TotalNumberOfRows));
+                    OnPropertyChanged(nameof(TotalNumberOfValues));
                 }
 
             // Avoiding LINQ here to improve performance - this method is called frequently when there are updates from the backend
@@ -289,13 +262,13 @@ namespace Simple.Wpf.DataGrid.ViewModels
             foreach (var update in data.Updates)
             {
                 var viewModel = _dataIds[update.Id];
-                viewModel.ProcessUpdate(update);
+                viewModel.Update(update);
             }
 
-            CalculateUpdateRates(data.Updates);
+            return CalculateUpdateRates(data.Updates);
         }
 
-        private void CalculateUpdateRates(IReadOnlyCollection<DynamicData> updates)
+        private int CalculateUpdateRates(IReadOnlyCollection<DynamicData> updates)
         {
             var now = _dateTimeService.Now;
             var previous = now.AddSeconds(-1);
@@ -308,29 +281,35 @@ namespace Simple.Wpf.DataGrid.ViewModels
 
             foreach (var item in oldItems) _updateStats.Remove(item);
 
-            _updates.OnNext((int) (Math.Round(_updateStats.Sum(x => x.Value) / 100d, 0) * 100));
+            return System.Convert.ToInt32(Math.Round(_updateStats.Sum(x => x.Value) / 100d, 0) * 100);
         }
 
         private bool FilterData(object obj)
         {
             if (string.IsNullOrEmpty(_filter)) return true;
 
-            if (obj is DynamicDataViewModel data)
-            {
-                var propertyDescriptors = data.GetProperties()
-                    .OfType<PropertyDescriptor>()
-                    .ToArray();
+            if (!(obj is DynamicDataViewModel data)) return false;
 
-                // ReSharper disable once ForCanBeConvertedToForeach
-                // ReSharper disable once LoopCanBeConvertedToQuery
-                for (var i = 0; i < propertyDescriptors.Length; i++)
-                {
-                    var propertyDescriptor = propertyDescriptors[i];
-                    if (data.GetValueAsString(propertyDescriptor.Name).Contains(_filterLowercase)) return true;
-                }
+            var propertyDescriptors = data.GetProperties()
+                .OfType<PropertyDescriptor>()
+                .ToArray();
+
+            // ReSharper disable once ForCanBeConvertedToForeach
+            // ReSharper disable once LoopCanBeConvertedToQuery
+            for (var i = 0; i < propertyDescriptors.Length; i++)
+            {
+                var propertyDescriptor = propertyDescriptors[i];
+                var valueAsString = data.GetValueAsString(propertyDescriptor.Name);
+                return valueAsString.IndexOf(_filter, StringComparison.InvariantCultureIgnoreCase) != -1;
             }
 
             return false;
+        }
+
+        private void ShowColumnPicker()
+        {
+            var viewModel = new ColumnPickerViewModel(GridName, _columnsService, _schedulerService);
+            _overlayService.Post("Column Picker", viewModel, viewModel);
         }
 
         private sealed class DataSet
@@ -341,24 +320,17 @@ namespace Simple.Wpf.DataGrid.ViewModels
                 New = @new;
 
                 if (@new.Any())
-                {
-                    NewAsKeyValuePairs = @new.Select(x => new KeyValuePair<object, DynamicDataViewModel>(x.Id, x))
-                        .ToArray();
-
                     ColumnNames = @new
                         .First()
                         .GetProperties()
                         .Cast<PropertyDescriptor>()
                         .Select(x => x.Name)
                         .ToArray();
-                }
             }
 
             public DynamicData[] Updates { get; }
 
             public DynamicDataViewModel[] New { get; }
-
-            public KeyValuePair<object, DynamicDataViewModel>[] NewAsKeyValuePairs { get; }
 
             public string[] ColumnNames { get; }
         }

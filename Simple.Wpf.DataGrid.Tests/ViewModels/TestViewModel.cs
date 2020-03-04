@@ -10,13 +10,13 @@ namespace Simple.Wpf.DataGrid.Tests.ViewModels
         public string StringProperty
         {
             get => _stringProperty;
-            set { SetPropertyAndNotify(ref _stringProperty, value, () => StringProperty); }
+            set => SetProperty(ref _stringProperty, value);
         }
 
         public int IntegerProperty
         {
             get => _integerProperty;
-            set { SetPropertyAndNotify(ref _integerProperty, value, () => IntegerProperty); }
+            set => SetProperty(ref _integerProperty, value);
         }
     }
 }
