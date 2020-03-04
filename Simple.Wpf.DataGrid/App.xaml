@@ -6,16 +6,11 @@
 
         <rd:SharedResourceDictionary>
             <rd:SharedResourceDictionary.MergedDictionaries>
-                <rd:SharedResourceDictionary
-                    Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
-                <rd:SharedResourceDictionary
-                    Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
-                <rd:SharedResourceDictionary
-                    Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
-                <rd:SharedResourceDictionary
-                    Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/steel.xaml" />
-                <rd:SharedResourceDictionary
-                    Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/baselight.xaml" />
+                <rd:SharedResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <rd:SharedResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <rd:SharedResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
+                <rd:SharedResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/steel.xaml" />
+                <rd:SharedResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/baselight.xaml" />
                 <rd:SharedResourceDictionary Source="Views/Colors/Colors.xaml" />
                 <rd:SharedResourceDictionary Source="Views/Brushes/Brushes.xaml" />
                 <rd:SharedResourceDictionary Source="Views/Converters/Converters.xaml" />
@@ -25,12 +20,9 @@
                 <rd:SharedResourceDictionary Source="Views/Styles/TextBlockStyles.xaml" />
                 <rd:SharedResourceDictionary Source="Views/Icons/Icons.xaml" />
                 <rd:SharedResourceDictionary Source="Views/Templates/DataGridCellTemplates.xaml" />
-                <rd:SharedResourceDictionary
-                    Source="Views/Templates/DiagnosticsViewModelTemplate.xaml" />
-                <rd:SharedResourceDictionary
-                    Source="Views/Templates/ColumnPickerViewModelTemplate.xaml" />
-                <rd:SharedResourceDictionary
-                    Source="Views/Templates/ExceptionViewModelTemplate.xaml" />
+                <rd:SharedResourceDictionary Source="Views/Templates/DiagnosticsViewModelTemplate.xaml" />
+                <rd:SharedResourceDictionary Source="Views/Templates/ColumnPickerViewModelTemplate.xaml" />
+                <rd:SharedResourceDictionary Source="Views/Templates/ExceptionViewModelTemplate.xaml" />
                 <rd:SharedResourceDictionary Source="Views/Templates/MainViewModelTemplate.xaml" />
             </rd:SharedResourceDictionary.MergedDictionaries>
         </rd:SharedResourceDictionary>
