@@ -12,4 +12,4 @@ The UI's built using MVVM as the MVC architecture and being 'pure' about the sep
 
 Happy coding...
 
-![Image description](link-to-image)
+![Image description](screenshot.png)
