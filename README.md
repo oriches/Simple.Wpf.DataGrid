@@ -1,5 +1,4 @@
 # Simple.Wpf.DataGrid
-=====================
 
 [![Build status](https://ci.appveyor.com/api/projects/status/2gustf15hmt9tw09/branch/master?svg=true)](https://ci.appveyor.com/project/oriches/simple-wpf-datagrid)
 
