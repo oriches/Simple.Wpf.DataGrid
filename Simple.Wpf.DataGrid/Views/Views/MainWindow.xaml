@@ -10,7 +10,7 @@
                 BorderThickness="1"
                 SaveWindowPosition="True"
                 ShowSystemMenuOnRightClick="False"
-                BorderBrush="{StaticResource AccentColorBrush}"
+                BorderBrush="{StaticResource MahApps.Brushes.Accent}"
                 d:DataContext="{d:DesignInstance vm:ChromeViewModel}">
 
     <mh:MetroWindow.Flyouts>

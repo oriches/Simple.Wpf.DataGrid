@@ -12,7 +12,7 @@
     </rd:SharedResourceDictionary.MergedDictionaries>
 
     <Style TargetType="{x:Type DataGridColumnHeader}"
-           BasedOn="{StaticResource MetroDataGridColumnHeader}">
+           BasedOn="{StaticResource MahApps.Styles.DataGridColumnHeader}">
         <Setter Property="HorizontalAlignment"
                 Value="Stretch" />
         <Setter Property="HorizontalContentAlignment"
@@ -83,11 +83,11 @@
                                HorizontalAlignment="Left"
                                HorizontalContentAlignment="Left"
                                Background="Transparent"
-                               Style="{StaticResource MetroColumnHeaderGripperStyle}" />
+                               Style="{StaticResource MahApps.Styles.Thumb.RowHeaderGripper}" />
                         <Thumb x:Name="PART_RightHeaderGripper"
                                HorizontalAlignment="Right"
                                HorizontalContentAlignment="Right"
-                               Style="{StaticResource MetroColumnHeaderGripperStyle}"
+                               Style="{StaticResource MahApps.Styles.Thumb.RowHeaderGripper}"
                                Grid.Column="1" />
                     </Grid>
                     <ControlTemplate.Triggers>
