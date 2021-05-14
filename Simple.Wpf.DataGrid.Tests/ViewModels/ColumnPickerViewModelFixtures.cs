@@ -20,7 +20,8 @@ namespace Simple.Wpf.DataGrid.Tests.ViewModels
             _visibleColumns = new[] {"Col1", "Col2", "Col3", "Col4", "Col5"};
             _hiddenColumns = new[] {"Col6", "Col7", "Col8", "Col9", "Col10"};
 
-            _columnService.Setup(x => x.Initialised).Returns(Observable.Never<string>());
+            _columnService.Setup(x => x.Initialised)
+                .Returns(Observable.Never<string>());
 
             _columnService.Setup(x => x.VisibleColumns(It.Is<string>(y => y == _identifier)))
                 .Returns(_visibleColumns);
@@ -62,9 +63,15 @@ namespace Simple.Wpf.DataGrid.Tests.ViewModels
 
             TestScheduler.AdvanceBy(TimeSpan.FromMilliseconds(1));
 
-            var columns = new[] {viewModel.Left.First(), viewModel.Left.Skip(1).First()};
-            columns[0].IsSelected = true;
-            columns[1].IsSelected = true;
+            var columns = new[]
+            {
+                viewModel.Left.First(), viewModel.Left.Skip(1)
+                    .First()
+            };
+            columns[0]
+                .IsSelected = true;
+            columns[1]
+                .IsSelected = true;
 
             // ACT
             viewModel.AddCommand.Execute(null);
@@ -86,7 +93,8 @@ namespace Simple.Wpf.DataGrid.Tests.ViewModels
 
             // ACT
 
-            viewModel.Left.First().IsSelected = true;
+            viewModel.Left.First()
+                .IsSelected = true;
 
             // ASSERT
             Assert.That(viewModel.AddCommand.CanExecute(null), Is.True);
@@ -102,8 +110,11 @@ namespace Simple.Wpf.DataGrid.Tests.ViewModels
 
             // ACT
 
-            viewModel.Left.First().IsSelected = true;
-            viewModel.Left.Skip(1).First().IsSelected = true;
+            viewModel.Left.First()
+                .IsSelected = true;
+            viewModel.Left.Skip(1)
+                .First()
+                .IsSelected = true;
 
             // ASSERT
             Assert.That(viewModel.AddCommand.CanExecute(null), Is.True);
@@ -119,7 +130,8 @@ namespace Simple.Wpf.DataGrid.Tests.ViewModels
 
             // ACT
 
-            viewModel.Right.First().IsSelected = true;
+            viewModel.Right.First()
+                .IsSelected = true;
 
             // ASSERT
             Assert.That(viewModel.MovedownCommand.CanExecute(null), Is.True);
@@ -135,7 +147,8 @@ namespace Simple.Wpf.DataGrid.Tests.ViewModels
 
             // ACT
 
-            viewModel.Right.First().IsSelected = true;
+            viewModel.Right.First()
+                .IsSelected = true;
 
             // ASSERT
             Assert.That(viewModel.MoveupCommand.CanExecute(null), Is.False);
@@ -151,8 +164,11 @@ namespace Simple.Wpf.DataGrid.Tests.ViewModels
 
             // ACT
 
-            viewModel.Right.First().IsSelected = true;
-            viewModel.Right.Skip(1).First().IsSelected = true;
+            viewModel.Right.First()
+                .IsSelected = true;
+            viewModel.Right.Skip(1)
+                .First()
+                .IsSelected = true;
 
             // ASSERT
             Assert.That(viewModel.RemoveCommand.CanExecute(null), Is.True);
@@ -168,7 +184,8 @@ namespace Simple.Wpf.DataGrid.Tests.ViewModels
 
             // ACT
 
-            viewModel.Right.First().IsSelected = true;
+            viewModel.Right.First()
+                .IsSelected = true;
 
             // ASSERT
             Assert.That(viewModel.RemoveCommand.CanExecute(null), Is.True);
@@ -183,7 +200,8 @@ namespace Simple.Wpf.DataGrid.Tests.ViewModels
             TestScheduler.AdvanceBy(TimeSpan.FromMilliseconds(1));
 
             var column = viewModel.Right.First();
-            var columnIndex = viewModel.Right.ToList().IndexOf(column);
+            var columnIndex = viewModel.Right.ToList()
+                .IndexOf(column);
 
             column.IsSelected = true;
 
@@ -191,7 +209,8 @@ namespace Simple.Wpf.DataGrid.Tests.ViewModels
             viewModel.MovedownCommand.Execute(null);
 
             // ASSERT
-            Assert.That(viewModel.Right.ToList().IndexOf(column), Is.EqualTo(++columnIndex));
+            Assert.That(viewModel.Right.ToList()
+                .IndexOf(column), Is.EqualTo(++columnIndex));
         }
 
 
@@ -204,7 +223,8 @@ namespace Simple.Wpf.DataGrid.Tests.ViewModels
             TestScheduler.AdvanceBy(TimeSpan.FromMilliseconds(1));
 
             var column = viewModel.Right.Last();
-            var columnIndex = viewModel.Right.ToList().IndexOf(column);
+            var columnIndex = viewModel.Right.ToList()
+                .IndexOf(column);
 
             column.IsSelected = true;
 
@@ -212,7 +232,8 @@ namespace Simple.Wpf.DataGrid.Tests.ViewModels
             viewModel.MoveupCommand.Execute(null);
 
             // ASSERT
-            Assert.That(viewModel.Right.ToList().IndexOf(column), Is.EqualTo(--columnIndex));
+            Assert.That(viewModel.Right.ToList()
+                .IndexOf(column), Is.EqualTo(--columnIndex));
         }
 
         [Test]
@@ -242,10 +263,12 @@ namespace Simple.Wpf.DataGrid.Tests.ViewModels
 
             // ASSERT
             Assert.That(viewModel.Left, Is.Not.Empty);
-            Assert.That(viewModel.Left.Select(x => x.Name).SequenceEqual(_hiddenColumns), Is.True);
+            Assert.That(viewModel.Left.Select(x => x.Name)
+                .SequenceEqual(_hiddenColumns), Is.True);
 
             Assert.That(viewModel.Right, Is.Not.Empty);
-            Assert.That(viewModel.Right.Select(x => x.Name).SequenceEqual(_visibleColumns), Is.True);
+            Assert.That(viewModel.Right.Select(x => x.Name)
+                .SequenceEqual(_visibleColumns), Is.True);
         }
 
         [Test]
@@ -256,9 +279,15 @@ namespace Simple.Wpf.DataGrid.Tests.ViewModels
 
             TestScheduler.AdvanceBy(TimeSpan.FromMilliseconds(1));
 
-            var columns = new[] {viewModel.Right.First(), viewModel.Right.Skip(1).First()};
-            columns[0].IsSelected = true;
-            columns[1].IsSelected = true;
+            var columns = new[]
+            {
+                viewModel.Right.First(), viewModel.Right.Skip(1)
+                    .First()
+            };
+            columns[0]
+                .IsSelected = true;
+            columns[1]
+                .IsSelected = true;
 
             // ACT
             viewModel.RemoveCommand.Execute(null);

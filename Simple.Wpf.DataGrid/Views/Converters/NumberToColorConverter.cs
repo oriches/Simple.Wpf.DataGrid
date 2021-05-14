@@ -10,8 +10,8 @@ namespace Simple.Wpf.DataGrid.Views.Converters
     {
         public static readonly IValueConverter Instance = new NumberToColorConverter();
 
-        private readonly SolidColorBrush _negativeNumber;
-        private readonly SolidColorBrush _positiveNumber;
+        private readonly object _negativeNumber;
+        private readonly object _positiveNumber;
 
         private NumberToColorConverter()
         {

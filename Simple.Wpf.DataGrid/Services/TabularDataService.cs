@@ -20,7 +20,8 @@ namespace Simple.Wpf.DataGrid.Services
         public TabularDataService(ISchedulerService schedulerService)
         {
             _schedulerService = schedulerService;
-            using (Duration.Measure(Logger, "Constructor - " + GetType().Name))
+            using (Duration.Measure(Logger, "Constructor - " + GetType()
+                .Name))
             {
             }
         }
@@ -40,7 +41,8 @@ namespace Simple.Wpf.DataGrid.Services
                         .Synchronize(data)
                         .Subscribe(_ =>
                         {
-                            var localCopy = data.Select(y => y.Clone()).ToArray();
+                            var localCopy = data.Select(y => y.Clone())
+                                .ToArray();
                             var updates = TabularDataGenerator.CreateUpdates(localCopy);
 
                             x.OnNext(updates);

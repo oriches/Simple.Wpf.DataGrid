@@ -15,7 +15,8 @@ namespace Simple.Wpf.DataGrid.Services
 
         public ColumnsService(ISettingsService settingsService)
         {
-            using (Duration.Measure(Logger, "Constructor - " + GetType().Name))
+            using (Duration.Measure(Logger, "Constructor - " + GetType()
+                .Name))
             {
                 _settingsService = settingsService;
 
@@ -89,7 +90,8 @@ namespace Simple.Wpf.DataGrid.Services
             if (_settingsService.TryGet(identifier, out settings))
             {
                 var allColumns = settings.Get<string[]>(Constants.UI.Settings.Names.Columns);
-                settings[Constants.UI.Settings.Names.VisibleColumns] = allColumns.Except(columns).ToArray();
+                settings[Constants.UI.Settings.Names.VisibleColumns] = allColumns.Except(columns)
+                    .ToArray();
 
                 _changed.OnNext(identifier);
             }
@@ -101,7 +103,8 @@ namespace Simple.Wpf.DataGrid.Services
             if (_settingsService.TryGet(identifier, out settings))
             {
                 var allColumns = settings.Get<string[]>(Constants.UI.Settings.Names.Columns);
-                settings[Constants.UI.Settings.Names.VisibleColumns] = columns.Intersect(allColumns).ToArray();
+                settings[Constants.UI.Settings.Names.VisibleColumns] = columns.Intersect(allColumns)
+                    .ToArray();
 
                 _changed.OnNext(identifier);
             }

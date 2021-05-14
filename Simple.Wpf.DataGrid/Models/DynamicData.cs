@@ -32,7 +32,8 @@ namespace Simple.Wpf.DataGrid.Models
                 if (!_dictionary.ContainsKey(Constants.UI.Grids.PredefinedColumns.Id))
                     throw new ArgumentException("DynamicData - Id is not defined in properties collection!");
 
-                Id = _dictionary[Constants.UI.Grids.PredefinedColumns.Id].ToString();
+                Id = _dictionary[Constants.UI.Grids.PredefinedColumns.Id]
+                    .ToString();
             }
         }
 
@@ -82,7 +83,8 @@ namespace Simple.Wpf.DataGrid.Models
                 this[name] = value;
 
                 if (name == Constants.UI.Grids.PredefinedColumns.Id)
-                    Id = _dictionary[Constants.UI.Grids.PredefinedColumns.Id].ToString();
+                    Id = _dictionary[Constants.UI.Grids.PredefinedColumns.Id]
+                        .ToString();
 
                 return true;
             }

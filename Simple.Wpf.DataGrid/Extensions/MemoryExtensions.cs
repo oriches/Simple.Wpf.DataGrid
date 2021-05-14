@@ -10,14 +10,14 @@ namespace Simple.Wpf.DataGrid.Extensions
     {
         private static readonly IDictionary<MemoryUnits, string> UnitsAsString = new Dictionary<MemoryUnits, string>();
 
-        private static readonly IDictionary<MemoryUnits, decimal> UnitsMulitpler =
+        private static readonly IDictionary<MemoryUnits, decimal> UnitsMultiplier =
             new Dictionary<MemoryUnits, decimal>();
 
         private static readonly Type MemoryUnitsType = typeof(MemoryUnits);
 
         public static string WorkingSetPrivateAsString(this Memory memory)
         {
-            var valueAsString = decimal.Round(memory.WorkingSetPrivate * GetMultipler(MemoryUnits.Mega), 2)
+            var valueAsString = decimal.Round(memory.WorkingSetPrivate * GetMultiplier(MemoryUnits.Mega), 2)
                 .ToString(CultureInfo.InvariantCulture);
 
             return valueAsString + " " + GetUnitString(MemoryUnits.Mega);
@@ -25,27 +25,25 @@ namespace Simple.Wpf.DataGrid.Extensions
 
         public static string ManagedAsString(this Memory memory)
         {
-            var valueAsString = decimal.Round(memory.Managed * GetMultipler(MemoryUnits.Mega), 2)
+            var valueAsString = decimal.Round(memory.Managed * GetMultiplier(MemoryUnits.Mega), 2)
                 .ToString(CultureInfo.InvariantCulture);
 
             return valueAsString + " " + GetUnitString(MemoryUnits.Mega);
         }
 
-        private static decimal GetMultipler(MemoryUnits units)
+        private static decimal GetMultiplier(MemoryUnits units)
         {
-            decimal unitsMulitpler;
-            if (UnitsMulitpler.TryGetValue(units, out unitsMulitpler)) return unitsMulitpler;
+            if (UnitsMultiplier.TryGetValue(units, out var unitsMultiplier)) return unitsMultiplier;
 
-            unitsMulitpler = 1 / Convert.ToDecimal((int) units);
+            unitsMultiplier = 1 / Convert.ToDecimal((int) units);
 
-            UnitsMulitpler.Add(units, unitsMulitpler);
-            return unitsMulitpler;
+            UnitsMultiplier.Add(units, unitsMultiplier);
+            return unitsMultiplier;
         }
 
         private static string GetUnitString(MemoryUnits units)
         {
-            string unitsString;
-            if (UnitsAsString.TryGetValue(units, out unitsString)) return unitsString;
+            if (UnitsAsString.TryGetValue(units, out var unitsString)) return unitsString;
 
             string unitAsString;
             switch (units)
@@ -63,11 +61,12 @@ namespace Simple.Wpf.DataGrid.Extensions
                     unitAsString = "Giga";
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException("units", @"Unknown units of memory!");
+                    throw new ArgumentOutOfRangeException(nameof(units), @"Unknown units of memory!");
             }
 
             var memInfo = MemoryUnitsType.GetMember(unitAsString);
-            var attributes = memInfo[0].GetCustomAttributes(typeof(DescriptionAttribute), false);
+            var attributes = memInfo[0]
+                .GetCustomAttributes(typeof(DescriptionAttribute), false);
             unitsString = ((DescriptionAttribute) attributes[0]).Description;
 
             UnitsAsString.Add(units, unitsString);

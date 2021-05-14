@@ -22,14 +22,30 @@ namespace Simple.Wpf.DataGrid.Services
 
         static TabularDataGenerator()
         {
-            HowManyColumnsRandom = new Random(Convert.ToInt32(Regex.Match(Guid.NewGuid().ToString(), @"\d+").Value));
-            HowManyRowsRandom = new Random(Convert.ToInt32(Regex.Match(Guid.NewGuid().ToString(), @"\d+").Value));
-            TypesRandom = new Random(Convert.ToInt32(Regex.Match(Guid.NewGuid().ToString(), @"\d+").Value));
-            StringLengthRandom = new Random(Convert.ToInt32(Regex.Match(Guid.NewGuid().ToString(), @"\d+").Value));
-            StringCharRandom = new Random(Convert.ToInt32(Regex.Match(Guid.NewGuid().ToString(), @"\d+").Value));
-            DoubleRandom = new Random(Convert.ToInt32(Regex.Match(Guid.NewGuid().ToString(), @"\d+").Value));
-            IntegerRandom = new Random(Convert.ToInt32(Regex.Match(Guid.NewGuid().ToString(), @"\d+").Value));
-            UpdatesRandom = new Random(Convert.ToInt32(Regex.Match(Guid.NewGuid().ToString(), @"\d+").Value));
+            HowManyColumnsRandom = new Random(Convert.ToInt32(Regex.Match(Guid.NewGuid()
+                    .ToString(), @"\d+")
+                .Value));
+            HowManyRowsRandom = new Random(Convert.ToInt32(Regex.Match(Guid.NewGuid()
+                    .ToString(), @"\d+")
+                .Value));
+            TypesRandom = new Random(Convert.ToInt32(Regex.Match(Guid.NewGuid()
+                    .ToString(), @"\d+")
+                .Value));
+            StringLengthRandom = new Random(Convert.ToInt32(Regex.Match(Guid.NewGuid()
+                    .ToString(), @"\d+")
+                .Value));
+            StringCharRandom = new Random(Convert.ToInt32(Regex.Match(Guid.NewGuid()
+                    .ToString(), @"\d+")
+                .Value));
+            DoubleRandom = new Random(Convert.ToInt32(Regex.Match(Guid.NewGuid()
+                    .ToString(), @"\d+")
+                .Value));
+            IntegerRandom = new Random(Convert.ToInt32(Regex.Match(Guid.NewGuid()
+                    .ToString(), @"\d+")
+                .Value));
+            UpdatesRandom = new Random(Convert.ToInt32(Regex.Match(Guid.NewGuid()
+                    .ToString(), @"\d+")
+                .Value));
 
             Types = new Dictionary<Type, Func<object>>
             {
@@ -73,7 +89,8 @@ namespace Simple.Wpf.DataGrid.Services
                     }
                     else
                     {
-                        rows[j].Update(name, Types[type]());
+                        rows[j]
+                            .Update(name, Types[type]());
                     }
             }
 
@@ -89,7 +106,8 @@ namespace Simple.Wpf.DataGrid.Services
 
         private static object GenerateDateTime()
         {
-            return DateTime.Now.AddDays(IntegerRandom.Next(-4000, 9000)).Date;
+            return DateTime.Now.AddDays(IntegerRandom.Next(-4000, 9000))
+                .Date;
         }
 
         private static object GenerateInteger()

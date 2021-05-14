@@ -57,11 +57,13 @@
                                 Command="{Binding ClearCommand}"
                                 Style="{StaticResource ResourceButtonStyle}" />
 
-                        <TextBlock Text="{Binding TotalNumberOfRows, IsAsync=True, StringFormat=Total Rows Count: {0:N0}}"
-                                   Style="{StaticResource RowTextBlockStyle}" />
+                        <TextBlock
+                            Text="{Binding TotalNumberOfRows, IsAsync=True, StringFormat=Total Rows Count: {0:N0}}"
+                            Style="{StaticResource RowTextBlockStyle}" />
 
-                        <TextBlock Text="{Binding TotalNumberOfValues, IsAsync=True, StringFormat=Total Value Count: {0:N0}}"
-                                   Style="{StaticResource RowTextBlockStyle}" />
+                        <TextBlock
+                            Text="{Binding TotalNumberOfValues, IsAsync=True, StringFormat=Total Value Count: {0:N0}}"
+                            Style="{StaticResource RowTextBlockStyle}" />
 
                         <TextBlock Style="{StaticResource RowTextBlockStyle}"
                                    Text="Updates per Second: " />

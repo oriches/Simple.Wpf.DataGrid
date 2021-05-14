@@ -23,7 +23,8 @@ namespace Simple.Wpf.DataGrid.Tests.Services
             _idleService = new Mock<IIdleService>();
 
             _idling = new Subject<Unit>();
-            _idleService.Setup(x => x.Idling).Returns(_idling);
+            _idleService.Setup(x => x.Idling)
+                .Returns(_idling);
         }
 
         private TestScheduler _testScheduler;

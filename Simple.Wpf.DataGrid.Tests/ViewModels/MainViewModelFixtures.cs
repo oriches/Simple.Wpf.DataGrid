@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Reactive.Concurrency;
 using System.Reactive.Subjects;
 using Moq;
 using NUnit.Framework;
@@ -20,18 +19,22 @@ namespace Simple.Wpf.DataGrid.Tests.ViewModels
 
             _data = new Subject<IEnumerable<DynamicData>>();
             _tabularDataService = new Mock<ITabularDataService>();
-            _tabularDataService.Setup(x => x.GetAsync()).Returns(_data);
+            _tabularDataService.Setup(x => x.GetAsync())
+                .Returns(_data);
 
             _columnsChanged = new Subject<string>();
             _columnsInitialised = new Subject<string>();
 
             _columnsService = new Mock<IColumnsService>();
-            _columnsService.Setup(x => x.Changed).Returns(_columnsChanged);
-            _columnsService.Setup(x => x.Initialised).Returns(_columnsInitialised);
+            _columnsService.Setup(x => x.Changed)
+                .Returns(_columnsChanged);
+            _columnsService.Setup(x => x.Initialised)
+                .Returns(_columnsInitialised);
             _columnsService.Setup(x => x.InitialiseColumns(It.IsAny<string>(), It.IsAny<IEnumerable<string>>()))
                 .Callback<string, IEnumerable<string>>((y, z) =>
                 {
-                    _columnsService.Setup(x => x.VisibleColumns(It.IsAny<string>())).Returns(z);
+                    _columnsService.Setup(x => x.VisibleColumns(It.IsAny<string>()))
+                        .Returns(z);
                 });
 
             _overlayService = new Mock<IOverlayService>();

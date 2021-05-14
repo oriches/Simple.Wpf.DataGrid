@@ -14,7 +14,8 @@ namespace Simple.Wpf.DataGrid.Services
 
         public IdleService(ISchedulerService schedulerService)
         {
-            using (Duration.Measure(Logger, "Constructor - " + GetType().Name))
+            using (Duration.Measure(Logger, "Constructor - " + GetType()
+                .Name))
             {
                 var mainWindow = Application.Current.MainWindow;
                 if (mainWindow == null) throw new Exception("Main window has not been created yet!");

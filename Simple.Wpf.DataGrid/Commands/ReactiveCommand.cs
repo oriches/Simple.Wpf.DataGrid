@@ -8,6 +8,7 @@ using System.Windows.Input;
 using NLog;
 using Simple.Wpf.DataGrid.Extensions;
 using Simple.Wpf.DataGrid.Services;
+// ReSharper disable StaticMemberInGenericType
 
 namespace Simple.Wpf.DataGrid.Commands
 {
@@ -80,7 +81,8 @@ namespace Simple.Wpf.DataGrid.Commands
 
         public void Dispose()
         {
-            using (Duration.Measure(Logger, "Dispose - " + GetType().Name))
+            using (Duration.Measure(Logger, "Dispose - " + GetType()
+                .Name))
             {
                 _eventHandlers.ForEach(x => CommandManager.RequerySuggested -= x);
                 _eventHandlers.Clear();
@@ -94,9 +96,10 @@ namespace Simple.Wpf.DataGrid.Commands
 
         public IDisposable Subscribe(IObserver<T> observer)
         {
-            return _execute.ActivateGestures().Subscribe(x => observer.OnNext(x),
-                e => observer.OnError(e),
-                () => observer.OnCompleted());
+            return _execute.ActivateGestures()
+                .Subscribe(x => observer.OnNext(x),
+                    e => observer.OnError(e),
+                    () => observer.OnCompleted());
         }
 
         public static ReactiveCommand<T> Create()

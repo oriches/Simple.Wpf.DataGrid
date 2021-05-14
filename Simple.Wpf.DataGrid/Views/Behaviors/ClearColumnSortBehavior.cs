@@ -26,7 +26,8 @@ namespace Simple.Wpf.DataGrid.Views.Behaviors
         {
             _disposable = new SerialDisposable();
 
-            AssociatedObject.IsEnabled = AssociatedObject.GetHeader().SortDirection != null;
+            AssociatedObject.IsEnabled = AssociatedObject.GetHeader()
+                .SortDirection != null;
             AssociatedObject.Click += HandleClick;
         }
 
@@ -77,7 +78,7 @@ namespace Simple.Wpf.DataGrid.Views.Behaviors
 
             public ICollectionView View { get; }
 
-            public bool HasSortDescriptions => View != null && View.SortDescriptions != null;
+            public bool HasSortDescriptions => View?.SortDescriptions != null;
         }
     }
 }

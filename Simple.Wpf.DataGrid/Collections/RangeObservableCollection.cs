@@ -20,7 +20,8 @@ namespace Simple.Wpf.DataGrid.Collections
             {
                 var handlers = CollectionChanged;
                 if (handlers != null)
-                    foreach (var handler in handlers.GetInvocationList().Cast<NotifyCollectionChangedEventHandler>())
+                    foreach (var handler in handlers.GetInvocationList()
+                        .Cast<NotifyCollectionChangedEventHandler>())
                         if (handler.Target is CollectionView view)
                             view.Refresh();
                         else

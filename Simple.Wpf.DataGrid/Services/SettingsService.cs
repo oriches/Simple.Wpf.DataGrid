@@ -24,7 +24,8 @@ namespace Simple.Wpf.DataGrid.Services
 
         public SettingsService(ISchedulerService schedulerService)
         {
-            using (Duration.Measure(Logger, "Constructor - " + GetType().Name))
+            using (Duration.Measure(Logger, "Constructor - " + GetType()
+                .Name))
             {
                 _persist = new Subject<bool>()
                     .DisposeWith(this);

@@ -17,10 +17,12 @@ namespace Simple.Wpf.DataGrid.Tests.ViewModels
             _diagnosticService = new Mock<IDiagnosticsService>();
 
             _cpuSubject = new Subject<int>();
-            _diagnosticService.Setup(x => x.Cpu).Returns(_cpuSubject);
+            _diagnosticService.Setup(x => x.Cpu)
+                .Returns(_cpuSubject);
 
             _memorySubject = new Subject<Memory>();
-            _diagnosticService.Setup(x => x.Memory).Returns(_memorySubject);
+            _diagnosticService.Setup(x => x.Memory)
+                .Returns(_memorySubject);
         }
 
         private Mock<IDiagnosticsService> _diagnosticService;

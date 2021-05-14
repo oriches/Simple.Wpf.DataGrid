@@ -11,12 +11,9 @@ namespace Simple.Wpf.DataGrid.Extensions
 
             while (current != null)
             {
-                var ancestor = current as T;
-                if (ancestor != null) return ancestor;
+                if (current is T ancestor) return ancestor;
                 current = VisualTreeHelper.GetParent(current);
             }
-
-            ;
 
             return null;
         }
@@ -25,12 +22,9 @@ namespace Simple.Wpf.DataGrid.Extensions
         {
             while (current != null)
             {
-                var ancestor = current as T;
-                if (ancestor != null && Equals(ancestor, lookupItem)) return ancestor;
+                if (current is T ancestor && Equals(ancestor, lookupItem)) return ancestor;
                 current = VisualTreeHelper.GetParent(current);
             }
-
-            ;
 
             return null;
         }
@@ -41,8 +35,8 @@ namespace Simple.Wpf.DataGrid.Extensions
             {
                 if (!string.IsNullOrEmpty(parentName))
                 {
-                    var frameworkElement = current as FrameworkElement;
-                    if (current is T && frameworkElement != null && frameworkElement.Name == parentName)
+                    if (current is T && current is FrameworkElement frameworkElement &&
+                        frameworkElement.Name == parentName)
                         return (T) current;
                 }
                 else if (current is T)
@@ -68,8 +62,7 @@ namespace Simple.Wpf.DataGrid.Extensions
             for (var i = 0; i < childrenCount; i++)
             {
                 var child = VisualTreeHelper.GetChild(parent, i);
-                var childType = child as T;
-                if (childType == null)
+                if (!(child is T childType))
                 {
                     foundChild = FindDescendant<T>(child, childName);
 
@@ -77,8 +70,7 @@ namespace Simple.Wpf.DataGrid.Extensions
                 }
                 else if (!string.IsNullOrEmpty(childName))
                 {
-                    var frameworkElement = child as FrameworkElement;
-                    if (frameworkElement != null && frameworkElement.Name == childName)
+                    if (child is FrameworkElement frameworkElement && frameworkElement.Name == childName)
                     {
                         foundChild = (T) child;
                         break;
@@ -108,8 +100,7 @@ namespace Simple.Wpf.DataGrid.Extensions
             for (var i = 0; i < childrenCount; i++)
             {
                 var child = VisualTreeHelper.GetChild(parent, i);
-                var childType = child as T;
-                if (childType == null)
+                if (!(child is T childType))
                 {
                     foundChild = FindDescendant<T>(child);
                     if (foundChild != null) break;

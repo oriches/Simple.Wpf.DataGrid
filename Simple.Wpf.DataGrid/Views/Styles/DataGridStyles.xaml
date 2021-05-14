@@ -8,7 +8,8 @@
     <rd:SharedResourceDictionary.MergedDictionaries>
         <rd:SharedResourceDictionary Source="../Brushes/Brushes.xaml" />
         <rd:SharedResourceDictionary Source="../Colors/Colors.xaml" />
-        <rd:SharedResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/controls.datagrid.xaml" />
+        <rd:SharedResourceDictionary
+            Source="pack://application:,,,/MahApps.Metro;component/Styles/controls.datagrid.xaml" />
     </rd:SharedResourceDictionary.MergedDictionaries>
 
     <Style TargetType="{x:Type DataGridColumnHeader}"

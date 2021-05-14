@@ -6,10 +6,13 @@
 
         <rd:SharedResourceDictionary>
             <rd:SharedResourceDictionary.MergedDictionaries>
-                <rd:SharedResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <rd:SharedResourceDictionary
+                    Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
                 <rd:SharedResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
-                <rd:SharedResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/themes/light.blue.xaml" />
-                <rd:SharedResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/controls.buttons.xaml" />
+                <rd:SharedResourceDictionary
+                    Source="pack://application:,,,/MahApps.Metro;component/Styles/themes/light.blue.xaml" />
+                <rd:SharedResourceDictionary
+                    Source="pack://application:,,,/MahApps.Metro;component/Styles/controls.buttons.xaml" />
                 <rd:SharedResourceDictionary Source="Views/Colors/Colors.xaml" />
                 <rd:SharedResourceDictionary Source="Views/Brushes/Brushes.xaml" />
                 <rd:SharedResourceDictionary Source="Views/Styles/ButtonStyles.xaml" />

@@ -165,7 +165,8 @@ namespace Simple.Wpf.DataGrid.Views.Behaviors
 
             // ReSharper disable once ForCanBeConvertedToForeach
             foreach (var columnName in _columnsName)
-                _columns[columnName].Visibility = Visibility.Hidden;
+                _columns[columnName]
+                    .Visibility = Visibility.Hidden;
 
             var visibleColumns = VisibleColumns.ToArray();
             for (var i = 0; i < visibleColumns.Length; i++)

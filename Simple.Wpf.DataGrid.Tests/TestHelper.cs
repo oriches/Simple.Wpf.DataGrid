@@ -10,7 +10,8 @@ namespace Simple.Wpf.DataGrid.Tests
         {
             return instance.GetType()
                 .GetProperties()
-                .Where(x => x.PropertyType == typeof(T) || x.PropertyType.GetInterfaces().Any(y => y == typeof(T)));
+                .Where(x => x.PropertyType == typeof(T) || x.PropertyType.GetInterfaces()
+                    .Any(y => y == typeof(T)));
         }
     }
 }

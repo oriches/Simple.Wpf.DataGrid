@@ -25,7 +25,8 @@ namespace Simple.Wpf.DataGrid.Collections
             if (args.Action == NotifyCollectionChangedAction.Reset)
                 _properties = null;
             else if (args.Action == NotifyCollectionChangedAction.Add && Count == 1)
-                _properties = this.First().GetProperties();
+                _properties = this.First()
+                    .GetProperties();
 
             base.OnCollectionChanged(args);
         }
@@ -35,7 +36,8 @@ namespace Simple.Wpf.DataGrid.Collections
             if (!items.Any()) return;
 
             var firstItem = items.First();
-            var allOtherItems = items.Skip(1).ToArray();
+            var allOtherItems = items.Skip(1)
+                .ToArray();
 
             Add(firstItem);
 

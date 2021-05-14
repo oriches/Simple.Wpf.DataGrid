@@ -24,7 +24,7 @@ namespace Simple.Wpf.DataGrid.Tests.ViewModels
         }
 
         // Unable to mock out Logger class successfully because method are not marked as virtual,
-        // This means have manipulate a real instance of the NLog which involves making test synchonrous to make
+        // This means have manipulate a real instance of the NLog which involves making test synchronous to make
         // they don't interfere with each other or I could push the logger behind an interface...
         //
         // Why not push behind an interface? - sick of to many interfaces in projects, and hate the idea of just creating it for testing purposes...

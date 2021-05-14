@@ -1,8 +1,6 @@
 using System;
 using System.Reactive;
-using System.Reactive.Concurrency;
 using System.Reactive.Linq;
-using System.Threading;
 using Simple.Wpf.DataGrid.Commands;
 using Simple.Wpf.DataGrid.Services;
 
@@ -24,7 +22,7 @@ namespace Simple.Wpf.DataGrid.Extensions
 
         public static IObservable<T> ActivateGestures<T>(this IObservable<T> observable)
         {
-            if (GestureService == null) throw new Exception($"GestureService has not been initialised");
+            if (GestureService == null) throw new Exception("GestureService has not been initialised");
 
             return observable.Do(x => GestureService.SetBusy());
         }

@@ -22,7 +22,7 @@ namespace Simple.Wpf.DataGrid.Models
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            return obj is Heartbeat && Equals((Heartbeat) obj);
+            return obj is Heartbeat heartbeat && Equals(heartbeat);
         }
 
         public override int GetHashCode()

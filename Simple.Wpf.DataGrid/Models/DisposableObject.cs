@@ -19,7 +19,8 @@ namespace Simple.Wpf.DataGrid.Models
         protected DisposableObject()
         {
             _disposable = new CompositeDisposable();
-            _disposeMessage = string.Intern("Dispose - " + GetType().Name);
+            _disposeMessage = string.Intern("Dispose - " + GetType()
+                .Name);
         }
 
         protected bool SuppressDebugWriteline { get; set; }

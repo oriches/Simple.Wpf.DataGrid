@@ -115,7 +115,9 @@ namespace Simple.Wpf.DataGrid.ViewModels
         {
             if (PropertyDescriptors != null) return PropertyDescriptors;
 
-            var descriptors = BuildDescriptors(_data.Properties.Concat(AuditProperties).ToArray()).ToArray();
+            var descriptors = BuildDescriptors(_data.Properties.Concat(AuditProperties)
+                    .ToArray())
+                .ToArray();
             PropertyDescriptors = new PropertyDescriptorCollection(descriptors);
             return PropertyDescriptors;
         }
@@ -150,7 +152,9 @@ namespace Simple.Wpf.DataGrid.ViewModels
         {
             if (!_valuesAsStrings.TryGetValue(name, out var value))
             {
-                value = GetValue(name).ToString().ToLower();
+                value = GetValue(name)
+                    .ToString()
+                    .ToLower();
                 _valuesAsStrings.Add(name, value);
             }
 
@@ -200,7 +204,8 @@ namespace Simple.Wpf.DataGrid.ViewModels
 
                 var descriptor = new DynamicDataViewModelPropertyDescriptor(property,
                     ColumnHelper.DisplayName(property),
-                    GetValue(property).GetType());
+                    GetValue(property)
+                        .GetType());
 
                 descriptors.Add(descriptor);
             }

@@ -18,13 +18,16 @@ namespace Simple.Wpf.DataGrid.Extensions
                 .ToArray();
 
             return Observable.Return(new SourceAndNames<TSource>(source, names))
-                .SelectMany(x => x.Source.ObservePropertyChanged().Where(y => x.Names.Contains(y.PropertyName)),
+                .SelectMany(x => x.Source.ObservePropertyChanged()
+                        .Where(y => x.Names.Contains(y.PropertyName)),
                     (x, y) => y);
         }
 
-        public static IObservable<PropertyChangedEventArgs> ObservePropertyChanged(this INotifyPropertyChanged source, string propertyName)
+        public static IObservable<PropertyChangedEventArgs> ObservePropertyChanged(this INotifyPropertyChanged source,
+            string propertyName)
         {
-            return ObservePropertyChanged(source).Where(x => x.PropertyName == propertyName);
+            return ObservePropertyChanged(source)
+                .Where(x => x.PropertyName == propertyName);
         }
 
         public static IObservable<PropertyChangedEventArgs> ObservePropertyChanged(this INotifyPropertyChanged source)

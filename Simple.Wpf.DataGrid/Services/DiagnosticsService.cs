@@ -22,7 +22,8 @@ namespace Simple.Wpf.DataGrid.Services
 
         public DiagnosticsService(IIdleService idleService, ISchedulerService schedulerService)
         {
-            using (Duration.Measure(Logger, "Constructor - " + GetType().Name))
+            using (Duration.Measure(Logger, "Constructor - " + GetType()
+                .Name))
             {
                 _disposable = new CompositeDisposable()
                     .DisposeWith(this);
@@ -35,7 +36,8 @@ namespace Simple.Wpf.DataGrid.Services
                     .ObserveOn(schedulerService.TaskPool)
                     .CombineLatest(
                         idleService.Idling.Buffer(Constants.UI.Diagnostics.DiagnosticsIdleBuffer,
-                            schedulerService.TaskPool).Where(x => x.Any()), (x, y) => x)
+                                schedulerService.TaskPool)
+                            .Where(x => x.Any()), (x, y) => x)
                     .Replay(1);
             }
         }

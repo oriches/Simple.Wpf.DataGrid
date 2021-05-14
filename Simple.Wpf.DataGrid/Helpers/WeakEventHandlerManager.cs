@@ -46,8 +46,7 @@ namespace Simple.Wpf.DataGrid.Helpers
             for (var i = handlers.Count - 1; i >= 0; i--)
             {
                 var reference = handlers[i];
-                var handler = reference.Target as EventHandler;
-                if (handler == null)
+                if (!(reference.Target is EventHandler handler))
                 {
                     // Clean up old handlers that have been collected
                     handlers.RemoveAt(i);
@@ -88,8 +87,7 @@ namespace Simple.Wpf.DataGrid.Helpers
                 for (var i = handlers.Count - 1; i >= 0; i--)
                 {
                     var reference = handlers[i];
-                    var existingHandler = reference.Target as EventHandler;
-                    if (existingHandler == null || existingHandler == handler)
+                    if (!(reference.Target is EventHandler existingHandler) || existingHandler == handler)
                         // Clean up old handlers that have been collected
                         // in addition to the handler that is to be removed.
                         handlers.RemoveAt(i);

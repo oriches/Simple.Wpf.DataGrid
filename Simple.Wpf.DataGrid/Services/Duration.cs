@@ -42,9 +42,7 @@ namespace Simple.Wpf.DataGrid.Services
 
         public static IDisposable Measure(Logger logger, string context)
         {
-            if (!logger.IsDebugEnabled) return Disposable.Empty;
-
-            return new Duration(logger, context);
+            return !logger.IsDebugEnabled ? Disposable.Empty : new Duration(logger, context);
         }
 
         public static IDisposable Measure(Logger logger, string context, object[] args)

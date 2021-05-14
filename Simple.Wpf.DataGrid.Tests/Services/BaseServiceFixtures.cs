@@ -9,7 +9,8 @@ namespace Simple.Wpf.DataGrid.Tests.Services
         protected BaseServiceFixtures()
         {
             GestureService = new Mock<IGestureService>();
-            GestureService.Setup(x => x.SetBusy()).Verifiable();
+            GestureService.Setup(x => x.SetBusy())
+                .Verifiable();
 
             ObservableExtensions.GestureService = GestureService.Object;
         }

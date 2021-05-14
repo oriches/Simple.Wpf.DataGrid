@@ -22,7 +22,7 @@ namespace Simple.Wpf.DataGrid.Services
             get
             {
                 var setting = FindFirst(name);
-                return setting != null ? setting.Value : null;
+                return setting?.Value;
             }
 
             set

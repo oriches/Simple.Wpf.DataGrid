@@ -2,7 +2,7 @@ using System;
 
 namespace Simple.Wpf.DataGrid.Models
 {
-    public struct Memory : IEquatable<Memory>
+    public readonly struct Memory : IEquatable<Memory>
     {
         public bool Equals(Memory other)
         {
@@ -12,7 +12,7 @@ namespace Simple.Wpf.DataGrid.Models
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
-            return obj is Memory && Equals((Memory) obj);
+            return obj is Memory memory && Equals(memory);
         }
 
         public override int GetHashCode()

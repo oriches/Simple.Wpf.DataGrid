@@ -1,6 +1,6 @@
 ﻿<resourceDictionaries:SharedResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                             xmlns:resourceDictionaries="clr-namespace:Simple.Wpf.DataGrid.Views.ResourceDictionaries">
+                                               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                                               xmlns:resourceDictionaries="clr-namespace:Simple.Wpf.DataGrid.Views.ResourceDictionaries">
 
     <Style x:Key="ColumnsListBoxItemsStyle"
            TargetType="{x:Type ListBoxItem}">

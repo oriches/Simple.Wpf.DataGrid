@@ -26,12 +26,15 @@ namespace Simple.Wpf.DataGrid.Services
 
         static CultureService()
         {
-            using (Duration.Measure(Logger, "Constructor - " + typeof(CultureService).Name))
+            using (Duration.Measure(Logger, "Constructor - " + nameof(CultureService)))
             {
-                Thread.CurrentThread.CurrentCulture = Cultures.First().Value;
-                Thread.CurrentThread.CurrentUICulture = Cultures.First().Value;
+                Thread.CurrentThread.CurrentCulture = Cultures.First()
+                    .Value;
+                Thread.CurrentThread.CurrentUICulture = Cultures.First()
+                    .Value;
 
-                Changed = new BehaviorSubject<string>(Cultures.First().Key);
+                Changed = new BehaviorSubject<string>(Cultures.First()
+                    .Key);
             }
         }
 
@@ -45,8 +48,7 @@ namespace Simple.Wpf.DataGrid.Services
 
         public static void SetCulture(string cultureName)
         {
-            CultureInfo culture;
-            if (Cultures.TryGetValue(cultureName, out culture))
+            if (Cultures.TryGetValue(cultureName, out var culture))
             {
                 Thread.CurrentThread.CurrentCulture = culture;
                 Thread.CurrentThread.CurrentUICulture = culture;

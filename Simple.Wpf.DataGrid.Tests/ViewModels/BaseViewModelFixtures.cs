@@ -20,7 +20,8 @@ namespace Simple.Wpf.DataGrid.Tests.ViewModels
         public void BaseOneTimeSetup()
         {
             GestureService = new Mock<IGestureService>();
-            GestureService.Setup(x => x.SetBusy()).Verifiable();
+            GestureService.Setup(x => x.SetBusy())
+                .Verifiable();
 
             ObservableExtensions.GestureService = GestureService.Object;
         }

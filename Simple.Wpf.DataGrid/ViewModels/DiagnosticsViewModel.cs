@@ -84,7 +84,7 @@ namespace Simple.Wpf.DataGrid.ViewModels
             return new FormattedMemory(managedMemory, totalMemory);
         }
 
-        internal struct FormattedMemory
+        internal readonly struct FormattedMemory
         {
             public string ManagedMemory { get; }
             public string TotalMemory { get; }

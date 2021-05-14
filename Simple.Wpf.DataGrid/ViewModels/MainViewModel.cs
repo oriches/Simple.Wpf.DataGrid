@@ -106,7 +106,11 @@ namespace Simple.Wpf.DataGrid.ViewModels
 
         public int TotalNumberOfRows => _dataIds.Count;
 
-        public int TotalNumberOfColumns => _dataIds.Any() ? _dataIds.First().Value.GetProperties().Count : 0;
+        public int TotalNumberOfColumns => _dataIds.Any()
+            ? _dataIds.First()
+                .Value.GetProperties()
+                .Count
+            : 0;
 
         public int TotalNumberOfValues => TotalNumberOfRows * TotalNumberOfColumns;
 
@@ -155,17 +159,20 @@ namespace Simple.Wpf.DataGrid.ViewModels
         }
 
         private IObservable<string> FilterChanged =>
-            this.ObservePropertyChanged(nameof(Filter)).Select(x => Filter)
+            this.ObservePropertyChanged(nameof(Filter))
+                .Select(x => Filter)
                 .DistinctUntilChanged()
                 .Select(x => x?.ToLower())
                 .Throttle(Constants.UI.Grids.FilterThrottle, _schedulerService.Dispatcher)
                 .ActivateGestures();
 
         private IObservable<Unit> ColumnsChanged =>
-            _columnsService.Changed.Where(x => x == GridName).AsUnit();
+            _columnsService.Changed.Where(x => x == GridName)
+                .AsUnit();
 
         private IObservable<bool> HasDataChanged =>
-            _data.ObserveCollectionChanged().Select(x => _data.Any());
+            _data.ObserveCollectionChanged()
+                .Select(x => _data.Any());
 
         public IDiagnosticsViewModel Diagnostics { get; }
 
@@ -300,7 +307,7 @@ namespace Simple.Wpf.DataGrid.ViewModels
             for (var i = 0; i < propertyDescriptors.Length; i++)
             {
                 var propertyDescriptor = propertyDescriptors[i];
-                
+
                 var valueAsString = data.GetValueAsString(propertyDescriptor.Name);
                 var result = valueAsString.IndexOf(_filter, StringComparison.InvariantCultureIgnoreCase) != -1;
                 if (result)

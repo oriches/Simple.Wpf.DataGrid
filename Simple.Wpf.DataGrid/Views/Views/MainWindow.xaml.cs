@@ -45,7 +45,8 @@ namespace Simple.Wpf.DataGrid.Views.Views
             return this.ShowMetroDialogAsync(dialog, settings)
                 .ToObservable()
                 .SelectMany(x => dialog.CloseableContent.Closed, (x, y) => x)
-                .SelectMany(x => this.HideMetroDialogAsync(dialog).ToObservable(), (x, y) => x)
+                .SelectMany(x => this.HideMetroDialogAsync(dialog)
+                    .ToObservable(), (x, y) => x)
                 .Take(1);
         }
     }
