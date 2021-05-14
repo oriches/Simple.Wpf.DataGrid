@@ -3,7 +3,8 @@
                              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
                              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                              xmlns:rd="clr-namespace:Simple.Wpf.DataGrid.Views.ResourceDictionaries"
-                             xmlns:b="clr-namespace:Simple.Wpf.DataGrid.Views.Behaviors">
+                             xmlns:b="clr-namespace:Simple.Wpf.DataGrid.Views.Behaviors"
+                             xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors">
 
     <rd:SharedResourceDictionary.MergedDictionaries>
         <rd:SharedResourceDictionary Source="../Brushes/Brushes.xaml" />
@@ -28,25 +29,25 @@
                                           Padding="2"
                                           FontSize="12"
                                           Header="Sort Ascending">
-                                    <i:Interaction.Behaviors>
+                                    <behaviors:Interaction.Behaviors>
                                         <b:ApplyColumnSortBehavior Direction="Ascending" />
-                                    </i:Interaction.Behaviors>
+                                    </behaviors:Interaction.Behaviors>
                                 </MenuItem>
                                 <MenuItem x:Name="SortDescendingMenuItem"
                                           Padding="2"
                                           FontSize="12"
                                           Header="Sort Descending">
-                                    <i:Interaction.Behaviors>
+                                    <behaviors:Interaction.Behaviors>
                                         <b:ApplyColumnSortBehavior Direction="Descending" />
-                                    </i:Interaction.Behaviors>
+                                    </behaviors:Interaction.Behaviors>
                                 </MenuItem>
                                 <MenuItem x:Name="ClearSortMenuItem"
                                           Padding="2"
                                           FontSize="12"
                                           Header="Clear Sort">
-                                    <i:Interaction.Behaviors>
+                                    <behaviors:Interaction.Behaviors>
                                         <b:ClearColumnSortBehavior />
-                                    </i:Interaction.Behaviors>
+                                    </behaviors:Interaction.Behaviors>
                                 </MenuItem>
                             </ContextMenu>
                         </Grid.ContextMenu>

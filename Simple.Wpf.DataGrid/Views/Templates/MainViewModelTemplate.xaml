@@ -4,7 +4,8 @@
                              xmlns:c="http://metro.mahapps.com/winfx/xaml/controls"
                              xmlns:vm="clr-namespace:Simple.Wpf.DataGrid.ViewModels"
                              xmlns:rd="clr-namespace:Simple.Wpf.DataGrid.Views.ResourceDictionaries"
-                             xmlns:b="clr-namespace:Simple.Wpf.DataGrid.Views.Behaviors">
+                             xmlns:b="clr-namespace:Simple.Wpf.DataGrid.Views.Behaviors"
+                             xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors">
 
     <rd:SharedResourceDictionary.MergedDictionaries>
         <rd:SharedResourceDictionary Source="../Styles/ButtonStyles.xaml" />
@@ -109,11 +110,11 @@
                               EnableRowVirtualization="True"
                               CellStyle="{StaticResource DynamicDataGridCellStyle}"
                               RenderOptions.EdgeMode="Aliased">
-                        <i:Interaction.Behaviors>
+                        <behaviors:Interaction.Behaviors>
                             <b:RegenerateColumnsBehavior IsEnabled="{Binding HasData}"
                                                          VisibleColumns="{Binding VisibleColumns}" />
                             <b:IsGridScrollingBehavior IsScrolling="{Binding SuspendUpdates, Mode=OneWayToSource}" />
-                        </i:Interaction.Behaviors>
+                        </behaviors:Interaction.Behaviors>
                     </DataGrid>
 
                 </Grid>
